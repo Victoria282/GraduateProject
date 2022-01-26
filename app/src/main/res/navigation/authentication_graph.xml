@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/authentication_graph"
+    app:startDestination="@id/AuthorizationFragment">
+    <fragment
+        android:id="@+id/AuthorizationFragment"
+        android:name="com.example.graduateproject.authentication.authorization.AuthorizationFragment"
+        android:label="Авторизация" />
+    <fragment
+        android:id="@+id/RegistrationFragment"
+        android:name="com.example.graduateproject.authentication.registration.RegistrationFragment"
+        android:label="Регистрация" />
+</navigation>
