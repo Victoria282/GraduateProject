@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">ЧелГУ</string>
+    <string name="app_name">Помощник студента</string>
+    <string name="emailHint">Почта</string>
+    <string name="PasswordHint">Пароль</string>
+    <string name="PasswordHintConfirm">Подтверждение пароля*</string>
+    <string name="LoginText">Вход</string>
+    <string name="adviceToRegister">Ещё не зарегистрированы?</string>
+    <string name="buttonRegister">Регистрация</string>
+    <string name="registerButton">Зарегестрироваться</string>
+    <string name="adviceToLogIn"> Уже есть аккаунт?</string>
+    <string name="message_no_internet">Проверьте подключение к интернету</string>
+    <string name="message_input_empty_fields">Заполните пустые поля</string>
+    <string name="message_login_and_password_is_difficult">Логин и пароль не совпадают</string>
+    <string name="message_email_incorrect">Некорректный email</string>
+    <string name="alert_dialog_message">Сообщение</string>
+    <string name="message_ok">ок</string>
+    <string name="message_something_went_wrong">Что-то пошло не так.. Проверьте интернет-соединение</string>
+    <string name="message_weak_password"> Придумайте более надёжный пароль</string>
+    <string name="message_invalid_auth_data"> Неверный логин или пароль</string>
+    <string name="message_user_with_such_email_exists"> Пользователь с данным email уже существует</string>
+    <string name="forgot_password"> Забыли пароль? </string>
+    <string name="restore_lose_data"> Восстановить пароль </string>
 </resources>
