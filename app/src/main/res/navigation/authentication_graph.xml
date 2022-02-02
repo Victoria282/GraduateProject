@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_graph"
     app:startDestination="@id/AuthorizationFragment">
     <fragment
         android:id="@+id/AuthorizationFragment"
         android:name="com.example.graduateproject.authentication.authorization.AuthorizationFragment"
-        android:label="Авторизация" />
+        android:label="Авторизация"
+        tools:layout="@layout/authorization_layout">
+    </fragment>
     <fragment
         android:id="@+id/RegistrationFragment"
         android:name="com.example.graduateproject.authentication.registration.RegistrationFragment"
-        android:label="Регистрация" />
+        android:label="Регистрация"
+        tools:layout="@layout/registration_layout"/>
 </navigation>
