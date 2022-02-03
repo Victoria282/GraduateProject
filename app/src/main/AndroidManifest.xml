@@ -12,13 +12,15 @@
         android:name=".MainApplication"
         android:theme="@style/Theme.GraduateProject">
         <activity
-            android:name=".authentication.MainActivity"
+            android:name=".authentication.SplashScreen"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".authentication.MainActivity"/>
         <activity
             android:name=".main.MainPageAccount"/>
     </application>

@@ -2,6 +2,7 @@
 <resources>
     <dimen name="normal_text_size">16sp</dimen>
     <dimen name="button_text_size">18sp</dimen>
+    <dimen name="tittle_text_size">32sp</dimen>
     <dimen name="material_card_view_height">60dp</dimen>
     <dimen name="material_card_view_margin">8dp</dimen>
     <dimen name="material_card_view_text_padding">16dp</dimen>

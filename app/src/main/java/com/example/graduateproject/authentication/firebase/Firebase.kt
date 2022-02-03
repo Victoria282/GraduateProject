@@ -5,6 +5,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
 class Firebase {
+
     private var user: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun registerUser(email: String, password: String): Task<AuthResult> =
@@ -12,4 +13,8 @@ class Firebase {
 
     fun loginUser(email: String, password: String): Task<AuthResult> =
         user.signInWithEmailAndPassword(email, password)
+
+    fun logoutUser(): Unit {
+        user.signOut()
+    }
 }
