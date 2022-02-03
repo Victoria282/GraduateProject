@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.graduateproject.R
 import com.example.graduateproject.authentication.authorization.AuthorizationFragment
+import com.example.graduateproject.authentication.validation.Validation
 import com.example.graduateproject.databinding.RegistrationLayoutBinding
 import com.example.graduateproject.main.MainPageAccount
-import com.example.graduateproject.utils.Utils.isCorrectEmail
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -27,9 +27,10 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
 
     private val statusRegistrationObserver = Observer<Task<AuthResult>> { authResult ->
         if (authResult.isSuccessful) {
-            val intent = Intent(requireContext(), MainPageAccount::class.java)
-            startActivity(intent)
-        } else {
+            Intent(requireContext(), MainPageAccount::class.java).also {
+                startActivity(it)
+            }
+        } else
             when (authResult.exception) {
                 is FirebaseAuthWeakPasswordException -> showMessage(
                     R.string.message_weak_password,
@@ -44,7 +45,6 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
                     requireContext()
                 )
             }
-        }
     }
 
     override fun onCreateView(
@@ -59,9 +59,13 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = "Регистрация"
+        setTittle()
         initListeners()
         initObservers()
+    }
+
+    private fun setTittle() {
+        activity?.title = "Регистрация"
     }
 
     private fun initObservers() = with(viewModel) {
@@ -90,18 +94,16 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
         val email = email.text.toString()
         val password = password.text.toString()
         val confirmPassword = confirmPassword.text.toString()
-        validateLoginForm(email, password, confirmPassword)
+
+        validateRegisterForm(email, password, confirmPassword)
     }
 
-    private fun validateLoginForm(email: String, password: String, confirmPassword: String) {
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty())
-            showMessage(R.string.message_input_empty_fields, requireContext())
-        else if (password != confirmPassword)
-            showMessage(R.string.message_login_and_password_is_difficult, requireContext())
-        else if (!isCorrectEmail(email))
-            showMessage(R.string.message_email_incorrect, requireContext())
-        else {
+    private fun validateRegisterForm(email: String, password: String, confirmPassword: String) {
+        val resultValidation: Int = Validation.validateInputText(email, password, confirmPassword)
+
+        if (resultValidation == 1)
             viewModel.registerUser(email, password)
-        }
+        else
+            showMessage(resultValidation, requireContext())
     }
 }
