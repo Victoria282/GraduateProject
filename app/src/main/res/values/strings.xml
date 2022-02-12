@@ -1,19 +1,22 @@
 <resources>
     <string name="app_name">Помощник студента</string>
-    <string name="emailHint">Почта</string>
-    <string name="PasswordHint">Пароль</string>
-    <string name="PasswordHintConfirm">Подтверждение пароля*</string>
-    <string name="LoginText">Вход</string>
-    <string name="adviceToRegister">Ещё не зарегистрированы?</string>
-    <string name="buttonRegister">Регистрация</string>
-    <string name="registerButton">Зарегестрироваться</string>
-    <string name="adviceToLogIn"> Уже есть аккаунт?</string>
+    <string name="email_hint">Почта</string>
+    <string name="password_hint">Пароль</string>
+    <string name="password_hint_confirm">Подтверждение пароля*</string>
+    <string name="login_text">Вход</string>
+    <string name="reset_password">Отправить пароль</string>
+    <string name="password_is_reset">Письмо для восстановления пароля отправлено</string>
+    <string name="advice_to_register">Ещё не зарегистрированы?</string>
+    <string name="button_register">Регистрация</string>
+    <string name="register_button">Зарегестрироваться</string>
+    <string name="advice_to_logIn"> Уже есть аккаунт?</string>
     <string name="message_no_internet">Проверьте подключение к интернету</string>
     <string name="message_input_empty_fields">Заполните пустые поля</string>
     <string name="message_password_is_difficult">Пароли не совпадают</string>
     <string name="message_email_incorrect">Некорректный email</string>
     <string name="alert_dialog_message">Сообщение</string>
     <string name="message_ok">ок</string>
+    <string name="message_back_to_main_page">Вернуться на главную</string>
     <string name="message_something_went_wrong">Что-то пошло не так.. Проверьте интернет-соединение</string>
     <string name="message_weak_password"> Придумайте более надёжный пароль</string>
     <string name="message_invalid_auth_data"> Неверный email или пароль</string>
@@ -21,4 +24,14 @@
     <string name="forgot_password"> Забыли пароль? </string>
     <string name="restore_lose_data"> Восстановить пароль </string>
     <string name="logout"> Выйти </string>
+    <string name="forgot_password_ask">Забыли пароль?</string>
+    <string name="nav_item_home">Главная</string>
+    <string name="nav_item_schedule">Расписание</string>
+    <string name="nav_contact_with_developer">Связь с разработчиком</string>
+    <string name="nav_feedback">Обратная связь</string>
+    <string name="nav_log_out">Выйти</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_main">Основное</string>
+    <string name="open"> Открыть </string>
+    <string name="close">Закрыть</string>
 </resources>

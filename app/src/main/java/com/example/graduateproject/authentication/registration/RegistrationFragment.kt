@@ -26,25 +26,32 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
     private lateinit var viewModel: RegistrationViewModel
 
     private val statusRegistrationObserver = Observer<Task<AuthResult>> { authResult ->
-        if (authResult.isSuccessful) {
-            Intent(requireContext(), MainPageAccount::class.java).also {
-                startActivity(it)
-            }
-        } else
-            when (authResult.exception) {
-                is FirebaseAuthWeakPasswordException -> showMessage(
-                    R.string.message_weak_password,
-                    requireContext()
-                )
-                is FirebaseAuthUserCollisionException -> showMessage(
-                    R.string.message_user_with_such_email_exists,
-                    requireContext()
-                )
-                else -> showMessage(
-                    R.string.message_something_went_wrong,
-                    requireContext()
-                )
-            }
+        authResult.addOnCompleteListener {
+
+            hideProgressBar()
+
+            if (authResult.isSuccessful)
+                Intent(requireContext(), MainPageAccount::class.java).also {
+                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(it)
+                }
+            else
+                when (authResult.exception) {
+                    is FirebaseAuthWeakPasswordException -> showMessage(
+                        R.string.message_weak_password,
+                        requireContext()
+                    )
+                    is FirebaseAuthUserCollisionException -> showMessage(
+                        R.string.message_user_with_such_email_exists,
+                        requireContext()
+                    )
+                    else -> showMessage(
+                        R.string.message_something_went_wrong,
+                        requireContext()
+                    )
+                }
+        }
     }
 
     override fun onCreateView(
@@ -81,13 +88,12 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
                     R.anim.to_right_in,
                     R.anim.to_right_out
                 )
+                .addToBackStack("registration")
                 .replace(R.id.navHostMainActivity, AuthorizationFragment())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
         }
-        registerButton.setOnClickListener {
-            getInputData()
-        }
+        registerButton.setOnClickListener { getInputData() }
     }
 
     private fun getInputData() = with(binding) {
@@ -101,9 +107,18 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
     private fun validateRegisterForm(email: String, password: String, confirmPassword: String) {
         val resultValidation: Int = Validation.validateInputText(email, password, confirmPassword)
 
-        if (resultValidation == 1)
+        if (resultValidation == 1) {
+            showProgressBar()
             viewModel.registerUser(email, password)
-        else
+        } else
             showMessage(resultValidation, requireContext())
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
     }
 }

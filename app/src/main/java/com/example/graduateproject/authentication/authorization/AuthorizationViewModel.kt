@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.example.graduateproject.authentication.firebase.Firebase
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import javax.inject.Inject
 
 class AuthorizationViewModel : ViewModel() {
 
@@ -16,8 +15,10 @@ class AuthorizationViewModel : ViewModel() {
         get() = _statusAuthorization
 
     fun loginUser(email: String, password: String) {
-       firebase.loginUser(email, password).addOnCompleteListener {
+        firebase.loginUser(email, password).addOnCompleteListener {
             _statusAuthorization.postValue(it)
         }
     }
+
+    fun checkUserAuthorization(): Boolean = firebase.getCurrentUser() != null
 }
