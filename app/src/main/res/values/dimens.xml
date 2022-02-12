@@ -6,4 +6,6 @@
     <dimen name="material_card_view_height">60dp</dimen>
     <dimen name="material_card_view_margin">8dp</dimen>
     <dimen name="material_card_view_text_padding">16dp</dimen>
+    <dimen name="small_padding">16dp</dimen>
+    <dimen name="large_padding">32dp</dimen>
 </resources>

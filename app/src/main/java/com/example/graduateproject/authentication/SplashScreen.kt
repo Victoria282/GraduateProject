@@ -10,6 +10,7 @@ import com.example.graduateproject.databinding.SplashScreenLayoutBinding
 
 // Предположительно здесь будет браться случайное высказывание
 // с апи + некоторая картинка по тематике высказываний
+
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
     private lateinit var binding: SplashScreenLayoutBinding
@@ -22,8 +23,6 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun setSplashScreen() {
-        // This is used to hide the status bar and make
-        // the splash screen as a full screen activity.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
