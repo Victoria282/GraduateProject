@@ -118,14 +118,10 @@
         android:id="@+id/guidelineEnd"
         style="@style/guide_line_horizontal_style"
         app:layout_constraintGuide_percent="0.99" />
-    <ProgressBar
-        android:visibility="invisible"
-        android:id="@+id/progressBar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+   <include
+       android:id="@+id/progressBarLayout"
+       layout="@layout/progress_bar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
