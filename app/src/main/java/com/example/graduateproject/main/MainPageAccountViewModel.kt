@@ -2,10 +2,13 @@ package com.example.graduateproject.main
 
 import androidx.lifecycle.ViewModel
 import com.example.graduateproject.authentication.firebase.Firebase
+import javax.inject.Inject
 
-class MainPageAccountViewModel : ViewModel() {
+class MainPageAccountViewModel @Inject constructor(
+    private val firebase: Firebase
+): ViewModel() {
 
-    private val firebase = Firebase()
-
-    fun logOutUser() { firebase.logoutUser() }
+    fun logOutUser() {
+        firebase.logoutUser()
+    }
 }

@@ -9,10 +9,45 @@
         android:name="com.example.graduateproject.authentication.authorization.AuthorizationFragment"
         android:label="Авторизация"
         tools:layout="@layout/authorization_layout">
+        <action
+            android:id="@+id/toRegistration"
+            app:destination="@id/RegistrationFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
+        <action
+            android:id="@+id/toRestore"
+            app:destination="@id/RestoreFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
     </fragment>
     <fragment
         android:id="@+id/RegistrationFragment"
         android:name="com.example.graduateproject.authentication.registration.RegistrationFragment"
         android:label="Регистрация"
-        tools:layout="@layout/registration_layout"/>
+        tools:layout="@layout/registration_layout">
+        <action
+            android:id="@+id/toAuthorization"
+            app:destination="@id/AuthorizationFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/RestoreFragment"
+        android:name="com.example.graduateproject.authentication.restore.RestoreFragment"
+        android:label="Восстановить пароль"
+        tools:layout="@layout/restore_layout">
+        <action
+            android:id="@+id/toAuthorization"
+            app:destination="@id/AuthorizationFragment"
+            app:enterAnim="@anim/to_left_in"
+            app:exitAnim="@anim/to_left_out"
+            app:popEnterAnim="@anim/to_right_in"
+            app:popExitAnim="@anim/to_right_out" />
+    </fragment>
 </navigation>

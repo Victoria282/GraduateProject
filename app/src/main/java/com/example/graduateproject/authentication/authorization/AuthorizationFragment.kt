@@ -6,34 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
-import com.example.graduateproject.authentication.registration.RegistrationFragment
-import com.example.graduateproject.authentication.restore.RestoreFragment
 import com.example.graduateproject.authentication.validation.Validation
 import com.example.graduateproject.databinding.AuthorizationLayoutBinding
+import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.main.MainPageAccount
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import javax.inject.Inject
 
 /* TODO в будущем:
     1. api quotes для SplashScreen
-    2. Dagger2
-    3. Вынести общее из фрагментов Auth Register Restore -> BaseFragment
-    4. Animation fragment manager в отдельный файл ...
-    5. Progress bar в отдельный layout + synthetic
-    6. * Реализовать сохранение логина и пароля в shared preferences
-    ! 7. ЧИСТКА
+    2. Вынести общее из фрагментов Auth Register Restore -> BaseFragment
+    4. * Реализовать сохранение логина и пароля в shared preferences
 */
 
-class AuthorizationFragment : Fragment(R.layout.authorization_layout) {
+class AuthorizationFragment @Inject constructor(
+    viewModelFactory: ViewModelFactory
+): Fragment(R.layout.authorization_layout) {
 
     private lateinit var binding: AuthorizationLayoutBinding
-    private lateinit var viewModel: AuthorizationViewModel
+
+    private val viewModel: AuthorizationViewModel by viewModels { viewModelFactory }
 
     private val statusAuthorizationObserver = Observer<Task<AuthResult>> { authResult ->
         authResult.addOnCompleteListener {
@@ -61,13 +61,16 @@ class AuthorizationFragment : Fragment(R.layout.authorization_layout) {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = AuthorizationLayoutBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(AuthorizationViewModel::class.java)
         return binding.root
     }
 
@@ -94,33 +97,15 @@ class AuthorizationFragment : Fragment(R.layout.authorization_layout) {
 
     private fun initListeners() = with(binding) {
         registerLink.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.to_left_in,
-                    R.anim.to_left_out,
-                    R.anim.to_right_in,
-                    R.anim.to_right_out
-                )
-                .addToBackStack("authorization")
-                .replace(R.id.navHostMainActivity, RegistrationFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
+            val direction = AuthorizationFragmentDirections.toRegistration()
+            findNavController().navigate(direction)
         }
 
         loginButton.setOnClickListener { getInputData() }
 
         textViewRestorePassword.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.to_left_in,
-                    R.anim.to_left_out,
-                    R.anim.to_right_in,
-                    R.anim.to_right_out
-                )
-                .replace(R.id.navHostMainActivity, RestoreFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack("authorization")
-                .commit()
+            val direction = AuthorizationFragmentDirections.toRestore()
+            findNavController().navigate(direction)
         }
     }
 
@@ -132,20 +117,26 @@ class AuthorizationFragment : Fragment(R.layout.authorization_layout) {
     }
 
     private fun validateLoginForm(email: String, password: String) {
+
         val resultValidation: Int = Validation.validateInputText(email, password, null)
 
-        if (resultValidation == 1) {
-            viewModel.loginUser(email, password)
-            showProgressBar()
-        } else
-            showMessage(resultValidation, requireContext())
+        when(resultValidation) {
+            1 -> {
+                viewModel.loginUser(email, password)
+                showProgressBar()
+            }
+            0 -> {
+                showMessage(resultValidation, requireContext())
+            }
+        }
     }
 
     private fun hideProgressBar() {
-        binding.progressBar.visibility = View.GONE
+        binding.progressBarLayout.progressBar.visibility = View.GONE
     }
 
     private fun showProgressBar() {
-        binding.progressBar.visibility = View.GONE
+        binding.progressBarLayout.progressBar.visibility = View.GONE
     }
 }
+

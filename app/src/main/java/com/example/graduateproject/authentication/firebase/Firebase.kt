@@ -4,21 +4,19 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import javax.inject.Inject
 
-class Firebase {
-
-    private var user: FirebaseAuth = FirebaseAuth.getInstance()
-
+class Firebase @Inject constructor() {
     fun registerUser(email: String, password: String): Task<AuthResult> =
-        user.createUserWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
 
     fun loginUser(email: String, password: String): Task<AuthResult> =
-        user.signInWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
 
     fun restoreAccount(email: String): Task<Void> =
-        user.sendPasswordResetEmail(email)
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
 
-    fun getCurrentUser(): FirebaseUser? = user.currentUser
+    fun getCurrentUser(): FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
-    fun logoutUser(): Unit = user.signOut()
+    fun logoutUser(): Unit = FirebaseAuth.getInstance().signOut()
 }

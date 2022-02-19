@@ -15,7 +15,7 @@ class SharedPreferences(context: Context) {
 
     var savedPasswordUser: String?
         get() = sharedPreferences.getString(PASSWORD, "")
-        set(value) = sharedPreferences.edit {putString(PASSWORD, value)}
+        set(value) = sharedPreferences.edit { putString(PASSWORD, value) }
 
     companion object {
         private const val PREF_NAME = "saved data user"
