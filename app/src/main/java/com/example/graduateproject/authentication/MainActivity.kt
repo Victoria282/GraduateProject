@@ -1,19 +1,21 @@
 package com.example.graduateproject.authentication
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.graduateproject.R
-import com.example.graduateproject.databinding.ActivityMainBinding
+import com.example.graduateproject.di.utils.FragmentFactory
+import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    @Inject
+    lateinit var fragmentFactory: FragmentFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        supportFragmentManager.fragmentFactory = fragmentFactory
+        setContentView(R.layout.activity_main)
+        AndroidInjection.inject(this)
     }
 }

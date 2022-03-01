@@ -7,9 +7,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import javax.inject.Inject
 
-class RegistrationViewModel : ViewModel() {
-
-    private val firebase = Firebase()
+class RegistrationViewModel @Inject constructor(
+    private val firebase: Firebase
+) : ViewModel() {
 
     private val _statusRegistration = MutableLiveData<Task<AuthResult>>()
     val statusRegistration: MutableLiveData<Task<AuthResult>>

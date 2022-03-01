@@ -7,23 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
 import com.example.graduateproject.authentication.authorization.AuthorizationFragment
+import com.example.graduateproject.authentication.authorization.AuthorizationFragmentDirections
 import com.example.graduateproject.authentication.validation.Validation
 import com.example.graduateproject.databinding.RegistrationLayoutBinding
+import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.main.MainPageAccount
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import javax.inject.Inject
 
-class RegistrationFragment : Fragment(R.layout.registration_layout) {
+class RegistrationFragment @Inject constructor(
+    viewModelFactory: ViewModelFactory
+): Fragment(R.layout.registration_layout) {
 
     private lateinit var binding: RegistrationLayoutBinding
-    private lateinit var viewModel: RegistrationViewModel
+
+    private val viewModel: RegistrationViewModel by viewModels { viewModelFactory }
 
     private val statusRegistrationObserver = Observer<Task<AuthResult>> { authResult ->
         authResult.addOnCompleteListener {
@@ -60,7 +68,6 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
         savedInstanceState: Bundle?
     ): View {
         binding = RegistrationLayoutBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
         return binding.root
     }
 
@@ -81,17 +88,8 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
 
     private fun initListeners() = with(binding) {
         loginBtn.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.to_left_in,
-                    R.anim.to_left_out,
-                    R.anim.to_right_in,
-                    R.anim.to_right_out
-                )
-                .addToBackStack("registration")
-                .replace(R.id.navHostMainActivity, AuthorizationFragment())
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
+            val direction = RegistrationFragmentDirections.toAuthorization()
+            findNavController().navigate(direction)
         }
         registerButton.setOnClickListener { getInputData() }
     }
@@ -105,20 +103,25 @@ class RegistrationFragment : Fragment(R.layout.registration_layout) {
     }
 
     private fun validateRegisterForm(email: String, password: String, confirmPassword: String) {
+
         val resultValidation: Int = Validation.validateInputText(email, password, confirmPassword)
 
-        if (resultValidation == 1) {
-            showProgressBar()
-            viewModel.registerUser(email, password)
-        } else
-            showMessage(resultValidation, requireContext())
+        when(resultValidation) {
+            1 -> {
+                showProgressBar()
+                viewModel.registerUser(email, password)
+            }
+            0 -> {
+                showMessage(resultValidation, requireContext())
+            }
+        }
     }
 
     private fun hideProgressBar() {
-        binding.progressBar.visibility = View.GONE
+        binding.progressBarLayout.progressBar.visibility = View.GONE
     }
 
     private fun showProgressBar() {
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBarLayout.progressBar.visibility = View.VISIBLE
     }
 }
