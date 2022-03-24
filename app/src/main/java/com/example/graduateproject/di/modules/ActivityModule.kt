@@ -2,7 +2,7 @@ package com.example.graduateproject.di.modules
 
 import com.example.graduateproject.authentication.MainActivity
 import com.example.graduateproject.authentication.SplashScreen
-import com.example.graduateproject.main.MainPageAccount
+import com.example.graduateproject.main.MenuActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -15,5 +15,5 @@ interface ActivityModule {
     fun contributeSplashScreen(): SplashScreen
 
     @ContributesAndroidInjector
-    fun contributeMainPageAccount(): MainPageAccount
+    fun contributeMenuActivity(): MenuActivity
 }

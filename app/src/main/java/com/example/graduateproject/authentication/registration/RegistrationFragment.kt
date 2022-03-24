@@ -17,7 +17,7 @@ import com.example.graduateproject.authentication.authorization.AuthorizationFra
 import com.example.graduateproject.authentication.validation.Validation
 import com.example.graduateproject.databinding.RegistrationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.main.MainPageAccount
+import com.example.graduateproject.main.MenuActivity
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -39,7 +39,7 @@ class RegistrationFragment @Inject constructor(
             hideProgressBar()
 
             if (authResult.isSuccessful)
-                Intent(requireContext(), MainPageAccount::class.java).also {
+                Intent(requireContext(), MenuActivity::class.java).also {
                     it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(it)

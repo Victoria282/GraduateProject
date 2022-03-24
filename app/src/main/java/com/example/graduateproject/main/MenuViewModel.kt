@@ -4,11 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.example.graduateproject.authentication.firebase.Firebase
 import javax.inject.Inject
 
-class MainPageAccountViewModel @Inject constructor(
+class MenuViewModel @Inject constructor(
     private val firebase: Firebase
 ): ViewModel() {
 
-    fun logOutUser() {
-        firebase.logoutUser()
-    }
 }

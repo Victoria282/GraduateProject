@@ -14,18 +14,12 @@ import com.example.graduateproject.R
 import com.example.graduateproject.authentication.validation.Validation
 import com.example.graduateproject.databinding.AuthorizationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.main.MainPageAccount
+import com.example.graduateproject.main.MenuActivity
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import javax.inject.Inject
-
-/* TODO в будущем:
-    1. api quotes для SplashScreen
-    2. Вынести общее из фрагментов Auth Register Restore -> BaseFragment
-    4. * Реализовать сохранение логина и пароля в shared preferences
-*/
 
 class AuthorizationFragment @Inject constructor(
     viewModelFactory: ViewModelFactory
@@ -41,7 +35,7 @@ class AuthorizationFragment @Inject constructor(
             hideProgressBar()
 
             if (authResult.isSuccessful)
-                Intent(requireContext(), MainPageAccount::class.java).also {
+                Intent(requireContext(), MenuActivity::class.java).also {
                     it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(it)
@@ -84,7 +78,7 @@ class AuthorizationFragment @Inject constructor(
 
     private fun checkUserAuthorization() {
         if (viewModel.checkUserAuthorization())
-            startActivity(Intent(requireContext(), MainPageAccount::class.java))
+            startActivity(Intent(requireContext(), MenuActivity::class.java))
     }
 
     private fun setTittle() {
