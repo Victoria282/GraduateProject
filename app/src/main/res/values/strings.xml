@@ -34,4 +34,25 @@
     <string name="nav_main">Основное</string>
     <string name="open"> Открыть </string>
     <string name="close">Закрыть</string>
+    <string name="edit">Редактировать</string>
+    <string name="lesson_name">Предмет</string>
+    <string name="lesson_type">Тип занятия</string>
+    <string name="lesson_teacher">Преподаватель</string>
+    <string name="lesson_cabinet">Аудитория</string>
+    <string name="lesson_start_time">Начало пары</string>
+    <string name="lesson_end_time">Конец пары</string>
+    <string name="lesson_tittle">Пара</string>
+    <string name="lesson_type_lecture">Лекция</string>
+    <string name="lesson_type_practice">Практика</string>
+    <string name="message_empty_list_lessons">Сегодня выходной</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="test_email"> user@mail.ru </string>
 </resources>
