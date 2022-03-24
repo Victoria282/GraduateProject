@@ -3,9 +3,11 @@ package com.example.graduateproject.shared_preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import javax.inject.Inject
 
-class SharedPreferences(context: Context) {
-
+class SharedPreferences @Inject constructor(
+    context: Context
+) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
@@ -17,9 +19,18 @@ class SharedPreferences(context: Context) {
         get() = sharedPreferences.getString(PASSWORD, "")
         set(value) = sharedPreferences.edit { putString(PASSWORD, value) }
 
+    var savedStudyWeek: Int?
+        get() = sharedPreferences.getInt(STUDY_WEEK, 1)
+        set(value) = sharedPreferences.edit {
+            if (value != null) {
+                putInt(STUDY_WEEK, value)
+            }
+        }
+
     companion object {
         private const val PREF_NAME = "saved data user"
         private const val EMAIL = "email"
         private const val PASSWORD = "password"
+        private const val STUDY_WEEK = "study week"
     }
 }

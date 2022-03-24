@@ -1,9 +1,9 @@
 package com.example.graduateproject
 
 import android.app.Application
-import com.example.graduateproject.authentication.firebase.Firebase
 import com.example.graduateproject.di.component.AppComponent
 import com.example.graduateproject.di.component.DaggerAppComponent
+import com.example.graduateproject.schedule.database.AppDatabase
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -23,6 +23,7 @@ class MainApplication : Application(), HasAndroidInjector {
 
     override fun onCreate() {
         super.onCreate()
+        AppDatabase.invoke(applicationContext)
         appComponent.inject(this)
     }
 

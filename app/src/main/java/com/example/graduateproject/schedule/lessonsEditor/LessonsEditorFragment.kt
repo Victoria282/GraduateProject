@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.FragmentLessonsEditorBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
@@ -17,6 +19,8 @@ class LessonsEditorFragment @Inject constructor(
 
     private lateinit var binding: FragmentLessonsEditorBinding
     private val viewModel: LessonsEditorViewModel by viewModels { viewModelFactory }
+
+    private val args by navArgs<LessonsEditorFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +40,14 @@ class LessonsEditorFragment @Inject constructor(
     }
 
     private fun initUi() {
-        setTittle()
+        initListeners()
     }
 
-    private fun setTittle() {
-        activity?.title = "Расписание занятий"
+    private fun initListeners() = with(binding) {
+        btnSave.setOnClickListener {
+            val directions = LessonsEditorFragmentDirections.toSchedule()
+            findNavController().navigate(directions)
+        }
     }
 
     companion object {
