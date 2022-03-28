@@ -8,26 +8,27 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/guidelineCenter"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_study" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:fontFamily="@font/roboto_condensed_bold"
         app:layout_constraintTop_toBottomOf="@+id/guidelineCenter"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize = "@dimen/tittle_text_size"
