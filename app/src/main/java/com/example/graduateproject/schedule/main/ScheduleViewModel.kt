@@ -12,7 +12,7 @@ class ScheduleViewModel @Inject constructor(
     val studyWeek: MutableLiveData<Int>
         get() = _studyWeek
 
-    fun setStudyWeek(numberOfWeek: Int) {
+    fun saveStudyWeek(numberOfWeek: Int) {
         _studyWeek.value = numberOfWeek
     }
 }

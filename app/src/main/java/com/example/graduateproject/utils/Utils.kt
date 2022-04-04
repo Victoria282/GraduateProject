@@ -37,9 +37,7 @@ object Utils {
         .setPositiveButton(listenerMessageId, listener)
         .show()
 
-    fun Context.hideKeyboard(
-        view: View
-    ) {
+    fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(
             Activity.INPUT_METHOD_SERVICE
         ) as InputMethodManager

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.RestoreLayoutBinding
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 class RestoreFragment @Inject constructor(
     viewModelFactory: ViewModelFactory
-): Fragment(R.layout.restore_layout) {
+) : Fragment(R.layout.restore_layout) {
 
     private lateinit var binding: RestoreLayoutBinding
     private val viewModel: RestoreViewModel by viewModels { viewModelFactory }
@@ -30,7 +29,7 @@ class RestoreFragment @Inject constructor(
         task.addOnCompleteListener {
 
             hideProgressBar()
-            clearInputField()
+            clearInputFields()
 
             if (task.isSuccessful) {
                 showMessageWithPositiveButton(
@@ -61,10 +60,23 @@ class RestoreFragment @Inject constructor(
         setTittle()
         initListeners()
         initObservers()
+        emailFocusListener()
     }
 
     private fun setTittle() {
         activity?.title = "Восстановление пароля"
+    }
+
+    private fun emailFocusListener() = with(binding) {
+        email.setOnFocusChangeListener { _, focused ->
+            if (!focused) textFieldEmail.helperText = emailValidate()
+        }
+    }
+
+    private fun emailValidate(): String? = with(binding) {
+        if (!Utils.isCorrectEmail(email.text.toString()))
+            return getString(R.string.message_email_incorrect)
+        return null
     }
 
     private fun initObservers() {
@@ -76,14 +88,23 @@ class RestoreFragment @Inject constructor(
 
             showProgressBar()
 
-            val email = email.text.toString()
+            val email = email.text?.trim().toString()
+            val messageEmptyFields = getString(R.string.not_empty_fields)
 
-            if (email.trim().isEmpty() || !Utils.isCorrectEmail(email)) {
-                showMessage(R.string.message_email_incorrect, requireContext())
-                hideProgressBar()
-            } else {
-                view?.let { activity?.hideKeyboard(it) }
-                viewModel.restoreUserPassword(email)
+            when {
+                email.isEmpty() -> {
+                    textFieldEmail.helperText = messageEmptyFields
+                    hideProgressBar()
+                }
+                emailValidate() != null -> {
+                    textFieldEmail.helperText = emailValidate()
+                    hideProgressBar()
+                }
+                else -> {
+                    textFieldEmail.helperText = ""
+                    view?.let { activity?.hideKeyboard(it) }
+                    viewModel.restoreUserPassword(email)
+                }
             }
         }
     }
@@ -96,5 +117,5 @@ class RestoreFragment @Inject constructor(
         binding.progressBarLayout.progressBar.visibility = View.VISIBLE
     }
 
-    private fun clearInputField() = binding.email.setText("")
+    private fun clearInputFields() = binding.email.setText("")
 }

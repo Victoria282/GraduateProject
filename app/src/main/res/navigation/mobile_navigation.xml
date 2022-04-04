@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.graduateproject.mainScreen.MainFragment"
+        android:name="com.example.graduateproject.main.MainFragment"
         android:label="@string/nav_item_home"
         tools:layout="@layout/fragment_main_screen" />
 
@@ -20,6 +20,7 @@
             android:id="@+id/toLessonsEditor"
             app:destination="@id/nav_lessons_editor" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_lessons_editor"
         android:name="com.example.graduateproject.schedule.lessonsEditor.LessonsEditorFragment"
@@ -33,6 +34,7 @@
             app:argType="com.example.graduateproject.schedule.model.Lesson"
             app:nullable="true" />
     </fragment>
+
     <fragment
         android:id="@+id/lessonsFragment"
         android:name="com.example.graduateproject.schedule.lessons.LessonsFragment"

@@ -5,8 +5,8 @@ import com.example.graduateproject.authentication.authorization.AuthorizationVie
 import com.example.graduateproject.authentication.registration.RegistrationViewModel
 import com.example.graduateproject.authentication.restore.RestoreViewModel
 import com.example.graduateproject.di.utils.ViewModelKey
-import com.example.graduateproject.main.MenuViewModel
-import com.example.graduateproject.mainScreen.MainViewModel
+import com.example.graduateproject.menu.MenuViewModel
+import com.example.graduateproject.main.MainViewModel
 import com.example.graduateproject.schedule.lessons.LessonsViewModel
 import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorViewModel
 import com.example.graduateproject.schedule.main.ScheduleViewModel

@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.graduateproject.schedule.model.Lesson
 
-
 @Database(entities = [Lesson::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun lessonDao(): LessonDao
