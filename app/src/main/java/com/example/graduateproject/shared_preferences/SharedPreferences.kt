@@ -3,34 +3,27 @@ package com.example.graduateproject.shared_preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import javax.inject.Inject
 
-class SharedPreferences @Inject constructor(
-    context: Context
-) {
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+object SharedPreferences {
+    private lateinit var preferences: SharedPreferences
+    private const val MODE = Context.MODE_PRIVATE
 
-    var savedEmailUser: String?
-        get() = sharedPreferences.getString(EMAIL, "")
-        set(value) = sharedPreferences.edit { putString(EMAIL, value) }
+    private const val PREF_NAME = "saved data user"
+    private const val STUDY_WEEK = "study week"
+    private const val STUDY_WEEK_DAY = "day of week"
 
-    var savedPasswordUser: String?
-        get() = sharedPreferences.getString(PASSWORD, "")
-        set(value) = sharedPreferences.edit { putString(PASSWORD, value) }
-
-    var savedStudyWeek: Int?
-        get() = sharedPreferences.getInt(STUDY_WEEK, 1)
-        set(value) = sharedPreferences.edit {
-            if (value != null) {
-                putInt(STUDY_WEEK, value)
-            }
-        }
-
-    companion object {
-        private const val PREF_NAME = "saved data user"
-        private const val EMAIL = "email"
-        private const val PASSWORD = "password"
-        private const val STUDY_WEEK = "study week"
+    fun init(context: Context) {
+        preferences = context.getSharedPreferences(PREF_NAME, MODE)
     }
+
+    var savedStudyWeek: Int
+        get() = preferences.getInt(STUDY_WEEK, 1)
+        set(value) = preferences.edit {
+            putInt(STUDY_WEEK, value)
+        }
+    var savedWeekDay: Int
+        get() = preferences.getInt(STUDY_WEEK_DAY, 1)
+        set(value) = preferences.edit {
+            putInt(STUDY_WEEK_DAY, value)
+        }
 }

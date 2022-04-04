@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GraduateProject">
         <activity
-            android:name=".main.MenuActivity"
+            android:name="com.example.graduateproject.menu.MenuActivity"
             android:exported="true"
             android:label="@string/title_activity_menu"
             android:theme="@style/Theme.GraduateProject.NoActionBar" />

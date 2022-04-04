@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/large_margin"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_margin"
         tools:context=".schedule.lessonsEditor.LessonsEditorFragment">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lesson_name"
+            android:id="@+id/lesson_name_layout"
             style="@style/material_text_field"
             android:layout_marginTop="@dimen/little_margin"
             android:background="@android:color/transparent"
@@ -25,14 +24,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lesson"
+                android:id="@+id/lesson_name"
                 style="@style/material_text_field"
                 android:inputType="textEmailAddress"
                 android:textSize="@dimen/normal_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/teacherName"
+            android:id="@+id/teacher_name_layout"
             style="@style/material_text_field"
             android:layout_marginTop="@dimen/little_margin"
             android:background="@android:color/transparent"
@@ -40,17 +39,17 @@
             app:boxBackgroundColor="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lesson_name">
+            app:layout_constraintTop_toBottomOf="@+id/lesson_name_layout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/teacher"
+                android:id="@+id/teacher_name"
                 style="@style/material_text_field"
                 android:inputType="textEmailAddress"
                 android:textSize="@dimen/normal_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
-            android:id="@+id/typeOfLesson"
+            android:id="@+id/type_of_lesson_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/little_margin"
@@ -59,7 +58,7 @@
             android:weightSum="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teacherName">
+            app:layout_constraintTop_toBottomOf="@+id/teacher_name_layout">
 
             <RadioButton
                 android:id="@+id/lecture"
@@ -79,7 +78,7 @@
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cabinetNumber"
+            android:id="@+id/cabinet_number_layout"
             style="@style/material_text_field"
             android:layout_marginTop="@dimen/little_margin"
             android:background="@android:color/transparent"
@@ -87,7 +86,7 @@
             app:boxBackgroundColor="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/typeOfLesson">
+            app:layout_constraintTop_toBottomOf="@+id/type_of_lesson_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/cabinet"
@@ -96,13 +95,61 @@
                 android:textSize="@dimen/normal_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lesson_number_layout"
+            style="@style/material_text_field"
+            android:layout_marginTop="@dimen/little_margin"
+            android:background="@android:color/transparent"
+            android:hint="@string/lesson_number"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cabinet_number_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lesson_number"
+                style="@style/material_text_field"
+                android:inputType="number"
+                android:textSize="@dimen/normal_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/startTime"
+            style="@style/material_text_field"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/little_margin"
+            android:hint="@string/lesson_start_time"
+            android:padding="@dimen/little_margin"
+            android:textAlignment="center"
+            android:textSize="@dimen/large_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/endTime"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lesson_number_layout" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/endTime"
+            style="@style/material_text_field"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/little_margin"
+            android:layout_marginTop="@dimen/little_margin"
+            android:hint="@string/lesson_end_time"
+            android:padding="@dimen/little_margin"
+            android:textAlignment="center"
+            android:textSize="@dimen/large_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/startTime"
+            app:layout_constraintTop_toBottomOf="@+id/lesson_number_layout" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="cabinetNumber" />
+            app:constraint_referenced_ids="startTime,endTime" />
 
         <Button
             android:id="@+id/btnSave"
@@ -116,8 +163,25 @@
             android:text="@string/save"
             android:textSize="@dimen/button_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrier"
+            app:layout_constraintVertical_bias="1" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/little_margin"
+            android:backgroundTint="#404040"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/delete"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnSave"
             app:layout_constraintTop_toBottomOf="@+id/barrier"
             app:layout_constraintVertical_bias="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>

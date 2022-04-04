@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
-import com.example.graduateproject.authentication.validation.Validation
 import com.example.graduateproject.databinding.AuthorizationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.main.MenuActivity
+import com.example.graduateproject.menu.MenuActivity
+import com.example.graduateproject.utils.Utils
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -23,7 +22,7 @@ import javax.inject.Inject
 
 class AuthorizationFragment @Inject constructor(
     viewModelFactory: ViewModelFactory
-): Fragment(R.layout.authorization_layout) {
+) : Fragment(R.layout.authorization_layout) {
 
     private lateinit var binding: AuthorizationLayoutBinding
 
@@ -35,11 +34,7 @@ class AuthorizationFragment @Inject constructor(
             hideProgressBar()
 
             if (authResult.isSuccessful)
-                Intent(requireContext(), MenuActivity::class.java).also {
-                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(it)
-                }
+                enterApp()
             else
                 when (authResult.exception) {
                     is FirebaseAuthInvalidCredentialsException ->
@@ -55,10 +50,6 @@ class AuthorizationFragment @Inject constructor(
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,13 +63,31 @@ class AuthorizationFragment @Inject constructor(
         super.onViewCreated(view, savedInstanceState)
         checkUserAuthorization()
         setTittle()
+        emailFocusListener()
         initListeners()
         initObservers()
     }
 
+    private fun emailFocusListener() = with(binding) {
+        email.setOnFocusChangeListener { _, focused ->
+            if (!focused) textFieldEmail.helperText = emailValidate()
+        }
+    }
+
+    private fun emailValidate(): String? = with(binding) {
+        if (!Utils.isCorrectEmail(email.text.toString()))
+            return getString(R.string.message_email_incorrect)
+        return null
+    }
+
     private fun checkUserAuthorization() {
-        if (viewModel.checkUserAuthorization())
-            startActivity(Intent(requireContext(), MenuActivity::class.java))
+        if (viewModel.checkUserAuthorization()) enterApp()
+    }
+
+    private fun enterApp() = Intent(requireContext(), MenuActivity::class.java).also {
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(it)
     }
 
     private fun setTittle() {
@@ -106,21 +115,19 @@ class AuthorizationFragment @Inject constructor(
     private fun getInputData() = with(binding) {
         val email = email.text.toString()
         val password = password.text.toString()
-
-        validateLoginForm(email, password)
+        checkInputFields(email, password)
     }
 
-    private fun validateLoginForm(email: String, password: String) {
-
-        val resultValidation: Int = Validation.validateInputText(email, password, null)
-
-        when(resultValidation) {
-            1 -> {
+    private fun checkInputFields(email: String, password: String) = with(binding) {
+        val message = getString(R.string.not_empty_fields)
+        when {
+            email.isEmpty() -> textFieldEmail.helperText = message
+            password.isEmpty() -> textFieldPassword.helperText = message
+            else -> {
+                textFieldEmail.helperText = ""
+                textFieldPassword.helperText = ""
                 viewModel.loginUser(email, password)
                 showProgressBar()
-            }
-            0 -> {
-                showMessage(resultValidation, requireContext())
             }
         }
     }

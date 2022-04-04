@@ -5,7 +5,7 @@ import com.example.graduateproject.authentication.authorization.AuthorizationFra
 import com.example.graduateproject.authentication.registration.RegistrationFragment
 import com.example.graduateproject.authentication.restore.RestoreFragment
 import com.example.graduateproject.di.utils.FragmentKey
-import com.example.graduateproject.mainScreen.MainFragment
+import com.example.graduateproject.main.MainFragment
 import com.example.graduateproject.schedule.lessons.LessonsFragment
 import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorFragment
 import com.example.graduateproject.schedule.main.ScheduleFragment

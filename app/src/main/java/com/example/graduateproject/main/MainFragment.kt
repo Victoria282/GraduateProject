@@ -1,4 +1,4 @@
-package com.example.graduateproject.mainScreen
+package com.example.graduateproject.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -2,7 +2,7 @@ package com.example.graduateproject.di.modules
 
 import com.example.graduateproject.authentication.MainActivity
 import com.example.graduateproject.authentication.SplashScreen
-import com.example.graduateproject.main.MenuActivity
+import com.example.graduateproject.menu.MenuActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

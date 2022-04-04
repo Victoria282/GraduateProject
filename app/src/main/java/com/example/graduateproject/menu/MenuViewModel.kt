@@ -1,4 +1,4 @@
-package com.example.graduateproject.main
+package com.example.graduateproject.menu
 
 import androidx.lifecycle.ViewModel
 import com.example.graduateproject.authentication.firebase.Firebase
@@ -11,5 +11,9 @@ class MenuViewModel @Inject constructor(
 
     fun getUserInfo(): FirebaseUser? {
         return firebase.getCurrentUser()
+    }
+
+    fun logOut() {
+        firebase.logoutUser()
     }
 }

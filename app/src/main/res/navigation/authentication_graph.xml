@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/authentication_graph"
     app:startDestination="@id/AuthorizationFragment">
+
     <fragment
         android:id="@+id/AuthorizationFragment"
         android:name="com.example.graduateproject.authentication.authorization.AuthorizationFragment"
@@ -24,6 +25,7 @@
             app:popEnterAnim="@anim/to_right_in"
             app:popExitAnim="@anim/to_right_out" />
     </fragment>
+
     <fragment
         android:id="@+id/RegistrationFragment"
         android:name="com.example.graduateproject.authentication.registration.RegistrationFragment"
@@ -37,6 +39,7 @@
             app:popEnterAnim="@anim/to_right_in"
             app:popExitAnim="@anim/to_right_out" />
     </fragment>
+
     <fragment
         android:id="@+id/RestoreFragment"
         android:name="com.example.graduateproject.authentication.restore.RestoreFragment"

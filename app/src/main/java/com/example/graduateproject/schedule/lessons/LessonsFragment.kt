@@ -21,7 +21,6 @@ import javax.inject.Inject
 class LessonsFragment @Inject constructor(
 
 ) : Fragment(R.layout.fragment_lessons), LessonsAdapter.LessonClickListener {
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -30,8 +29,6 @@ class LessonsFragment @Inject constructor(
     private lateinit var adapter: LessonsAdapter
 
     var lessons: ArrayList<Lesson>? = null
-
-    // Добавить frgament result api (при добавлении пары), вызывать метод adapter.updateLessons
 
     override fun onLessonClick(lesson: Lesson?) {
         val direction = ScheduleFragmentDirections.toLessonsEditor(lesson)
@@ -52,24 +49,13 @@ class LessonsFragment @Inject constructor(
     }
 
     private fun initUi() = with(binding) {
-        if (arguments != null)
-            lessons = arguments!!.getParcelableArrayList("listLessons")
-
-        if (lessons != null) {
-            if (lessons!!.isEmpty())
-                binding.messageEmptyListLessons.visibility = View.VISIBLE
-            else {
-                initLessonsAdapter(lessons)
-            }
-        }
+        initLessonsAdapter()
         addLesson.setOnClickListener {
             onLessonClick(null)
         }
     }
 
-    private fun initLessonsAdapter(
-        lessons: ArrayList<Lesson>?
-    ) = with(binding) {
+    private fun initLessonsAdapter() = with(binding) {
         listOfLessons.layoutManager = LinearLayoutManager(context)
         adapter = LessonsAdapter(lessons!!)
         listOfLessons.addItemDecoration(
@@ -80,9 +66,5 @@ class LessonsFragment @Inject constructor(
         )
         listOfLessons.adapter = adapter
         adapter.clickListener = this@LessonsFragment
-    }
-
-    companion object {
-        fun getInstance() = LessonsFragment()
     }
 }

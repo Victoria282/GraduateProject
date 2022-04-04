@@ -1,121 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/AuthorizationFragment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineTop"
-        style="@style/guide_line_horizontal_style"
-        app:layout_constraintGuide_percent="0.15" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldEmail"
-        style="@style/material_text_field"
-        android:hint="@string/email_hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineTop"
-        app:startIconDrawable="@drawable/ic_email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            style="@style/material_text_field"
-            android:inputType="textEmailAddress"
-            android:textSize="@dimen/normal_text_size" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldPassword"
-        style="@style/material_text_field"
-        android:layout_marginTop="80dp"
-        android:hint="@string/password_hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldEmail"
-        app:startIconDrawable="@drawable/ic_password">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password"
-            style="@style/material_text_field"
-            android:textSize="@dimen/normal_text_size" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        app:layout_constraintTop_toBottomOf="@id/textFieldPassword"
-        android:id="@+id/guidelineMiddle"
-        style="@style/guide_line_horizontal_style"
-        app:layout_constraintGuide_percent="0.7" />
-
-    <Button
-        android:id="@+id/loginButton"
-        style="@style/Widget.MaterialComponents.Button"
-        android:fontFamily="@font/roboto_condensed_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#404040"
-        android:text="@string/login_text"
-        android:textSize="@dimen/button_text_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineMiddle" />
-
-
-    <com.google.android.material.card.MaterialCardView
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/AuthorizationFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/material_card_view_height"
-        android:layout_margin="@dimen/material_card_view_margin"
-        app:layout_constraintBottom_toTopOf="@id/guidelineEnd">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineTop"
+            style="@style/guide_line_horizontal_style"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldEmail"
+            style="@style/material_text_field"
+            android:hint="@string/email_hint"
+            app:helperTextTextColor="@color/error_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineTop"
+            app:startIconDrawable="@drawable/ic_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                style="@style/material_text_field"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/normal_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldPassword"
+            style="@style/material_text_field"
+            android:layout_marginTop="80dp"
+            android:hint="@string/password_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textFieldEmail"
+            app:startIconDrawable="@drawable/ic_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                style="@style/material_text_field"
+                android:inputType="textPassword"
+                android:textSize="@dimen/normal_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineMiddle"
+            style="@style/guide_line_horizontal_style"
+            app:layout_constraintGuide_percent="0.7"
+            app:layout_constraintTop_toBottomOf="@id/textFieldPassword" />
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:fontFamily="@font/roboto_condensed_light"
-            android:padding="@dimen/material_card_view_text_padding"
-            android:text="@string/advice_to_register"
-            android:textSize="@dimen/normal_text_size" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/registerLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
+            android:backgroundTint="#404040"
             android:fontFamily="@font/roboto_condensed_bold"
-            android:padding="@dimen/material_card_view_text_padding"
-            android:text="@string/button_register"
+            android:text="@string/login_text"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineMiddle" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/material_card_view_height"
+            android:layout_margin="@dimen/material_card_view_margin"
+            app:layout_constraintBottom_toTopOf="@id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:fontFamily="@font/roboto_condensed_light"
+                android:padding="@dimen/material_card_view_text_padding"
+                android:text="@string/advice_to_register"
+                android:textSize="@dimen/normal_text_size" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/registerLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:padding="@dimen/material_card_view_text_padding"
+                android:text="@string/button_register"
+                android:textSize="@dimen/normal_text_size"
+                android:textStyle="bold" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            style="@style/guide_line_horizontal_style"
+            app:layout_constraintGuide_percent="0.99" />
+
+        <TextView
+            android:id="@+id/textViewRestorePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_padding"
+            android:fontFamily="@font/roboto_condensed_light"
+            android:text="@string/forgot_password_ask"
             android:textSize="@dimen/normal_text_size"
-            android:textStyle="bold" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textFieldPassword" />
 
-    </com.google.android.material.card.MaterialCardView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineEnd"
-        style="@style/guide_line_horizontal_style"
-        app:layout_constraintGuide_percent="0.99" />
-
-    <TextView
-        android:id="@+id/textViewRestorePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_padding"
-        android:text="@string/forgot_password_ask"
-        android:textSize="@dimen/normal_text_size"
-        android:fontFamily="@font/roboto_condensed_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldPassword"
-        />
-
-    <include
-        android:id="@+id/progressBarLayout"
-        layout="@layout/progress_bar"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/progressBarLayout"
+            layout="@layout/progress_bar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

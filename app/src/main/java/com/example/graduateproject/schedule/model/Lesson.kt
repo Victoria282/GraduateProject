@@ -11,6 +11,8 @@ import kotlinx.android.parcel.Parcelize
 data class Lesson(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    @ColumnInfo(name = "positionOfWeekDay")
+    val positionOfWeekDay: Int,
     @ColumnInfo(name = "numberOfLesson")
     val numberOfLesson: Int,
     @ColumnInfo(name = "subject")
@@ -22,5 +24,9 @@ data class Lesson(
     @ColumnInfo(name = "cabinet")
     val cabinet: String,
     @ColumnInfo(name = "countOfWeek")
-    val countOfWeek: Int
+    val countOfWeek: Int,
+    @ColumnInfo(name = "startTime")
+    val startTime: String,
+    @ColumnInfo(name = "endTime")
+    val endTime: String,
 ) : Parcelable
