@@ -29,6 +29,7 @@
     <string name="nav_item_home">Главная</string>
     <string name="nav_item_schedule">Расписание</string>
     <string name="nav_item_schedule_editor">Редактирование</string>
+    <string name="nav_item_schedule_add">Добавление</string>
     <string name="nav_contact_with_developer">Связь с разработчиком</string>
     <string name="nav_feedback">Обратная связь</string>
     <string name="nav_log_out">Выйти</string>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -36,7 +35,6 @@ class MenuActivity : DaggerAppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMenuBinding
     private val viewModel: MenuViewModel by viewModels { viewModelFactory }
-    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +54,7 @@ class MenuActivity : DaggerAppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_menu)
 
-        navView.menu.findItem(R.id.log_out).setOnMenuItemClickListener {
-            logOut()
-            true
-        }
+        initLogout(navView)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -70,6 +65,12 @@ class MenuActivity : DaggerAppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    private fun initLogout(navView: NavigationView) =
+        navView.menu.findItem(R.id.log_out).setOnMenuItemClickListener {
+            logOut()
+            true
+        }
 
     private fun initNavigationViewHeader() {
         val header = binding.navView.getHeaderView(0)

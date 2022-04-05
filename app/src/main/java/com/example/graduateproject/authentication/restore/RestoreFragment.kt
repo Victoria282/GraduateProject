@@ -19,8 +19,10 @@ import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
 class RestoreFragment @Inject constructor(
-    viewModelFactory: ViewModelFactory
 ) : Fragment(R.layout.restore_layout) {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: RestoreLayoutBinding
     private val viewModel: RestoreViewModel by viewModels { viewModelFactory }

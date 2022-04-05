@@ -28,7 +28,4 @@ class MainFragment @Inject constructor(
         binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
-    companion object {
-    }
 }

@@ -8,10 +8,16 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.graduateproject.R
+import java.util.*
 
 object Utils {
 
     fun isCorrectEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    fun onToday(): Int {
+        val today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2
+        return if (today < 5) today else 0
+    }
 
     fun showMessage(
         messageId: Int,

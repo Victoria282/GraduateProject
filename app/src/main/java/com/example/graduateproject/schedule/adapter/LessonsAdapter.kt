@@ -55,11 +55,4 @@ class LessonsAdapter(private val lessons: ArrayList<Lesson>) :
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         holder.bind(lessons[position])
     }
-
-    fun updateLessons(lessons: Lesson) {
-        this.lessons.apply {
-            add(lessons)
-        }
-        notifyDataSetChanged()
-    }
 }

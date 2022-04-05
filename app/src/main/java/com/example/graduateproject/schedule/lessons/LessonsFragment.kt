@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +24,8 @@ class LessonsFragment @Inject constructor(
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: FragmentLessonsBinding
-    private val viewModel: LessonsViewModel by viewModels { viewModelFactory }
     private lateinit var adapter: LessonsAdapter
-
-    var lessons: ArrayList<Lesson>? = null
+    private var lessons: ArrayList<Lesson>? = null
 
     override fun onLessonClick(lesson: Lesson?) {
         val direction = ScheduleFragmentDirections.toLessonsEditor(lesson)
@@ -45,26 +42,28 @@ class LessonsFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUi()
-    }
-
-    private fun initUi() = with(binding) {
         initLessonsAdapter()
-        addLesson.setOnClickListener {
-            onLessonClick(null)
-        }
     }
 
     private fun initLessonsAdapter() = with(binding) {
-        listOfLessons.layoutManager = LinearLayoutManager(context)
-        adapter = LessonsAdapter(lessons!!)
-        listOfLessons.addItemDecoration(
-            DividerItemDecoration(
-                listOfLessons.context,
-                (listOfLessons.layoutManager as LinearLayoutManager).orientation
+        arguments?.let {
+            lessons = it.getParcelableArrayList("listLessons")
+        }
+        if (lessons != null) {
+            listOfLessons.layoutManager = LinearLayoutManager(context)
+            adapter = LessonsAdapter(lessons!!)
+            listOfLessons.addItemDecoration(
+                DividerItemDecoration(
+                    listOfLessons.context,
+                    (listOfLessons.layoutManager as LinearLayoutManager).orientation
+                )
             )
-        )
-        listOfLessons.adapter = adapter
-        adapter.clickListener = this@LessonsFragment
+            listOfLessons.adapter = adapter
+            adapter.clickListener = this@LessonsFragment
+        }
+    }
+
+    companion object {
+        fun getInstance() = LessonsFragment()
     }
 }

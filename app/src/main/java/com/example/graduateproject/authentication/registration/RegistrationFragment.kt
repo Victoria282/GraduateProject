@@ -22,8 +22,10 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import javax.inject.Inject
 
 class RegistrationFragment @Inject constructor(
-    viewModelFactory: ViewModelFactory
 ) : Fragment(R.layout.registration_layout) {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: RegistrationLayoutBinding
 

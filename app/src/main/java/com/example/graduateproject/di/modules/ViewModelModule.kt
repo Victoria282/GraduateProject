@@ -1,14 +1,15 @@
 package com.example.graduateproject.di.modules
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.graduateproject.authentication.authorization.AuthorizationViewModel
 import com.example.graduateproject.authentication.registration.RegistrationViewModel
 import com.example.graduateproject.authentication.restore.RestoreViewModel
+import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.di.utils.ViewModelKey
-import com.example.graduateproject.menu.MenuViewModel
 import com.example.graduateproject.main.MainViewModel
+import com.example.graduateproject.menu.MenuViewModel
 import com.example.graduateproject.schedule.lessons.LessonsViewModel
-import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorViewModel
 import com.example.graduateproject.schedule.main.ScheduleViewModel
 import dagger.Binds
 import dagger.Module
@@ -16,6 +17,10 @@ import dagger.multibindings.IntoMap
 
 @Module
 interface ViewModelModule {
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory):
+            ViewModelProvider.Factory
+
     @Binds
     @IntoMap
     @ViewModelKey(AuthorizationViewModel::class)
@@ -45,11 +50,6 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(LessonsViewModel::class)
     fun bindLessonsViewModel(viewModel: LessonsViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LessonsEditorViewModel::class)
-    fun bindLessonsEditorViewModel(viewModel: LessonsEditorViewModel): ViewModel
 
     @Binds
     @IntoMap

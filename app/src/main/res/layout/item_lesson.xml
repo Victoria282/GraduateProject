@@ -54,7 +54,6 @@
         app:barrierDirection="right"
         app:constraint_referenced_ids="start_time" />
 
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/lesson_tittle"
         android:layout_width="wrap_content"

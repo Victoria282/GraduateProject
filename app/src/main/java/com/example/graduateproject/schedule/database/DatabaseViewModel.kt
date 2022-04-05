@@ -10,14 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DatabaseViewModel(application: Application) : AndroidViewModel(application) {
-    private val scheduleRepository: ScheduleRepository
-    val lessons: LiveData<List<Lesson>>
-
-    init {
-        val lessonDao = AppDatabase.invoke(application).lessonDao()
-        scheduleRepository = ScheduleRepository(lessonDao)
-        lessons = scheduleRepository.lessons
-    }
+    private val lessonDao = AppDatabase.invoke(application).lessonDao()
+    private val scheduleRepository: ScheduleRepository= ScheduleRepository(lessonDao)
+    val lessons: LiveData<List<Lesson>> = scheduleRepository.lessons
 
     fun insertLesson(lesson: Lesson) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,7 +22,6 @@ class DatabaseViewModel(application: Application) : AndroidViewModel(application
 
     fun updateLesson(lesson: Lesson) {
         viewModelScope.launch(Dispatchers.IO) {
-            val t = lesson.teacher
             scheduleRepository.updateLesson(lesson)
         }
     }
