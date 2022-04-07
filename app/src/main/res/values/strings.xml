@@ -29,6 +29,8 @@
     <string name="nav_item_home">Главная</string>
     <string name="nav_item_schedule">Расписание</string>
     <string name="nav_item_schedule_editor">Редактирование</string>
+    <string name="nav_item_note">Заметки</string>
+    <string name="nav_item_create_note">Создание</string>
     <string name="nav_contact_with_developer">Связь с разработчиком</string>
     <string name="nav_feedback">Обратная связь</string>
     <string name="nav_log_out">Выйти</string>
@@ -67,13 +69,9 @@
     <string name="thursday">Четверг</string>
     <string name="friday">Пятница</string>
     <string name="saturday">Суббота</string>
-
-    <string-array name="study_week">
-        <item> Понедельник </item>
-        <item> Вторник </item>
-        <item> Среда </item>
-        <item> Четверг </item>
-        <item> Пятница </item>
-        <item> Суббота </item>
-    </string-array>
+    <string name="note_title_hint">Заголовок</string>
+    <string name="note_subtitle_hint">Подзаголовок</string>
+    <string name="note_hint">Текс заметки</string>
+    <string name="delete_note">Удалить заметку</string>
+    <string name="add_image_note">Добавить изображение</string>
 </resources>

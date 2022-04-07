@@ -6,6 +6,8 @@ import com.example.graduateproject.authentication.registration.RegistrationFragm
 import com.example.graduateproject.authentication.restore.RestoreFragment
 import com.example.graduateproject.di.utils.FragmentKey
 import com.example.graduateproject.main.MainFragment
+import com.example.graduateproject.notes.NotesFragment
+import com.example.graduateproject.notes.create.NoteCreateFragment
 import com.example.graduateproject.schedule.lessons.LessonsFragment
 import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorFragment
 import com.example.graduateproject.schedule.main.ScheduleFragment
@@ -49,4 +51,14 @@ interface FragmentModule {
     @IntoMap
     @FragmentKey(MainFragment::class)
     fun bindMainScreenFragment(fragment: MainFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(NotesFragment::class)
+    fun bindNotesFragment(fragment: NotesFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(NoteCreateFragment::class)
+    fun bindNoteCreateFragment(fragment: NoteCreateFragment): Fragment
 }

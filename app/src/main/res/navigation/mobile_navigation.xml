@@ -40,4 +40,28 @@
         android:name="com.example.graduateproject.schedule.lessons.LessonsFragment"
         android:label="fragment_lessons"
         tools:layout="@layout/fragment_lessons" />
+
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.graduateproject.notes.NotesFragment"
+        android:label="@string/nav_item_note"
+        tools:layout="@layout/notes_fragment" >
+        <action
+            android:id="@+id/toNoteCreateFragment"
+            app:destination="@id/noteCreateFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteCreateFragment"
+        android:name="com.example.graduateproject.notes.create.NoteCreateFragment"
+        android:label="@string/nav_item_create_note"
+        tools:layout="@layout/note_create_fragment">
+        <argument
+            android:name="notesVal"
+            app:argType="com.example.graduateproject.notes.model.Note"
+            app:nullable="true" />
+        <action
+            android:id="@+id/toNotesFragment"
+            app:destination="@id/notesFragment" />
+    </fragment>
 </navigation>

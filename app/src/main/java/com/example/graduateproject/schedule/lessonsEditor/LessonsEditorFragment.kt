@@ -35,7 +35,7 @@ class LessonsEditorFragment @Inject constructor(
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLessonsEditorBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(DatabaseViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DatabaseViewModel::class.java]
         return binding.root
     }
 

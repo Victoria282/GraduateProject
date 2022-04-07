@@ -7,6 +7,8 @@ import com.example.graduateproject.authentication.restore.RestoreViewModel
 import com.example.graduateproject.di.utils.ViewModelKey
 import com.example.graduateproject.menu.MenuViewModel
 import com.example.graduateproject.main.MainViewModel
+import com.example.graduateproject.notes.NotesViewModel
+import com.example.graduateproject.notes.create.NoteCreateViewModel
 import com.example.graduateproject.schedule.lessons.LessonsViewModel
 import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorViewModel
 import com.example.graduateproject.schedule.main.ScheduleViewModel

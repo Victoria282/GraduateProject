@@ -26,7 +26,6 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class MenuActivity : DaggerAppCompatActivity() {
-
     @Inject
     lateinit var fragmentFactory: FragmentFactory
 
@@ -36,7 +35,6 @@ class MenuActivity : DaggerAppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMenuBinding
     private val viewModel: MenuViewModel by viewModels { viewModelFactory }
-    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +62,8 @@ class MenuActivity : DaggerAppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
-                R.id.nav_schedule
+                R.id.nav_schedule,
+                R.id.notesFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.graduateproject.notes.dao.NoteDao
+import com.example.graduateproject.notes.model.Note
 import com.example.graduateproject.schedule.model.Lesson
 
-@Database(entities = [Lesson::class], version = 1, exportSchema = false)
+@Database(entities = [Lesson::class, Note::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun lessonDao(): LessonDao
+    abstract fun noteDao(): NoteDao
 
     companion object {
         @Volatile
