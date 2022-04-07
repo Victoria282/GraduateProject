@@ -4,12 +4,14 @@
     <dimen name="middle_text_size">20sp</dimen>
     <dimen name="button_text_size">18sp</dimen>
     <dimen name="normal_text_size">16sp</dimen>
+    <dimen name="little_text_size">12sp</dimen>
 
     <dimen name="material_card_view_height">60dp</dimen>
     <dimen name="material_card_view_margin">8dp</dimen>
     <dimen name="material_card_view_text_padding">16dp</dimen>
 
     <dimen name="small_padding">16dp</dimen>
+    <dimen name="normal_padding">24dp</dimen>
     <dimen name="large_padding">32dp</dimen>
 
     <dimen name="little_margin">8dp</dimen>
@@ -21,4 +23,7 @@
 
     <dimen name="nav_header_vertical_spacing">24dp</dimen>
     <dimen name="nav_header_height">180dp</dimen>
+
+    <dimen name="corner_radius">24dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
 </resources>
