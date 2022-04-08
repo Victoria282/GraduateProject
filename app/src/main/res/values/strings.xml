@@ -30,6 +30,8 @@
     <string name="nav_item_schedule">Расписание</string>
     <string name="nav_item_schedule_editor">Редактирование</string>
     <string name="nav_item_note">Заметки</string>
+    <string name="nav_item_map">Карта</string>
+    <string name="tittle_map">Челябинск</string>
     <string name="nav_item_create_note">Создание</string>
     <string name="nav_contact_with_developer">Связь с разработчиком</string>
     <string name="nav_feedback">Обратная связь</string>
