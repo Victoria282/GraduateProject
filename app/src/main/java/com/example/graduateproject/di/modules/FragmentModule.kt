@@ -6,6 +6,7 @@ import com.example.graduateproject.authentication.registration.RegistrationFragm
 import com.example.graduateproject.authentication.restore.RestoreFragment
 import com.example.graduateproject.di.utils.FragmentKey
 import com.example.graduateproject.main.MainFragment
+import com.example.graduateproject.maps.MapsFragment
 import com.example.graduateproject.notes.NotesFragment
 import com.example.graduateproject.notes.create.NoteCreateFragment
 import com.example.graduateproject.schedule.lessons.LessonsFragment
@@ -61,4 +62,9 @@ interface FragmentModule {
     @IntoMap
     @FragmentKey(NoteCreateFragment::class)
     fun bindNoteCreateFragment(fragment: NoteCreateFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(MapsFragment::class)
+    fun bindMapsFragment(fragment: MapsFragment): Fragment
 }

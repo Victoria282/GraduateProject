@@ -52,6 +52,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.graduateproject.maps.MapsFragment"
+        android:label="@string/nav_item_map"
+        tools:layout="@layout/fragment_maps" >
+    </fragment>
+
+    <fragment
         android:id="@+id/noteCreateFragment"
         android:name="com.example.graduateproject.notes.create.NoteCreateFragment"
         android:label="@string/nav_item_create_note"

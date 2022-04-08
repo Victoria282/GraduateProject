@@ -27,6 +27,11 @@
         android:icon="@drawable/ic_note"
         android:title="@string/nav_item_note" />
 
+    <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/ic_map"
+        android:title="@string/nav_item_map" />
+
     <item android:title="@string/nav_feedback">
         <menu>
             <item

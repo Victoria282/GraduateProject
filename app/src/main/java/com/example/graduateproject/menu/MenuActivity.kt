@@ -63,7 +63,8 @@ class MenuActivity : DaggerAppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_schedule,
-                R.id.notesFragment
+                R.id.notesFragment,
+                R.id.mapFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
