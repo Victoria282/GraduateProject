@@ -8,11 +8,4 @@ class ScheduleViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private val _studyWeek = MutableLiveData<Int>()
-    val studyWeek: MutableLiveData<Int>
-        get() = _studyWeek
-
-    fun saveStudyWeek(numberOfWeek: Int) {
-        _studyWeek.value = numberOfWeek
-    }
 }

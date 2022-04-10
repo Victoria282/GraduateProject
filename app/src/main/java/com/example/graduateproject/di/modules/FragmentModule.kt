@@ -6,9 +6,8 @@ import com.example.graduateproject.authentication.registration.RegistrationFragm
 import com.example.graduateproject.authentication.restore.RestoreFragment
 import com.example.graduateproject.di.utils.FragmentKey
 import com.example.graduateproject.main.MainFragment
-import com.example.graduateproject.schedule.editor.add.AddLessonFragment
 import com.example.graduateproject.schedule.lessons.LessonsFragment
-import com.example.graduateproject.schedule.editor.edit.LessonsEditorFragment
+import com.example.graduateproject.schedule.editor.LessonsEditorFragment
 import com.example.graduateproject.schedule.main.ScheduleFragment
 import dagger.Binds
 import dagger.Module
@@ -40,11 +39,6 @@ interface FragmentModule {
     @IntoMap
     @FragmentKey(LessonsEditorFragment::class)
     fun bindLessonsEditorFragment(fragment: LessonsEditorFragment): Fragment
-
-    @Binds
-    @IntoMap
-    @FragmentKey(AddLessonFragment::class)
-    fun bindAddLessonFragment(fragment: AddLessonFragment): Fragment
 
     @Binds
     @IntoMap

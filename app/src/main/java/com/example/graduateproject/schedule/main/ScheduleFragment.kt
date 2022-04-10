@@ -11,12 +11,10 @@ import com.example.graduateproject.databinding.ScheduleFragmentBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.schedule.database.DatabaseViewModel
 import com.example.graduateproject.schedule.lessons.LessonsFragment
-import com.example.graduateproject.schedule.lessons.usecase.FakeLessons
 import com.example.graduateproject.schedule.model.Lesson
 import com.example.graduateproject.shared_preferences.SharedPreferences
 import com.example.graduateproject.utils.Constants.FIRST_WEEK
 import com.example.graduateproject.utils.Constants.SECOND_WEEK
-import com.example.graduateproject.utils.Utils.onToday
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
@@ -55,7 +53,7 @@ class ScheduleFragment @Inject constructor(
 
     private fun initListeners() = with(binding) {
         addLesson.setOnClickListener {
-            val direction = ScheduleFragmentDirections.toLessonsAdd()
+            val direction = ScheduleFragmentDirections.toLessonsEditor(null)
             findNavController().navigate(direction)
         }
     }
@@ -71,7 +69,6 @@ class ScheduleFragment @Inject constructor(
         viewPager = ViewPager(lessonsList, requireActivity())
         binding.viewPager.adapter = viewPager
         TabLayoutMediator(binding.tabLayout, binding.viewPager, tabConfigurator).attach()
-        binding.viewPager.setCurrentItem(onToday(), false)
     }
 
     private val tabConfigurator = TabLayoutMediator.TabConfigurationStrategy { tab, position ->
@@ -99,18 +96,19 @@ class ScheduleFragment @Inject constructor(
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setStudyWeek(number: Int) = with(viewModel) {
-        saveStudyWeek(number)
+    private fun setStudyWeek(number: Int) {
         SharedPreferences.savedStudyWeek = number
     }
 
     class ViewPager(lessons: List<Lesson>?, fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+
         private val lessonsCurrentDay: Map<Int, List<Lesson>> = lessons?.takeIf { true }!!.groupBy { it.positionOfWeekDay }
 
         override fun getItemCount() = 6
 
         override fun createFragment(position: Int): Fragment {
             SharedPreferences.savedWeekDay = position
+
             return if(lessonsCurrentDay[position] != null && lessonsCurrentDay.isNotEmpty()) {
                 val timetable: ArrayList<Lesson> = lessonsCurrentDay[position] as ArrayList<Lesson>
                 val bundle = Bundle()

@@ -14,11 +14,6 @@ object Utils {
 
     fun isCorrectEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-    fun onToday(): Int {
-        val today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 2
-        return if (today < 5) today else 0
-    }
-
     fun showMessage(
         messageId: Int,
         context: Context

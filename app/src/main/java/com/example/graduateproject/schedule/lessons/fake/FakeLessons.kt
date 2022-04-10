@@ -1,4 +1,4 @@
-package com.example.graduateproject.schedule.lessons.usecase
+package com.example.graduateproject.schedule.lessons.fake
 
 import com.example.graduateproject.schedule.model.Lesson
 
