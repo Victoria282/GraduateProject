@@ -6,19 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.graduateproject.notes.model.Note
 import com.example.graduateproject.notes.repository.NoteRepository
-import com.example.graduateproject.schedule.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteCreateViewModel(application: Application) : AndroidViewModel(application) {
+class NoteCreateViewModel @Inject constructor(
+    application: Application,
     private val noteRepository: NoteRepository
-    val notes: LiveData<List<Note>>
-
-    init {
-        val noteDao = AppDatabase.invoke(application).noteDao()
-        noteRepository = NoteRepository(noteDao)
-        notes = noteRepository.notes
-    }
+) : AndroidViewModel(application) {
+    val notes: LiveData<List<Note>> = noteRepository.notes
 
     fun insertNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {

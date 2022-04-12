@@ -9,11 +9,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.NoteCreateFragmentBinding
+import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.notes.model.Note
 import com.example.graduateproject.utils.Utils
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
@@ -22,9 +23,10 @@ import java.util.*
 import javax.inject.Inject
 
 class NoteCreateFragment @Inject constructor(
-
+    viewModelFactory: ViewModelFactory
 ) : Fragment(R.layout.note_create_fragment) {
-    private lateinit var viewModel: NoteCreateViewModel
+
+    private val viewModel: NoteCreateViewModel by viewModels { viewModelFactory }
     private lateinit var binding: NoteCreateFragmentBinding
     private val args by navArgs<NoteCreateFragmentArgs>()
     private lateinit var note: Note
@@ -39,10 +41,7 @@ class NoteCreateFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        args.notesVal?.let {
-            setNoteInfo(it)
-        }
-        viewModel = ViewModelProvider(this)[NoteCreateViewModel::class.java]
+        args.notesVal?.let { setNoteInfo(it) }
         initListeners()
         setNoteDate()
     }
@@ -67,7 +66,6 @@ class NoteCreateFragment @Inject constructor(
                 )
                 if (id == 0) viewModel.insertNote(note)
                 else viewModel.updateNote(note)
-
                 backToNotesFragment()
             }
         }
@@ -81,14 +79,13 @@ class NoteCreateFragment @Inject constructor(
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_sheet_layout)
+
         val deleteNoteButton = dialog.delete_text
         val uploadImage = dialog.upload_image
 
         deleteNoteButton.setOnClickListener {
             val note = args.notesVal
-            note?.let {
-                viewModel.deleteNote(it)
-            }
+            note?.let { viewModel.deleteNote(it) }
             dialog.dismiss()
             backToNotesFragment()
         }
@@ -98,14 +95,16 @@ class NoteCreateFragment @Inject constructor(
             dialog.dismiss()
         }
 
-        dialog.show()
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.attributes?.windowAnimations = R.style.bottomSheetAnimation
-        dialog.window?.setGravity(Gravity.BOTTOM)
+        with(dialog) {
+            show()
+            window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window?.attributes?.windowAnimations = R.style.bottomSheetAnimation
+            window?.setGravity(Gravity.BOTTOM)
+        }
     }
 
     private fun uploadImage() {
@@ -142,6 +141,5 @@ class NoteCreateFragment @Inject constructor(
 
     companion object {
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-        fun newInstance() = NoteCreateFragment()
     }
 }

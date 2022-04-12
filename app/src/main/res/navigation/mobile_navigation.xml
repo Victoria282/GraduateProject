@@ -36,12 +36,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/lessonsFragment"
-        android:name="com.example.graduateproject.schedule.lessons.LessonsFragment"
-        android:label="fragment_lessons"
-        tools:layout="@layout/fragment_lessons" />
-
-    <fragment
         android:id="@+id/notesFragment"
         android:name="com.example.graduateproject.notes.NotesFragment"
         android:label="@string/nav_item_note"

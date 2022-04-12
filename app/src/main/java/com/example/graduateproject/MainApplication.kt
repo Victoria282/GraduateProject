@@ -3,7 +3,7 @@ package com.example.graduateproject
 import android.app.Application
 import com.example.graduateproject.di.component.AppComponent
 import com.example.graduateproject.di.component.DaggerAppComponent
-import com.example.graduateproject.schedule.database.AppDatabase
+import com.example.graduateproject.database.AppDatabase
 import com.example.graduateproject.shared_preferences.SharedPreferences
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

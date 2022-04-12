@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.FragmentLessonsEditorBinding
-import com.example.graduateproject.schedule.database.DatabaseViewModel
+import com.example.graduateproject.di.utils.ViewModelFactory
+import com.example.graduateproject.schedule.main.ScheduleViewModel
 import com.example.graduateproject.schedule.model.Lesson
 import com.example.graduateproject.shared_preferences.SharedPreferences
 import com.example.graduateproject.utils.Utils
@@ -21,13 +22,11 @@ import java.util.*
 import javax.inject.Inject
 
 class LessonsEditorFragment @Inject constructor(
-
+    viewModelFactory: ViewModelFactory
 ) : Fragment(R.layout.fragment_lessons_editor) {
 
     private lateinit var binding: FragmentLessonsEditorBinding
-
-    private lateinit var viewModel: DatabaseViewModel
-
+    private val viewModel: ScheduleViewModel by viewModels { viewModelFactory }
     private val args by navArgs<LessonsEditorFragmentArgs>()
 
     override fun onCreateView(
@@ -35,16 +34,13 @@ class LessonsEditorFragment @Inject constructor(
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLessonsEditorBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[DatabaseViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
-        args.lesson?.let {
-            setLessonInfo(it)
-        }
+        args.lesson?.let { setLessonInfo(it) }
     }
 
     private fun setLessonInfo(lesson: Lesson) {
@@ -82,13 +78,10 @@ class LessonsEditorFragment @Inject constructor(
         val teacherName = teacherName.text?.trim()
         val cabinet = cabinet.text?.trim()
 
-        val radioButton: View =
-            typeOfLessonLayout.findViewById(typeOfLessonLayout.checkedRadioButtonId)
-
-        val typeOfLesson: Int = typeOfLessonLayout.indexOfChild(radioButton)
-        val numOfLesson: Int =
-            if (lessonNumber.text?.trim().toString().isEmpty()) 0 else lessonNumber.text?.trim()
-                .toString().toInt()
+        val radioButton: View = typeOfLesson.findViewById(typeOfLesson.checkedRadioButtonId)
+        val typeOfLesson: Int = typeOfLesson.indexOfChild(radioButton)
+        val numOfLesson: Int = if (lessonNumber.text?.trim().toString().isEmpty()) 0
+        else lessonNumber.text?.trim().toString().toInt()
 
         val startTime = startTime.text?.trim()
         val endTime = endTime.text?.trim()
@@ -116,9 +109,9 @@ class LessonsEditorFragment @Inject constructor(
         if (lessonName == "" || teacherName == "" || cabinet == "" || startTime == "" || endTime == "") {
             Utils.showMessage(R.string.message_input_empty_fields, requireContext())
         } else {
-
+            val id = if (args.lesson?.id != null) args.lesson?.id else 0
             val formedLesson = Lesson(
-                id = 0,
+                id = id!!,
                 positionOfWeekDay = SharedPreferences.savedWeekDay,
                 numberOfLesson = numOfLesson,
                 subject = lessonName.toString(),
@@ -144,10 +137,10 @@ class LessonsEditorFragment @Inject constructor(
 
     private fun createTimePicker(textView: MaterialTextView) {
         val cal = Calendar.getInstance()
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            textView.text = SimpleDateFormat("HH:mm").format(cal.time)
+            textView.text = sdf.format(cal.time)
         }
         TimePickerDialog(
             requireContext(),
@@ -156,5 +149,9 @@ class LessonsEditorFragment @Inject constructor(
             cal.get(Calendar.MINUTE),
             true
         ).show()
+    }
+
+    companion object {
+        val sdf = SimpleDateFormat("HH:mm")
     }
 }

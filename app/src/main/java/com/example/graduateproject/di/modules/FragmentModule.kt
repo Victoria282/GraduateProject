@@ -9,7 +9,6 @@ import com.example.graduateproject.main.MainFragment
 import com.example.graduateproject.maps.MapsFragment
 import com.example.graduateproject.notes.NotesFragment
 import com.example.graduateproject.notes.create.NoteCreateFragment
-import com.example.graduateproject.schedule.lessons.LessonsFragment
 import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorFragment
 import com.example.graduateproject.schedule.main.ScheduleFragment
 import dagger.Binds
@@ -42,11 +41,6 @@ interface FragmentModule {
     @IntoMap
     @FragmentKey(LessonsEditorFragment::class)
     fun bindLessonsEditorFragment(fragment: LessonsEditorFragment): Fragment
-
-    @Binds
-    @IntoMap
-    @FragmentKey(LessonsFragment::class)
-    fun bindLessonsFragment(fragment: LessonsFragment): Fragment
 
     @Binds
     @IntoMap
