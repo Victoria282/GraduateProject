@@ -21,6 +21,7 @@ object SharedPreferences {
         set(value) = preferences.edit {
             putInt(STUDY_WEEK, value)
         }
+
     var savedWeekDay: Int
         get() = preferences.getInt(STUDY_WEEK_DAY, 1)
         set(value) = preferences.edit {

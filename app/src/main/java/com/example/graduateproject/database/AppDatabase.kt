@@ -1,4 +1,4 @@
-package com.example.graduateproject.schedule.database
+package com.example.graduateproject.database
 
 import android.content.Context
 import androidx.room.Database
@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.graduateproject.notes.dao.NoteDao
 import com.example.graduateproject.notes.model.Note
+import com.example.graduateproject.schedule.dao.LessonDao
 import com.example.graduateproject.schedule.model.Lesson
 
 @Database(entities = [Lesson::class, Note::class], version = 1, exportSchema = false)
@@ -16,7 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        private const val DATABASE_NAME = "LESSONS_DATABASE"
+        const val DATABASE_NAME = "LESSONS_DATABASE"
 
         fun invoke(context: Context): AppDatabase {
             val temp = INSTANCE

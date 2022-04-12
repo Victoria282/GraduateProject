@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,6 +25,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 class MenuActivity : DaggerAppCompatActivity() {
+
     @Inject
     lateinit var fragmentFactory: FragmentFactory
 
