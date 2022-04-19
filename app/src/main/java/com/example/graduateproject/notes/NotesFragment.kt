@@ -15,18 +15,24 @@ import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.notes.adapter.NotesAdapter
 import com.example.graduateproject.notes.create.NoteCreateViewModel
 import com.example.graduateproject.notes.model.Note
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class NotesFragment @Inject constructor(
     viewModelFactory: ViewModelFactory
-) : Fragment(R.layout.notes_fragment), NotesAdapter.NoteClickListener {
+) : Fragment(R.layout.notes_fragment),
+    NotesAdapter.NoteClickListener {
 
     private val viewModel: NoteCreateViewModel by viewModels { viewModelFactory }
     private lateinit var binding: NotesFragmentBinding
+
     lateinit var notesAdapter: NotesAdapter
+    var arrayNotes = ArrayList<Note>()
 
     private val notesObserver = Observer<List<Note>> {
         notesAdapter.updateNotes(it)
+        arrayNotes.addAll(it)
     }
 
     override fun onCreateView(
@@ -48,14 +54,32 @@ class NotesFragment @Inject constructor(
         addNote.setOnClickListener {
             onNoteClick(null)
         }
+
+        searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                val tempArr = ArrayList<Note>()
+
+                for (arr in arrayNotes)
+                    if (arr.title!!.lowercase(Locale.getDefault()).contains(p0.toString()))
+                        tempArr.add(arr)
+
+                notesAdapter.updateNotes(tempArr)
+                notesAdapter.notifyDataSetChanged()
+                return true
+            }
+        })
     }
 
     private fun initUI() = with(binding) {
         notesAdapter = NotesAdapter()
         recyclerViewNotes.setHasFixedSize(true)
-        recyclerViewNotes.layoutManager = StaggeredGridLayoutManager(
-            2, StaggeredGridLayoutManager.VERTICAL
-        )
+        recyclerViewNotes.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewNotes.adapter = notesAdapter
         notesAdapter.clickListener = this@NotesFragment
     }

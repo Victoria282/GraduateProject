@@ -3,13 +3,9 @@ package com.example.graduateproject.authentication
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.graduateproject.databinding.SplashScreenLayoutBinding
-import com.example.graduateproject.di.utils.FragmentFactory
 import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : DaggerAppCompatActivity() {
@@ -23,11 +19,17 @@ class SplashScreen : DaggerAppCompatActivity() {
         setSplashScreen()
     }
 
-    private fun setSplashScreen() {
-        Handler().postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }, 3000)
-    }
+    private fun setSplashScreen() =
+        binding.motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                finish()
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+        })
 }

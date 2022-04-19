@@ -1,6 +1,8 @@
 package com.example.graduateproject.notes.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduateproject.databinding.NoteItemBinding
@@ -27,6 +29,9 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.DataViewHolder>() {
                 noteItem.setOnClickListener {
                     listener?.onNoteClick(note)
                 }
+                val bitmap = BitmapFactory.decodeFile(note?.imgPath)
+                imgNote.visibility = View.VISIBLE
+                imgNote.setImageBitmap(bitmap)
             }
         }
     }

@@ -118,7 +118,7 @@ class LessonsEditorFragment @Inject constructor(
                 teacher = teacherName.toString(),
                 typeOfLesson = typeOfLesson,
                 cabinet = cabinet.toString(),
-                countOfWeek = SharedPreferences.savedStudyWeek,
+                week = SharedPreferences.saveSwitchWeek,
                 startTime = startTime.toString(),
                 endTime = endTime.toString()
             )

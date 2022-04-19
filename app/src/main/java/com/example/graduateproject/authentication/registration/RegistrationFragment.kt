@@ -1,18 +1,17 @@
 package com.example.graduateproject.authentication.registration
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
+import com.example.graduateproject.authentication.DaggerBaseFragment
 import com.example.graduateproject.databinding.RegistrationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.menu.MenuActivity
+import com.example.graduateproject.shared_preferences.SharedPreferences
 import com.example.graduateproject.utils.Utils
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
@@ -21,9 +20,11 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import javax.inject.Inject
 
-class RegistrationFragment @Inject constructor(
-    viewModelFactory: ViewModelFactory
-) : Fragment(R.layout.registration_layout) {
+class RegistrationFragment @Inject constructor() :
+    DaggerBaseFragment(R.layout.registration_layout) {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: RegistrationLayoutBinding
 
@@ -34,31 +35,22 @@ class RegistrationFragment @Inject constructor(
 
             hideProgressBar()
 
-            if (authResult.isSuccessful) enterApp()
-            else
-                when (authResult.exception) {
-                    is FirebaseAuthWeakPasswordException -> showMessage(
-                        R.string.message_weak_password,
-                        requireContext()
-                    )
-                    is FirebaseAuthUserCollisionException -> showMessage(
-                        R.string.message_user_with_such_email_exists,
-                        requireContext()
-                    )
-                    else -> showMessage(
-                        R.string.message_something_went_wrong,
-                        requireContext()
-                    )
-                }
+            when (authResult.exception) {
+                is FirebaseAuthWeakPasswordException -> showMessage(
+                    R.string.message_weak_password,
+                    requireContext()
+                )
+                is FirebaseAuthUserCollisionException -> showMessage(
+                    R.string.message_user_with_such_email_exists,
+                    requireContext()
+                )
+                else -> showMessage(
+                    R.string.message_something_went_wrong,
+                    requireContext()
+                )
+            }
         }
     }
-
-    private fun enterApp() =
-        Intent(requireContext(), MenuActivity::class.java).also {
-            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(it)
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -115,6 +107,7 @@ class RegistrationFragment @Inject constructor(
             val direction = RegistrationFragmentDirections.toAuthorization()
             findNavController().navigate(direction)
         }
+
         registerButton.setOnClickListener { getInputData() }
     }
 
@@ -124,23 +117,24 @@ class RegistrationFragment @Inject constructor(
         val confirmPassword = confirmPassword.text?.trim().toString()
 
         val messageEmptyFields = getString(R.string.not_empty_fields)
-        val messageDifficultPasswords = getString(R.string.message_password_is_difficult)
+        val messageDifferencePasswords = getString(R.string.message_password_is_difficult)
 
         when {
             email.isEmpty() -> textFieldEmail.helperText = messageEmptyFields
             password.isEmpty() -> textFieldPassword.helperText = messageEmptyFields
             confirmPassword.isEmpty() -> textFieldPasswordConfirm.helperText = messageEmptyFields
             binding.password.text.toString() != binding.confirmPassword.text.toString() ->
-                textFieldPasswordConfirm.helperText = messageDifficultPasswords
+                textFieldPasswordConfirm.helperText = messageDifferencePasswords
             else -> {
                 clearHelperText()
                 viewModel.registerUser(email, password)
+                SharedPreferences.savedPassword = password
                 showProgressBar()
             }
         }
     }
 
-    private fun RegistrationLayoutBinding.clearHelperText() {
+    private fun clearHelperText() = with(binding) {
         textFieldEmail.helperText = ""
         textFieldPassword.helperText = ""
         textFieldPasswordConfirm.helperText = ""

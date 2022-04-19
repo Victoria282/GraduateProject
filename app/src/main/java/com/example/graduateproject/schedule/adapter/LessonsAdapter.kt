@@ -56,10 +56,6 @@ class LessonsAdapter(private val lessons: ArrayList<Lesson>) :
         holder.bind(lessons[position])
     }
 
-    fun clearAll() {
-        this.lessons.clear()
-    }
-
     fun updateLessons(lessons: Lesson) {
         this.lessons.apply {
             add(lessons)

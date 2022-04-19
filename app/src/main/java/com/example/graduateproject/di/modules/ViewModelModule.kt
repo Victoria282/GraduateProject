@@ -10,6 +10,7 @@ import com.example.graduateproject.menu.MenuViewModel
 import com.example.graduateproject.notes.create.NoteCreateViewModel
 import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorViewModel
 import com.example.graduateproject.schedule.main.ScheduleViewModel
+import com.example.graduateproject.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -55,4 +56,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(NoteCreateViewModel::class)
     fun bindNoteCreateViewModel(viewModel: NoteCreateViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
 }

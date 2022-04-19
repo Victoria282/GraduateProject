@@ -24,7 +24,7 @@ data class Lesson(
     @ColumnInfo(name = "cabinet")
     val cabinet: String,
     @ColumnInfo(name = "countOfWeek")
-    val countOfWeek: Int,
+    val week: Boolean,
     @ColumnInfo(name = "startTime")
     val startTime: String,
     @ColumnInfo(name = "endTime")

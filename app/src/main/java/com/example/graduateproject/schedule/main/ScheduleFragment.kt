@@ -29,10 +29,8 @@ class ScheduleFragment @Inject constructor(
 
     private val lessonsObserver = Observer<List<Lesson>> { list ->
         list.forEach {
-            if (!lessonsList.contains(it))
-                lessonsList.add(it)
-            if (checkWeekPositionDay(it))
-                adapter.updateLessons(it)
+            if (!lessonsList.contains(it)) lessonsList.add(it)
+            if (checkWeekPositionDay(it)) adapter.updateLessons(it)
         }
     }
 
@@ -46,12 +44,11 @@ class ScheduleFragment @Inject constructor(
     }
 
     private fun checkWeekPositionDay(lesson: Lesson):Boolean {
-        return lesson.positionOfWeekDay == SharedPreferences.savedWeekDay && lesson.countOfWeek == SharedPreferences.savedStudyWeek
+        return lesson.positionOfWeekDay == SharedPreferences.savedWeekDay && lesson.week == SharedPreferences.saveSwitchWeek
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStudyWeek(SharedPreferences.savedStudyWeek)
         setHasOptionsMenu(true)
     }
 
@@ -94,10 +91,6 @@ class ScheduleFragment @Inject constructor(
         )
         listOfLessons.adapter = adapter
         adapter.clickListener = this@ScheduleFragment
-    }
-
-    private fun setStudyWeek(number: Int) = with(viewModel) {
-        saveStudyWeek(number)
     }
 
     override fun onLessonClick(lesson: Lesson?) {
