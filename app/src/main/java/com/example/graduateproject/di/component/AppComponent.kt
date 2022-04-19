@@ -13,10 +13,11 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityModule::class,
         AppModule::class,
-        FragmentModule::class,
+        PresenterModule::class,
         ViewModelModule::class,
         DatabaseModule::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        FragmentModule::class
     ]
 )
 @Singleton

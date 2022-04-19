@@ -11,7 +11,7 @@ class NoteRepositoryImpl @Inject constructor(
     override val notes: LiveData<List<Note>> = noteDao.getNotes()
 
     override suspend fun insertNote(note: Note) {
-        noteDao.insertNotes(note)
+        noteDao.insertNote(note)
     }
 
     override suspend fun updateNote(note: Note) {

@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
+import com.example.graduateproject.authentication.DaggerBaseFragment
 import com.example.graduateproject.databinding.AuthorizationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.menu.MenuActivity
@@ -20,9 +20,11 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import javax.inject.Inject
 
-class AuthorizationFragment @Inject constructor(
-    viewModelFactory: ViewModelFactory
-) : Fragment(R.layout.authorization_layout) {
+class AuthorizationFragment @Inject constructor() :
+    DaggerBaseFragment(R.layout.authorization_layout) {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: AuthorizationLayoutBinding
 
@@ -33,20 +35,18 @@ class AuthorizationFragment @Inject constructor(
 
             hideProgressBar()
 
-            if (authResult.isSuccessful)
-                enterApp()
-            else
-                when (authResult.exception) {
-                    is FirebaseAuthInvalidCredentialsException ->
-                        showMessage(
-                            R.string.message_invalid_auth_data,
-                            requireContext()
-                        )
-                    else -> showMessage(
-                        R.string.message_something_went_wrong,
+            if (authResult.isSuccessful) enterApp()
+            else when (authResult.exception) {
+                is FirebaseAuthInvalidCredentialsException ->
+                    showMessage(
+                        R.string.message_invalid_auth_data,
                         requireContext()
                     )
-                }
+                else -> showMessage(
+                    R.string.message_something_went_wrong,
+                    requireContext()
+                )
+            }
         }
     }
 

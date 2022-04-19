@@ -33,7 +33,7 @@
             android:layout_gravity="top|center"
             android:fontFamily="@font/roboto_condensed_light"
             android:padding="@dimen/little_margin"
-            android:text="@string/delete_note"
+            android:text="@string/personal_account_delete_account"
             android:textSize="@dimen/normal_text_size" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -48,16 +48,16 @@
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/little_margin"
             android:layout_marginEnd="@dimen/little_margin"
-            android:src="@drawable/ic_image" />
+            android:src="@drawable/ic_new" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/change_img"
+            android:id="@+id/change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
             android:fontFamily="@font/roboto_condensed_light"
             android:padding="@dimen/little_margin"
-            android:text="@string/add_image_note"
+            android:text="@string/personal_account_change_account"
             android:textSize="@dimen/normal_text_size"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

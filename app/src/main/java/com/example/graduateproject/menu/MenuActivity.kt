@@ -17,8 +17,6 @@ import com.example.graduateproject.databinding.ActivityMenuBinding
 import com.example.graduateproject.di.utils.FragmentFactory
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.shared_preferences.SharedPreferences
-import com.example.graduateproject.utils.Constants.FIRST_WEEK
-import com.example.graduateproject.utils.Constants.SECOND_WEEK
 import com.google.android.material.navigation.NavigationView
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
@@ -64,7 +62,8 @@ class MenuActivity : DaggerAppCompatActivity() {
                 R.id.nav_home,
                 R.id.nav_schedule,
                 R.id.notesFragment,
-                R.id.mapFragment
+                R.id.mapFragment,
+                R.id.settingsFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -89,11 +88,10 @@ class MenuActivity : DaggerAppCompatActivity() {
     }
 
     private fun checkStudyWeek(menu: Menu) {
-        if (SharedPreferences.savedStudyWeek == FIRST_WEEK) {
+        if (!SharedPreferences.saveSwitchWeek)
             menu.findItem(R.id.switchWeek).title = resources.getString(R.string.first_week)
-        } else if (SharedPreferences.savedStudyWeek == SECOND_WEEK) {
+        else
             menu.findItem(R.id.switchWeek).title = resources.getString(R.string.second_week)
-        }
     }
 
     private fun logOut() {

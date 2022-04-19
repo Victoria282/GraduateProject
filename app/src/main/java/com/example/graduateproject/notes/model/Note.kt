@@ -1,6 +1,5 @@
 package com.example.graduateproject.notes.model
 
-import android.net.Uri
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity

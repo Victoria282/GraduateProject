@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.graduateproject.R
+import com.example.graduateproject.authentication.DaggerBaseFragment
 import com.example.graduateproject.databinding.RestoreLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.utils.Utils
@@ -18,9 +18,11 @@ import com.example.graduateproject.utils.Utils.showMessageWithPositiveButton
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
-class RestoreFragment @Inject constructor(
-    viewModelFactory: ViewModelFactory
-) : Fragment(R.layout.restore_layout) {
+class RestoreFragment @Inject constructor() :
+    DaggerBaseFragment(R.layout.restore_layout) {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: RestoreLayoutBinding
     private val viewModel: RestoreViewModel by viewModels { viewModelFactory }
@@ -86,21 +88,18 @@ class RestoreFragment @Inject constructor(
     private fun initListeners() = with(binding) {
         buttonRestorePassword.setOnClickListener {
 
-            showProgressBar()
-
             val email = email.text?.trim().toString()
             val messageEmptyFields = getString(R.string.not_empty_fields)
 
             when {
                 email.isEmpty() -> {
                     textFieldEmail.helperText = messageEmptyFields
-                    hideProgressBar()
                 }
                 emailValidate() != null -> {
                     textFieldEmail.helperText = emailValidate()
-                    hideProgressBar()
                 }
                 else -> {
+                    showProgressBar()
                     textFieldEmail.helperText = ""
                     view?.let { activity?.hideKeyboard(it) }
                     viewModel.restoreUserPassword(email)

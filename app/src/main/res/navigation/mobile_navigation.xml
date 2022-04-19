@@ -39,7 +39,7 @@
         android:id="@+id/notesFragment"
         android:name="com.example.graduateproject.notes.NotesFragment"
         android:label="@string/nav_item_note"
-        tools:layout="@layout/notes_fragment" >
+        tools:layout="@layout/notes_fragment">
         <action
             android:id="@+id/toNoteCreateFragment"
             app:destination="@id/noteCreateFragment" />
@@ -49,8 +49,7 @@
         android:id="@+id/mapFragment"
         android:name="com.example.graduateproject.maps.MapsFragment"
         android:label="@string/nav_item_map"
-        tools:layout="@layout/fragment_maps" >
-    </fragment>
+        tools:layout="@layout/fragment_maps" />
 
     <fragment
         android:id="@+id/noteCreateFragment"
@@ -65,4 +64,18 @@
             android:id="@+id/toNotesFragment"
             app:destination="@id/notesFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.graduateproject.settings.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/settings_fragment_layout">
+        <action
+            android:id="@+id/toAuthenticationGraph"
+            app:destination="@id/authentication_graph"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <include app:graph="@navigation/authentication_graph" />
 </navigation>
