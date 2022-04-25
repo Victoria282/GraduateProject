@@ -1,5 +1,7 @@
 package com.example.graduateproject.di.modules
 
+import com.example.graduateproject.expense.repository.ExpenseRepository
+import com.example.graduateproject.expense.repository.ExpenseRepositoryImpl
 import com.example.graduateproject.notes.repository.NoteRepository
 import com.example.graduateproject.notes.repository.NoteRepositoryImpl
 import com.example.graduateproject.schedule.repository.ScheduleRepository
@@ -14,4 +16,7 @@ interface RepositoryModule {
 
     @Binds
     fun bindNoteRepository(noteRepositoryImpl: NoteRepositoryImpl): NoteRepository
+
+    @Binds
+    fun bindExpenseRepository(expenseRepositoryImpl: ExpenseRepositoryImpl): ExpenseRepository
 }

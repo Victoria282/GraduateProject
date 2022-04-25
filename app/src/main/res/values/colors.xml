@@ -14,4 +14,17 @@
     <color name="error_color">#FF2020</color>
     <color name="button_clicked">#D3D3D3</color>
     <color name="button_not_clicked">@color/white</color>
+    <color name="green_color">#00FF26</color>
+    <color name="green_light_color">#3300FF37</color>
+    <color name="blue_color">#00D4FF</color>
+    <color name="blue_light_color">#3300D9FF</color>
+    <color name="red_color">#FF0000</color>
+    <color name="red_light_color">#33FF0000</color>
+    <color name="yellow_color">#FFF200</color>
+    <color name="yellow_light_color">#33FFE100</color>
+    <color name="violet_color">#9900FF</color>
+    <color name="violet_light_color">#338000FF</color>
+    <color name="orange_color">#FF8800</color>
+    <color name="orange_light_color">#33FF7300</color>
+    <color name="gray_light">#F2F2F2</color>
 </resources>

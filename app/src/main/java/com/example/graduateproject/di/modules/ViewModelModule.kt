@@ -5,6 +5,8 @@ import com.example.graduateproject.authentication.authorization.AuthorizationVie
 import com.example.graduateproject.authentication.registration.RegistrationViewModel
 import com.example.graduateproject.authentication.restore.RestoreViewModel
 import com.example.graduateproject.di.utils.ViewModelKey
+import com.example.graduateproject.expense.ExpenseViewModel
+import com.example.graduateproject.expense.add.AddExpenseViewModel
 import com.example.graduateproject.main.MainViewModel
 import com.example.graduateproject.menu.MenuViewModel
 import com.example.graduateproject.notes.create.NoteCreateViewModel
@@ -61,4 +63,14 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExpenseViewModel::class)
+    fun bindExpenseViewModel(viewModel: ExpenseViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddExpenseViewModel::class)
+    fun bindAddExpenseViewModel(viewModel: AddExpenseViewModel): ViewModel
 }

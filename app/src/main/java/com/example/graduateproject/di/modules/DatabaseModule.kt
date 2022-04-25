@@ -22,4 +22,8 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideNotesDao(appDatabase: AppDatabase) = appDatabase.noteDao()
+
+    @Singleton
+    @Provides
+    fun provideExpenseDao(appDatabase: AppDatabase) = appDatabase.expenseDao()
 }

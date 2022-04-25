@@ -32,6 +32,11 @@
         android:icon="@drawable/ic_map"
         android:title="@string/nav_item_map" />
 
+    <item
+        android:id="@+id/expenseFragment"
+        android:icon="@drawable/ic_analytics"
+        android:title="@string/nav_expense" />
+
     <item android:title="@string/nav_feedback">
         <menu>
             <item

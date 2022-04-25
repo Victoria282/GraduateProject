@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/expenseItem"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginHorizontal="@dimen/little_margin"
+    android:layout_marginVertical="@dimen/small_margin"
+    android:backgroundTint="@color/white"
+    app:cardCornerRadius="@dimen/corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image"
+            android:layout_width="@dimen/expenseCategoryImage"
+            android:layout_height="@dimen/expenseCategoryImage"
+            android:layout_marginStart="@dimen/little_margin"
+            app:cardBackgroundColor="@color/main_color_icon"
+            app:cardCornerRadius="120dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/small_padding">
+
+                <ImageView
+                    android:id="@+id/categoryIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/shopping"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/tittleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            app:layout_constraintBottom_toTopOf="@+id/category"
+            app:layout_constraintStart_toEndOf="@+id/card_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Подарок родным" />
+
+        <TextView
+            android:id="@+id/category"
+            style="@style/pieChartCardStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="Другое" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/large_margin"
+            android:fontFamily="@font/roboto_condensed_light"
+            android:textColor="@color/green_color"
+            android:textSize="@dimen/middle_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="2500" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_ruble"
+            app:layout_constraintBottom_toBottomOf="@+id/money"
+            app:layout_constraintEnd_toStartOf="@+id/money"
+            app:layout_constraintTop_toTopOf="@+id/money" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/pieChartCardStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/little_margin"
+            android:padding="@dimen/little_padding"
+            android:background="@drawable/round"
+            android:paddingHorizontal="@dimen/little_margin"
+            android:paddingVertical="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/money"
+            app:layout_constraintTop_toBottomOf="@+id/money"
+            tools:text="24 апреля 2022" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

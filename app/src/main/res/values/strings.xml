@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Student helper</string>
-    <string name="app_developer">Made by \n Victoria</string>
+    <string name="app_name">Помощник студента</string>
+    <string name="app_developer">2022</string>
     <string name="email_hint">Почта</string>
     <string name="password_hint">Пароль</string>
     <string name="password_hint_confirm">Подтверждение пароля*</string>
@@ -40,6 +40,8 @@
     <string name="nav_feedback">Обратная связь</string>
     <string name="nav_log_out">Выйти</string>
     <string name="nav_settings">Настройки</string>
+    <string name="nav_expense">Траты</string>
+    <string name="nav_add_expense">Добавить траты</string>
     <string name="nav_main">Основное</string>
     <string name="open"> Открыть </string>
     <string name="close">Закрыть</string>
@@ -89,8 +91,22 @@
     <string name="personal_account_delete_schedule">Удалить расписание</string>
     <string name="personal_account_change_account">Изменить пароль</string>
     <string name="personal_account_delete_account">Удалить аккаунт</string>
-
     <string name="map_corpus">Корпусы</string>
     <string name="map_library">Библиотеки</string>
     <string name="map_dormitory">Общежитие</string>
+    <string name="expense_category">Категория</string>
+    <string name="expense_details">Подробнее</string>
+    <string name="expense_food">Еда</string>
+    <string name="expense_shopping">Покупки</string>
+    <string name="expense_transport">Транспорт</string>
+    <string name="expense_health">Здоровье</string>
+    <string name="expense_other">Другое</string>
+    <string name="expense_education">Учёба</string>
+    <string name="expense_money">Сумма</string>
+    <string name="expense_date">Дата</string>
+    <string name="expense_more_details">Детали покупки</string>
+    <string name="expense_add">Добавить</string>
+    <string name="expense_month">Бюджет на месяц</string>
+    <string name="expense_current">Текущая сумма затрат</string>
+    <string name="expense_recent">Недавние траты</string>
 </resources>
