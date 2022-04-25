@@ -17,7 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        const val DATABASE_NAME = "LESSONS_DATABASE"
+        const val DATABASE_NAME = "STUDY_DATABASE"
 
         fun invoke(context: Context): AppDatabase {
             val temp = INSTANCE

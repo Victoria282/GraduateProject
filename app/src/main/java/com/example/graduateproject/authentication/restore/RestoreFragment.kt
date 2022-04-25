@@ -108,12 +108,12 @@ class RestoreFragment @Inject constructor() :
         }
     }
 
-    private fun hideProgressBar() {
-        binding.progressBarLayout.progressBar.visibility = View.GONE
+    private fun hideProgressBar() = with(binding) {
+        progressBarLayout.progressBar.visibility = View.GONE
     }
 
-    private fun showProgressBar() {
-        binding.progressBarLayout.progressBar.visibility = View.VISIBLE
+    private fun showProgressBar() = with(binding) {
+        progressBarLayout.progressBar.visibility = View.VISIBLE
     }
 
     private fun clearInputFields() = binding.email.setText("")

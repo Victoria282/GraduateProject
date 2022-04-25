@@ -19,8 +19,8 @@ class ScheduleViewModel @Inject constructor(
 
     val lessons: LiveData<List<Lesson>> = scheduleRepository.lessons
 
-    private val _weekDay = MutableLiveData<Int>()
-    val weekDay: MutableLiveData<Int>
+    private val _weekDay = MutableLiveData<String>()
+    val weekDay: MutableLiveData<String>
         get() = _weekDay
 
     fun insertLesson(lesson: Lesson) {
@@ -42,7 +42,7 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun setWeekDay(dayOfWeek: Int) {
+    fun setWeekDay(dayOfWeek: String) {
         SharedPreferences.savedWeekDay = dayOfWeek
         _weekDay.postValue(dayOfWeek)
     }

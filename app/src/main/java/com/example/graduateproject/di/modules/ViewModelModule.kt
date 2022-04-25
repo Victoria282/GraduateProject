@@ -8,7 +8,7 @@ import com.example.graduateproject.di.utils.ViewModelKey
 import com.example.graduateproject.main.MainViewModel
 import com.example.graduateproject.menu.MenuViewModel
 import com.example.graduateproject.notes.create.NoteCreateViewModel
-import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorViewModel
+import com.example.graduateproject.schedule.editor.LessonsEditorViewModel
 import com.example.graduateproject.schedule.main.ScheduleViewModel
 import com.example.graduateproject.settings.SettingsViewModel
 import dagger.Binds

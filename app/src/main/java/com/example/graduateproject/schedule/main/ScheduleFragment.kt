@@ -2,6 +2,7 @@ package com.example.graduateproject.schedule.main
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -34,7 +35,7 @@ class ScheduleFragment @Inject constructor(
         }
     }
 
-    private val weekDayObserver = Observer<Int> {
+    private val weekDayObserver = Observer<String> {
         initLessonsAdapter()
         lessonsList.forEach {
             if (checkWeekPositionDay(it)) {
@@ -43,7 +44,7 @@ class ScheduleFragment @Inject constructor(
         }
     }
 
-    private fun checkWeekPositionDay(lesson: Lesson):Boolean {
+    private fun checkWeekPositionDay(lesson: Lesson): Boolean {
         return lesson.positionOfWeekDay == SharedPreferences.savedWeekDay && lesson.week == SharedPreferences.saveSwitchWeek
     }
 
@@ -98,13 +99,13 @@ class ScheduleFragment @Inject constructor(
         findNavController().navigate(direction)
     }
 
-    private fun initListeners() {
-        binding.btn1.setOnClickListener(this)
-        binding.btn2.setOnClickListener(this)
-        binding.btn3.setOnClickListener(this)
-        binding.btn4.setOnClickListener(this)
-        binding.btn5.setOnClickListener(this)
-        binding.btn6.setOnClickListener(this)
+    private fun initListeners() = with(binding) {
+        btn1.setOnClickListener(this@ScheduleFragment)
+        btn2.setOnClickListener(this@ScheduleFragment)
+        btn3.setOnClickListener(this@ScheduleFragment)
+        btn4.setOnClickListener(this@ScheduleFragment)
+        btn5.setOnClickListener(this@ScheduleFragment)
+        btn6.setOnClickListener(this@ScheduleFragment)
     }
 
     override fun onResume() {
@@ -112,28 +113,9 @@ class ScheduleFragment @Inject constructor(
         initDefaultDay()
     }
 
-    private fun initDefaultDay() = viewModel.setWeekDay(1)
+    private fun initDefaultDay() = viewModel.setWeekDay("Понедельник")
 
     override fun onClick(button: View?) {
-        when (button?.id) {
-            R.id.btn1 -> {
-                viewModel.setWeekDay(1)
-            }
-            R.id.btn2 -> {
-                viewModel.setWeekDay(2)
-            }
-            R.id.btn3 -> {
-                viewModel.setWeekDay(3)
-            }
-            R.id.btn4 -> {
-                viewModel.setWeekDay(4)
-            }
-            R.id.btn5 -> {
-                viewModel.setWeekDay(5)
-            }
-            R.id.btn6 -> {
-                viewModel.setWeekDay(6)
-            }
-        }
+        viewModel.setWeekDay((button as Button).text.toString())
     }
 }

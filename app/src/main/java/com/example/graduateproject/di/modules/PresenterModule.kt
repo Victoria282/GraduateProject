@@ -9,7 +9,7 @@ import com.example.graduateproject.main.MainFragment
 import com.example.graduateproject.maps.MapsFragment
 import com.example.graduateproject.notes.NotesFragment
 import com.example.graduateproject.notes.create.NoteCreateFragment
-import com.example.graduateproject.schedule.lessonsEditor.LessonsEditorFragment
+import com.example.graduateproject.schedule.editor.LessonsEditorFragment
 import com.example.graduateproject.schedule.main.ScheduleFragment
 import com.example.graduateproject.settings.SettingsFragment
 import dagger.Binds

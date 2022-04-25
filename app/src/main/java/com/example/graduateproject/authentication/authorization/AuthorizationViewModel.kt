@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class AuthorizationViewModel @Inject constructor(
     private val firebase: Firebase
-): ViewModel() {
+) : ViewModel() {
 
     private val _statusAuthorization = MutableLiveData<Task<AuthResult>>()
     val statusAuthorization: MutableLiveData<Task<AuthResult>>

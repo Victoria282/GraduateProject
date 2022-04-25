@@ -26,10 +26,10 @@ object SharedPreferences {
             putString(SAVED_PASSWORD, value)
         }
 
-    var savedWeekDay: Int
-        get() = preferences.getInt(STUDY_WEEK_DAY, 1)
+    var savedWeekDay: String?
+        get() = preferences.getString(STUDY_WEEK_DAY, "")
         set(value) = preferences.edit {
-            putInt(STUDY_WEEK_DAY, value)
+            putString(STUDY_WEEK_DAY, value)
         }
 
     var saveSwitchWeek: Boolean

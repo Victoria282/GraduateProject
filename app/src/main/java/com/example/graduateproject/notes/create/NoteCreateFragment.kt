@@ -71,7 +71,8 @@ class NoteCreateFragment @Inject constructor(
                 Utils.showMessage(R.string.message_input_empty_fields, requireContext())
             else {
                 val id = if (args.notesVal == null) 0 else args.notesVal!!.id
-                val imgPath = if(selectedImageUrl == "" || selectedImageUrl == null) args.notesVal?.imgPath else selectedImageUrl
+                val imgPath =
+                    if (selectedImageUrl == "" || selectedImageUrl == null) args.notesVal?.imgPath else selectedImageUrl
                 note = Note(
                     id = id,
                     title = noteTittle,
