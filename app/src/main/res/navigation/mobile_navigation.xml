@@ -78,4 +78,26 @@
     </fragment>
 
     <include app:graph="@navigation/authentication_graph" />
+    <fragment
+        android:id="@+id/expenseFragment"
+        android:name="com.example.graduateproject.expense.ExpenseFragment"
+        android:label="@string/nav_expense"
+        tools:layout="@layout/fragment_expense_layout">
+        <action
+            android:id="@+id/toExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.graduateproject.expense.add.AddExpenseFragment"
+        android:label="@string/nav_add_expense"
+        tools:layout="@layout/add_expense_layout">
+        <argument
+            android:name="expenseItem"
+            app:argType="com.example.graduateproject.expense.model.Expense"
+            app:nullable="true" />
+        <action
+            android:id="@+id/toExpenseFragment"
+            app:destination="@id/expenseFragment" />
+    </fragment>
 </navigation>

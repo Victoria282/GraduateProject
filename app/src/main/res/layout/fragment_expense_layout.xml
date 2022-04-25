@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".expense.ExpenseFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/main_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/little_margin"
+            app:cardCornerRadius="@dimen/corner_radius_little"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tittleMonthMoney"
+                    style="@style/pieChartCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:text="@string/expense_month"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/budget"
+                    style="@style/pieChartCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/little_padding"
+                    android:textStyle="bold"
+                    tools:text="6000"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tittleMonthMoney" />
+
+                <TextView
+                    android:id="@+id/moreInfoTittle"
+                    style="@style/pieChartCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/little_padding"
+                    android:text="@string/expense_current"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/budget" />
+
+                <TextView
+                    android:id="@+id/expense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/little_margin"
+                    tools:text="5100"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:textSize="@dimen/large_text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/moreInfoTittle" />
+
+                <ImageView
+                    android:id="@+id/indicator"
+                    android:layout_width="@dimen/indicatorIconSize"
+                    android:layout_height="@dimen/indicatorIconSize"
+                    android:layout_marginStart="@dimen/small_padding"
+                    android:src="@drawable/ic_positive_balance"
+                    app:layout_constraintBottom_toBottomOf="@id/moreInfoTittle"
+                    app:layout_constraintStart_toEndOf="@id/moreInfoTittle"
+                    app:layout_constraintTop_toTopOf="@id/moreInfoTittle" />
+
+                <TextView
+                    android:id="@+id/date"
+                    style="@style/pieChartCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/little_margin"
+                    android:layout_marginBottom="12dp"
+                    android:padding="@dimen/little_padding"
+                    android:background="@drawable/round"
+                    tools:text="25 апреля 2022"
+                    app:layout_constraintTop_toBottomOf="@+id/expense"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <org.eazegraph.lib.charts.PieChart
+                    android:id="@+id/expenseAnalytics"
+                    android:layout_width="@dimen/pieChartSize"
+                    android:layout_height="@dimen/pieChartSize"
+                    android:padding="@dimen/little_padding"
+                    app:egInnerPaddingColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/recentlyExpenses"
+            style="@style/tittleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="22dp"
+            android:text="@string/expense_recent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_card" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expensesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/little_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recentlyExpenses"
+            tools:listitem="@layout/expense_item_layout" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:layout_margin="@dimen/large_margin"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@android:color/white"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

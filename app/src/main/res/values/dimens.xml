@@ -10,6 +10,7 @@
     <dimen name="material_card_view_margin">8dp</dimen>
     <dimen name="material_card_view_text_padding">16dp</dimen>
 
+    <dimen name="little_padding">8dp</dimen>
     <dimen name="small_padding">16dp</dimen>
     <dimen name="normal_padding">24dp</dimen>
     <dimen name="large_padding">32dp</dimen>
@@ -25,5 +26,10 @@
     <dimen name="nav_header_height">180dp</dimen>
 
     <dimen name="corner_radius">24dp</dimen>
+    <dimen name="corner_radius_little">12dp</dimen>
     <dimen name="card_elevation">8dp</dimen>
+
+    <dimen name="pieChartSize">150dp</dimen>
+    <dimen name="indicatorIconSize">24dp</dimen>
+    <dimen name="expenseCategoryImage">60dp</dimen>
 </resources>

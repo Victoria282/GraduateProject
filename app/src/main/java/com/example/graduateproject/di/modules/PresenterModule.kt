@@ -5,6 +5,8 @@ import com.example.graduateproject.authentication.authorization.AuthorizationFra
 import com.example.graduateproject.authentication.registration.RegistrationFragment
 import com.example.graduateproject.authentication.restore.RestoreFragment
 import com.example.graduateproject.di.utils.FragmentKey
+import com.example.graduateproject.expense.ExpenseFragment
+import com.example.graduateproject.expense.add.AddExpenseFragment
 import com.example.graduateproject.main.MainFragment
 import com.example.graduateproject.maps.MapsFragment
 import com.example.graduateproject.notes.NotesFragment
@@ -67,4 +69,14 @@ interface PresenterModule {
     @IntoMap
     @FragmentKey(SettingsFragment::class)
     fun bindSettingsFragment(fragment: SettingsFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(ExpenseFragment::class)
+    fun bindExpenseFragment(fragment: ExpenseFragment): Fragment
+
+    @Binds
+    @IntoMap
+    @FragmentKey(AddExpenseFragment::class)
+    fun bindAddExpenseFragment(fragment: AddExpenseFragment): Fragment
 }
