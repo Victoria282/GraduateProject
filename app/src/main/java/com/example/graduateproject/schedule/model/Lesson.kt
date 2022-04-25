@@ -12,7 +12,7 @@ data class Lesson(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "positionOfWeekDay")
-    val positionOfWeekDay: Int,
+    val positionOfWeekDay: String,
     @ColumnInfo(name = "numberOfLesson")
     val numberOfLesson: Int,
     @ColumnInfo(name = "subject")

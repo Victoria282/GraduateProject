@@ -10,10 +10,12 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.example.graduateproject.R
+import com.example.graduateproject.maps.model.PlaceType
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Utils {
 
@@ -52,20 +54,33 @@ object Utils {
 
     fun vectorToBitmap(
         context: Context,
-        id: Int,
-        color: Int
+        id: Int
     ): BitmapDescriptor {
         val vectorDrawable = ResourcesCompat.getDrawable(context.resources, id, null)
             ?: return BitmapDescriptorFactory.defaultMarker()
         val bitmap = Bitmap.createBitmap(
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight,
+            60,
+            60,
             Bitmap.Config.ARGB_8888
         )
         val canvas = Canvas(bitmap)
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-        DrawableCompat.setTint(vectorDrawable, color)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    fun getIcon(place: PlaceType?): Int {
+        when (place?.name) {
+            "CORPUS" -> return R.drawable.map_marker_blue
+            "DORMITORY" -> return R.drawable.map_marker_red
+            "LIBRARY" -> return R.drawable.map_marker_green
+        }
+        return R.drawable.map_marker_green
+    }
+
+    fun getDayOfWeek(): String {
+        val appLocale = Locale("ru")
+        Locale.setDefault(appLocale)
+        return SimpleDateFormat("EEEE", appLocale).format(System.currentTimeMillis())
     }
 }

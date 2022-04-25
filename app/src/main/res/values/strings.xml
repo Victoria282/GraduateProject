@@ -10,6 +10,7 @@
     <string name="advice_to_register">Ещё не зарегистрированы?</string>
     <string name="button_register">Регистрация</string>
     <string name="register_button">Зарегестрироваться</string>
+    <string name="change_password_button">Изменить пароль</string>
     <string name="advice_to_logIn"> Уже есть аккаунт?</string>
     <string name="message_no_internet">Проверьте подключение к интернету</string>
     <string name="message_input_empty_fields">Заполните пустые поля</string>
@@ -33,6 +34,7 @@
     <string name="nav_item_note">Заметки</string>
     <string name="nav_item_map">Карта</string>
     <string name="tittle_map">Челябинск</string>
+    <string name="tittle_map_my_location">Я нахожусь здесь</string>
     <string name="nav_item_create_note">Создание</string>
     <string name="nav_contact_with_developer">Связь с разработчиком</string>
     <string name="nav_feedback">Обратная связь</string>
@@ -78,13 +80,17 @@
     <string name="delete_note">Удалить заметку</string>
     <string name="add_image_note">Добавить изображение</string>
 
-    <string name="account_delete">Аккаунт удален</string>
-
+    <string name="personal_account_delete">Аккаунт удален</string>
     <string name="personal_account_switch_notification">Разрешить уведомления о парах</string>
     <string name="personal_account_switch_change_week">Переключить на 2 неделю</string>
     <string name="personal_account_switch_exams_period">Включить период сессии</string>
     <string name="personal_account_add_pic">Загрузить фото</string>
     <string name="personal_account_name">Имя</string>
-    <string name="personal_account_delete_account">Удалить аккаунт</string>
+    <string name="personal_account_delete_schedule">Удалить расписание</string>
     <string name="personal_account_change_account">Изменить пароль</string>
+    <string name="personal_account_delete_account">Удалить аккаунт</string>
+
+    <string name="map_corpus">Корпусы</string>
+    <string name="map_library">Библиотеки</string>
+    <string name="map_dormitory">Общежитие</string>
 </resources>

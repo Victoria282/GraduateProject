@@ -1,8 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".maps.MapsFragment" />
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".maps.MapsFragment" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:paddingVertical="@dimen/little_margin">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/corpus_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:backgroundTint="#D3D3D3"
+                android:checkable="true"
+                android:drawableLeft="@drawable/ic_corpus"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/map_corpus"
+                android:textColor="@color/main_color_icon"
+                android:textSize="@dimen/little_text_size" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/library_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:backgroundTint="#D3D3D3"
+                android:drawableLeft="@drawable/ic_library"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/map_library"
+                android:textColor="@color/main_color_icon"
+                android:textSize="@dimen/little_text_size" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dormitory_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:backgroundTint="#D3D3D3"
+                android:drawableLeft="@drawable/ic_dormitory"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/map_dormitory"
+                android:textColor="@color/main_color_icon"
+                android:textSize="@dimen/little_text_size" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </HorizontalScrollView>
+</FrameLayout>

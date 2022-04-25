@@ -1,4 +1,4 @@
-package com.example.graduateproject.schedule.lessonsEditor
+package com.example.graduateproject.schedule.editor
 
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -112,7 +112,7 @@ class LessonsEditorFragment @Inject constructor(
             val id = if (args.lesson?.id != null) args.lesson?.id else 0
             val formedLesson = Lesson(
                 id = id!!,
-                positionOfWeekDay = SharedPreferences.savedWeekDay,
+                positionOfWeekDay = SharedPreferences.savedWeekDay!!,
                 numberOfLesson = numOfLesson,
                 subject = lessonName.toString(),
                 teacher = teacherName.toString(),

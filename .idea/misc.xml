@@ -48,6 +48,8 @@
         <entry key="..\:/GraduateProject/app/src/main/res/menu/nav_menu.xml" value="0.2421875" />
         <entry key="..\:/GraduateProject/app/src/main/res/menu/navigation_menu.xml" value="0.4" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2625" />
+        <entry key="..\:/Users/GraduateProject/app/src/main/res/drawable/background_hover.xml" value="0.375" />
+        <entry key="..\:/Users/GraduateProject/app/src/main/res/drawable/button_state_colors.xml" value="0.375" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/drawable/gradient.xml" value="0.2625" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/drawable/ic_book.xml" value="0.2574055158324821" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/drawable/ic_delete.xml" value="0.2625" />
@@ -75,7 +77,7 @@
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/fragment_lessons.xml" value="0.12436932391523714" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/fragment_lessons_editor.xml" value="0.176" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/fragment_main_screen.xml" value="0.11730575176589304" />
-        <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/fragment_maps.xml" value="0.11730575176589304" />
+        <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/fragment_maps.xml" value="0.33" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/item_editor_lesson.xml" value="0.264" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/item_lesson.xml" value="0.536" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/nav_header_menu.xml" value="0.264" />
@@ -84,7 +86,7 @@
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/notes_fragment.xml" value="0.264" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/registration_layout.xml" value="0.264" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/restore_layout.xml" value="0.176" />
-        <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/schedule_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/schedule_fragment.xml" value="0.25" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/settings_fragment_layout.xml" value="0.4" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/layout/splash_screen_layout.xml" value="0.176" />
         <entry key="..\:/Users/GraduateProject/app/src/main/res/menu/activity_main_drawer.xml" value="0.4" />
