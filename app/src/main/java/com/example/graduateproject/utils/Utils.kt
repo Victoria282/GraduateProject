@@ -9,13 +9,13 @@ import android.graphics.Canvas
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.graduateproject.R
 import com.example.graduateproject.maps.model.PlaceType
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 
 object Utils {
 
@@ -70,17 +70,57 @@ object Utils {
     }
 
     fun getIcon(place: PlaceType?): Int {
-        when (place?.name) {
-            "CORPUS" -> return R.drawable.map_marker_blue
-            "DORMITORY" -> return R.drawable.map_marker_red
-            "LIBRARY" -> return R.drawable.map_marker_green
+        return when (place?.name) {
+            "CORPUS" -> R.drawable.map_marker_blue
+            "DORMITORY" -> R.drawable.map_marker_red
+            "LIBRARY" -> R.drawable.map_marker_green
+            else -> R.drawable.map_marker_green
         }
-        return R.drawable.map_marker_green
     }
 
-    fun getDayOfWeek(): String {
-        val appLocale = Locale("ru")
-        Locale.setDefault(appLocale)
-        return SimpleDateFormat("EEEE", appLocale).format(System.currentTimeMillis())
+    fun getCategoryIcon(category: String): Int {
+        return when (category) {
+            "Еда" -> R.drawable.food
+            "Покупки" -> R.drawable.shopping
+            "Транспорт" -> R.drawable.transport
+            "Здоровье" -> R.drawable.health
+            "Другое" -> R.drawable.other
+            "Учёба" -> R.drawable.education
+            else -> R.drawable.other
+        }
+    }
+
+    fun getCategoryColors(category: String): Pair<Int, Int> {
+        return when (category) {
+            "Еда" -> Pair(R.color.green_color, R.color.green_light_color)
+            "Покупки" -> Pair(R.color.blue_color, R.color.blue_light_color)
+            "Транспорт" -> Pair(R.color.yellow_color, R.color.yellow_light_color)
+            "Здоровье" -> Pair(R.color.red_color, R.color.red_light_color)
+            "Другое" -> Pair(R.color.violet_color, R.color.violet_light_color)
+            "Учёба" -> Pair(R.color.orange_color, R.color.orange_light_color)
+            else -> Pair(R.color.green_color, R.color.green_light_color)
+        }
+    }
+
+    fun showOnBoarding(
+        activity: Activity,
+        view: View,
+        secondaryMessage: Int,
+        context: Context,
+        action: () -> Unit
+    ) {
+        MaterialTapTargetPrompt.Builder(activity)
+            .setTarget(view)
+            .setPrimaryText(R.string.welcome_message_expenses)
+            .setFocalRadius(80.0f)
+            .setSecondaryText(secondaryMessage)
+            .setBackButtonDismissEnabled(true)
+            .setBackgroundColour(ContextCompat.getColor(context, R.color.main_color_icon))
+            .setPromptStateChangeListener { _, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
+                    action()
+                }
+            }
+            .show()
     }
 }

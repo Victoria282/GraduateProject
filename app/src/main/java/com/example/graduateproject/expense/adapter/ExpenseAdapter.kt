@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.graduateproject.R
 import com.example.graduateproject.databinding.ExpenseItemLayoutBinding
 import com.example.graduateproject.expense.model.Expense
 
@@ -37,150 +36,38 @@ class ExpenseAdapter(val context: Context) :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(expense: Expense) {
             with(binding) {
-                title.text = expense?.title
-                money.text = expense?.amount.toString()
-                date.text = expense?.date
-                category.text = expense?.category
+                title.text = expense.title
+                money.text = expense.amount.toString()
+                date.text = expense.date
+                category.text = expense.category
                 expenseItem.setOnClickListener {
                     listener?.onExpenseClick(expense)
                 }
-
-                when (expense?.category) {
-                    "Еда" -> {
-                        categoryIcon.setImageResource(R.drawable.food)
-                        categoryIcon.setColorFilter(
-                            ContextCompat.getColor(
-                                categoryIcon.context,
-                                R.color.green_color
-                            )
-                        )
-                        category.setTextColor(
-                            ContextCompat.getColor(
-                                category.context,
-                                R.color.green_color
-                            )
-                        )
-                        cardImage.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                cardImage.context,
-                                R.color.green_light_color
-                            )
-                        )
-                    }
-                    "Покупки" -> {
-                        categoryIcon.setImageResource(R.drawable.shopping)
-                        categoryIcon.setColorFilter(
-                            ContextCompat.getColor(
-                                categoryIcon.context,
-                                R.color.blue_color
-                            )
-                        )
-                        category.setTextColor(
-                            ContextCompat.getColor(
-                                category.context,
-                                R.color.blue_color
-                            )
-                        )
-                        cardImage.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                cardImage.context,
-                                R.color.blue_light_color
-                            )
-                        )
-                    }
-                    "Транспорт" -> {
-                        categoryIcon.setImageResource(R.drawable.transport)
-                        categoryIcon.setColorFilter(
-                            ContextCompat.getColor(
-                                categoryIcon.context,
-                                R.color.yellow_color
-                            )
-                        )
-                        category.setTextColor(
-                            ContextCompat.getColor(
-                                category.context,
-                                R.color.yellow_color
-                            )
-                        )
-                        cardImage.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                cardImage.context,
-                                R.color.yellow_light_color
-                            )
-                        )
-                    }
-                    "Здоровье" -> {
-                        categoryIcon.setImageResource(R.drawable.health)
-                        categoryIcon.setColorFilter(
-                            ContextCompat.getColor(
-                                categoryIcon.context,
-                                R.color.red_color
-                            )
-                        )
-                        category.setTextColor(
-                            ContextCompat.getColor(
-                                category.context,
-                                R.color.red_color
-                            )
-                        )
-                        cardImage.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                cardImage.context,
-                                R.color.red_light_color
-                            )
-                        )
-                    }
-                    "Другое" -> {
-                        categoryIcon.setImageResource(R.drawable.other)
-                        categoryIcon.setColorFilter(
-                            ContextCompat.getColor(
-                                categoryIcon.context,
-                                R.color.violet_color
-                            )
-                        )
-                        category.setTextColor(
-                            ContextCompat.getColor(
-                                category.context,
-                                R.color.violet_color
-                            )
-                        )
-                        cardImage.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                cardImage.context,
-                                R.color.violet_light_color
-                            )
-                        )
-                    }
-                    "Учёба" -> {
-                        categoryIcon.setImageResource(R.drawable.education)
-                        categoryIcon.setColorFilter(
-                            ContextCompat.getColor(
-                                categoryIcon.context,
-                                R.color.orange_color
-                            )
-                        )
-                        category.setTextColor(
-                            ContextCompat.getColor(
-                                category.context,
-                                R.color.orange_color
-                            )
-                        )
-                        cardImage.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                cardImage.context,
-                                R.color.orange_light_color
-                            )
-                        )
-                    }
-                }
+                categoryIcon.setImageResource(expense.getIcon())
+                categoryIcon.setColorFilter(
+                    ContextCompat.getColor(
+                        categoryIcon.context,
+                        expense.getColors().first
+                    )
+                )
+                category.setTextColor(
+                    ContextCompat.getColor(
+                        category.context,
+                        expense.getColors().first
+                    )
+                )
+                cardImage.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        cardImage.context,
+                        expense.getColors().second
+                    )
+                )
             }
         }
     }
 
     fun updateExpenses(expenses: Expense) {
-        this.expensesList.apply {
-            add(expenses)
-        }
+        expensesList.add(expenses)
         notifyDataSetChanged()
     }
 

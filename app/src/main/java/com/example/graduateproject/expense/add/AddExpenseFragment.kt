@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,57 +29,57 @@ class AddExpenseFragment @Inject constructor(
     private val viewModel: ExpenseViewModel by viewModels { viewModelFactory }
     private val args by navArgs<AddExpenseFragmentArgs>()
 
-    var day = 0
-    var month = 0
-    var year = 0
-    private var category = ""
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var categoryExpense = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = AddExpenseLayoutBinding.inflate(inflater, container, false)
-        Locale.setDefault(APP_LOCALE_RU)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Locale.setDefault(APP_LOCALE_RU)
         args.expenseItem?.let {
             setExpenseInfo()
         }
         datePicker()
         initListeners()
+        binding.delete.setOnClickListener {
+            val expense = args.expenseItem
+            expense?.let { viewModel.deleteTransaction(expense) }
+            backToExpenseFragment()
+        }
     }
 
     private fun datePicker() = with(binding) {
         val cal = Calendar.getInstance(APP_LOCALE_RU)
-        binding.editDate.setText(SimpleDateFormat("dd MMMM  yyyy").format(System.currentTimeMillis()))
-        day = SimpleDateFormat("dd").format(System.currentTimeMillis()).toInt()
-        month = SimpleDateFormat("MM").format(System.currentTimeMillis()).toInt()
-        year = SimpleDateFormat("yyyy").format(System.currentTimeMillis()).toInt()
+
+        editDate.setText(dateFormat.format(System.currentTimeMillis()))
+
+        day = dayFormat.format(System.currentTimeMillis()).toInt()
+        month = monthFormat.format(System.currentTimeMillis()).toInt()
+        year = yearFormat.format(System.currentTimeMillis()).toInt()
+
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { _, Year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, Year)
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                var myFormat = "dd MMMM  yyyy"
-                var sdf = SimpleDateFormat(myFormat, Locale.US)
-                binding.editDate.setText(sdf.format(cal.time))
-                myFormat = "dd"
-                sdf = SimpleDateFormat(myFormat, Locale.US)
-                day = sdf.format(cal.time).toInt()
-                myFormat = "MM"
-                sdf = SimpleDateFormat(myFormat, Locale.US)
-                month = sdf.format(cal.time).toInt()
-                myFormat = "yyyy"
-                sdf = SimpleDateFormat(myFormat, Locale.US)
-                year = sdf.format(cal.time).toInt()
+                editDate.setText(dateFormat.format(cal.time))
 
+                day = dayFormat.format(cal.time).toInt()
+                month = monthFormat.format(cal.time).toInt()
+                year = yearFormat.format(cal.time).toInt()
             }
 
-        binding.editDate.setOnClickListener {
+        editDate.setOnClickListener {
             DatePickerDialog(
                 requireContext(), dateSetListener,
                 cal.get(Calendar.YEAR),
@@ -105,11 +106,12 @@ class AddExpenseFragment @Inject constructor(
         val note = binding.editNote.text.toString()
         val date = binding.editDate.text.toString()
 
-        if (title == "" || amount == "" || note == "" || date == "" || category == "") {
+        if (title == "" || amount == "" || date == "" || categoryExpense == "") {
             Utils.showMessage(R.string.message_input_empty_fields, requireContext())
         } else {
             val id = if (args.expenseItem == null) null else args.expenseItem!!.id
-            val transaction = Expense(
+
+            val expense = Expense(
                 id = id,
                 title = title,
                 amount = amount.toDouble(),
@@ -118,10 +120,13 @@ class AddExpenseFragment @Inject constructor(
                 day = day,
                 month = month,
                 year = year,
-                category = category
+                category = categoryExpense
             )
-            if (id == null) viewModel.addTransaction(transaction)
-            else viewModel.updateTransaction(transaction)
+            if (id == null)
+                viewModel.addTransaction(expense)
+            else
+                viewModel.updateTransaction(expense)
+
             backToExpenseFragment()
         }
     }
@@ -132,38 +137,49 @@ class AddExpenseFragment @Inject constructor(
     }
 
     override fun onClick(btn: View?) {
-        when (btn) {
-            binding.food -> {
-                setCategory(btn, binding.food)
-            }
-            binding.shopping -> {
-                setCategory(btn, binding.shopping)
-            }
-            binding.transport -> {
-                setCategory(btn, binding.transport)
-            }
-            binding.health -> {
-                setCategory(btn, binding.health)
-            }
-            binding.others -> {
-                setCategory(btn, binding.others)
-            }
-            binding.academics -> {
-                setCategory(btn, binding.academics)
-            }
+        setCategory(btn)
+    }
+
+    private fun makeSelectedButton(v: View?) = with((v as MaterialButton)) {
+        setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.light_gray
+            )
+        )
+        setIconTintResource(R.color.main_color_icon)
+        setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color_icon))
+    }
+
+    private fun setExpenseInfo() {
+        with(binding) {
+            editTitle.setText(args.expenseItem?.title)
+            editDate.setText((args.expenseItem?.date))
+            editMoney.setText((args.expenseItem?.amount.toString()))
+            editNote.setText((args.expenseItem?.note))
+        }
+        categoryExpense = (args.expenseItem!!.category)
+
+        when (categoryExpense) {
+            "Еда" -> setCategory(binding.food)
+            "Покупки" -> setCategory(binding.shopping)
+            "Транспорт" -> setCategory(binding.transport)
+            "Здоровье" -> setCategory(binding.health)
+            "Другое" -> setCategory(binding.others)
+            "Учёба" -> setCategory(binding.academics)
         }
     }
 
-    private fun setCategory(v: View, button: MaterialButton) {
-        category = button.text.toString()
-        button.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.button_not_clicked
-            )
-        )
-        button.setIconTintResource(R.color.main_color_icon)
-        button.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color_icon))
+    private fun removeBackground(button: MaterialButton) = with(button) {
+        setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.main_color_icon))
+        setIconTintResource(R.color.white)
+        setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+    }
+
+    private fun setCategory(v: View?) {
+        categoryExpense = (v as Button).text.toString()
+
+        makeSelectedButton(v)
 
         when (v) {
             binding.food -> {
@@ -211,44 +227,12 @@ class AddExpenseFragment @Inject constructor(
         }
     }
 
-    private fun setExpenseInfo() {
-        with(binding) {
-            editTitle.setText(args.expenseItem?.title)
-            editDate.setText((args.expenseItem?.date))
-            editMoney.setText((args.expenseItem?.amount.toString()))
-            editNote.setText((args.expenseItem?.note))
-        }
-        category = (args.expenseItem!!.category)
-
-        when (category) {
-            "Еда" -> {
-                setCategory(binding.food, binding.food)
-            }
-            "Покупки" -> {
-                setCategory(binding.shopping, binding.shopping)
-            }
-            "Транспорт" -> {
-                setCategory(binding.transport, binding.transport)
-            }
-            "Здоровье" -> {
-                setCategory(binding.health, binding.health)
-            }
-            "Другое" -> {
-                setCategory(binding.others, binding.others)
-            }
-            "Учёба" -> {
-                setCategory(binding.academics, binding.academics)
-            }
-        }
-    }
-
-    private fun removeBackground(button: MaterialButton) {
-        button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.main_color_icon))
-        button.setIconTintResource(R.color.white)
-        button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-    }
-
     companion object {
         val APP_LOCALE_RU = Locale("ru")
+
+        val dayFormat = SimpleDateFormat("dd", APP_LOCALE_RU)
+        var monthFormat = SimpleDateFormat("MM", APP_LOCALE_RU)
+        val yearFormat = SimpleDateFormat("yyyy", APP_LOCALE_RU)
+        val dateFormat = SimpleDateFormat("dd MMMM  yyyy", APP_LOCALE_RU)
     }
 }

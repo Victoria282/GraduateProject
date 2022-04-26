@@ -8,6 +8,7 @@
         android:id="@+id/textFieldEmail"
         style="@style/material_text_field"
         android:layout_marginTop="@dimen/large_padding"
+        android:layout_marginHorizontal="@dimen/small_margin"
         android:hint="@string/email_hint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,13 +22,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_restore_password"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_padding"
-        android:backgroundTint="#404040"
         android:fontFamily="@font/roboto_condensed_bold"
         android:text="@string/reset_password"
         android:textSize="@dimen/button_text_size"

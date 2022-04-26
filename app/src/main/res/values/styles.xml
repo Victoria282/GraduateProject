@@ -13,7 +13,7 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="material_text_field">
+    <style name="material_text_field" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="fontFamily">@font/roboto_condensed_light</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

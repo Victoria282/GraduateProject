@@ -15,6 +15,7 @@ import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.schedule.adapter.LessonsAdapter
 import com.example.graduateproject.schedule.model.Lesson
 import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.utils.Utils
 import javax.inject.Inject
 
 class ScheduleFragment @Inject constructor(
@@ -65,6 +66,9 @@ class ScheduleFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!SharedPreferences.scheduleOnBoarding) {
+            showOnBoarding()
+        }
         initObservers()
         initUi()
     }
@@ -117,5 +121,16 @@ class ScheduleFragment @Inject constructor(
 
     override fun onClick(button: View?) {
         viewModel.setWeekDay((button as Button).text.toString())
+    }
+
+    private fun showOnBoarding() {
+        Utils.showOnBoarding(
+            requireActivity(),
+            binding.addLesson,
+            R.string.welcome_subtitle_message_schedule,
+            requireContext()
+        ) {
+            SharedPreferences.scheduleOnBoarding = true
+        }
     }
 }

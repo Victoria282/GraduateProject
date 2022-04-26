@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".schedule.lessons.LessonsFragment">
+    android:layout_height="wrap_content">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listOfLessons"
@@ -17,7 +16,7 @@
         tools:itemCount="3"
         tools:listitem="@layout/item_lesson" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/message_empty_list_lessons"
         style="@style/material_text_field"
         android:layout_width="match_parent"

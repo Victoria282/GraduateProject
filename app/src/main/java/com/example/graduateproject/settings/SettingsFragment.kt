@@ -15,6 +15,7 @@ import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.shared_preferences.SharedPreferences
 import com.example.graduateproject.utils.Utils
 import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import kotlinx.android.synthetic.main.bottom_sheet_settings.*
 import javax.inject.Inject
@@ -94,7 +95,7 @@ class SettingsFragment @Inject constructor(
     }
 
     private fun setDialog() = with(binding) {
-        val dialog = Dialog(requireContext())
+        val dialog = BottomSheetDialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_sheet_settings)
 
@@ -106,21 +107,11 @@ class SettingsFragment @Inject constructor(
             showProgressBar()
             viewModel.deleteAccount()
         }
-
         changePassword.setOnClickListener {
             dialog.dismiss()
         }
 
-        with(dialog) {
-            show()
-            window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window?.attributes?.windowAnimations = R.style.bottomSheetAnimation
-            window?.setGravity(Gravity.BOTTOM)
-        }
+        dialog.show()
     }
 
     private fun hideProgressBar() {

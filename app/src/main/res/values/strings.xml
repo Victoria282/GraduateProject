@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Помощник студента</string>
-    <string name="app_developer">2022</string>
+    <string name="app_developer">Виктория</string>
     <string name="email_hint">Почта</string>
     <string name="password_hint">Пароль</string>
     <string name="password_hint_confirm">Подтверждение пароля*</string>
@@ -109,4 +109,13 @@
     <string name="expense_month">Бюджет на месяц</string>
     <string name="expense_current">Текущая сумма затрат</string>
     <string name="expense_recent">Недавние траты</string>
+    <string name="expense_change_money">Изменить бюджет</string>
+    <string name="expense_full_date">%1$s %2$s %3$s</string>
+    <string name="expense_month_budget">%1$s ₽ </string>
+    <string name="expense_month_current">%1$s ₽ </string>
+    <string name="welcome_message_expenses">Нажми меня!</string>
+    <string name="welcome_subtitle_message_note">Добавьте первую заметку нажав на кнопку</string>
+    <string name="welcome_subtitle_message_schedule">Добавьте первую пару нажав на кнопку</string>
+    <string name="welcome_subtitle_message_expenses">Добавьте первую покупку нажав на кнопку</string>
+    <string name="welcome_subtitle_message_expenses_add_budget">Прежде чем добавить покупку, введите Ваш бюджет на месяц..</string>
 </resources>
