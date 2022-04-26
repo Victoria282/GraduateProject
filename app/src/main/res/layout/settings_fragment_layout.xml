@@ -10,39 +10,13 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/small_padding">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="120dp"
-            android:layout_height="150dp"
-            android:layout_marginVertical="@dimen/large_margin"
-            android:src="@mipmap/ic_launcher"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/addPic"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/small_margin"
-            android:backgroundTint="@color/main_color_icon"
-            android:drawableLeft="@drawable/ic_camera"
-            android:fontFamily="@font/roboto_condensed_bold"
-            android:text="@string/personal_account_add_pic"
-            android:textSize="@dimen/little_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintEnd_toEndOf="@+id/profile_image"
-            app:layout_constraintStart_toStartOf="@+id/profile_image"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
-
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/personal_account_switch_notification"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barrier" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_week"
@@ -67,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="addPic" />
+            app:constraint_referenced_ids="switch_exams, switch_notification, switch_week" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/indicator"
@@ -79,7 +53,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/barrier" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/bottomSheetMenu"
             android:layout_width="30dp"
             android:layout_height="30dp"

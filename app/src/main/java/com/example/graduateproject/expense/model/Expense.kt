@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.graduateproject.utils.Utils
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "Expense")
@@ -26,5 +27,8 @@ data class Expense(
     @ColumnInfo(name = "year")
     var year: Int,
     @ColumnInfo(name = "note")
-    var note: String
-) : Parcelable
+    var note: String?
+) : Parcelable {
+    fun getIcon() = Utils.getCategoryIcon(category)
+    fun getColors() = Utils.getCategoryColors(category)
+}

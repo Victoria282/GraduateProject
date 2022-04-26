@@ -13,7 +13,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/small_padding">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imgNote"
@@ -38,7 +39,7 @@
             tools:text="Заголовок" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/subtittle"
+            android:id="@+id/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
@@ -58,7 +59,7 @@
             android:padding="@dimen/little_margin"
             android:textColor="#C4C4C4"
             android:textSize="@dimen/little_text_size"
-            app:layout_constraintTop_toBottomOf="@id/subtittle"
+            app:layout_constraintTop_toBottomOf="@id/subtitle"
             tools:text="06.04.2022" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

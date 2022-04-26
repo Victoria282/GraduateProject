@@ -36,7 +36,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/budget"
                     style="@style/pieChartCardStyle"
                     android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/little_padding"
                     android:textStyle="bold"
-                    tools:text="6000"
+                    android:text="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tittleMonthMoney" />
 
@@ -65,13 +65,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/little_margin"
-                    tools:text="5100"
+                    android:text="0 ₽"
                     android:fontFamily="@font/roboto_condensed_bold"
                     android:textSize="@dimen/large_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/moreInfoTittle" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/indicator"
                     android:layout_width="@dimen/indicatorIconSize"
                     android:layout_height="@dimen/indicatorIconSize"
@@ -81,7 +81,7 @@
                     app:layout_constraintStart_toEndOf="@id/moreInfoTittle"
                     app:layout_constraintTop_toTopOf="@id/moreInfoTittle" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/date"
                     style="@style/pieChartCardStyle"
                     android:layout_width="wrap_content"
@@ -108,8 +108,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/recentlyExpenses"
+            android:visibility="gone"
+            tools:visibility="visible"
             style="@style/tittleStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,7 +126,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/little_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recentlyExpenses"

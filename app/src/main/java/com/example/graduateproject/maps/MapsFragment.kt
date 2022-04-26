@@ -122,7 +122,7 @@ class MapsFragment @Inject constructor() : Fragment(R.layout.fragment_maps) {
     }
 
     private fun changeStateButton(view: View) {
-        val color = if(view.isSelected) R.color.button_clicked else R.color.button_not_clicked
+        val color = if(view.isSelected) R.color.button_clicked else R.color.light_gray
         view.setBackgroundColor(resources.getColor(color))
         view.isSelected = !view.isSelected
     }

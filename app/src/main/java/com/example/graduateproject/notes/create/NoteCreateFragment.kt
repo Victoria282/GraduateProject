@@ -26,6 +26,7 @@ import com.example.graduateproject.databinding.NoteCreateFragmentBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.notes.model.Note
 import com.example.graduateproject.utils.Utils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
 import java.io.File
 import java.io.FileNotFoundException
@@ -93,7 +94,7 @@ class NoteCreateFragment @Inject constructor(
     }
 
     private fun setDialog() = with(binding) {
-        val dialog = Dialog(requireContext())
+        val dialog = BottomSheetDialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_sheet_layout)
 
@@ -112,16 +113,7 @@ class NoteCreateFragment @Inject constructor(
             dialog.dismiss()
         }
 
-        with(dialog) {
-            show()
-            window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window?.attributes?.windowAnimations = R.style.bottomSheetAnimation
-            window?.setGravity(Gravity.BOTTOM)
-        }
+        dialog.show()
     }
 
     private val permissionLauncher =

@@ -15,6 +15,10 @@ object SharedPreferences {
     private const val SWITCH_PERMISSION_NOTIFICATION = "switch permission notification"
     private const val SWITCH_STUDY_MODE = "switch study mode"
     private const val SAVED_PASSWORD = "user password"
+    private const val SAVED_MONTH_EXPENSE = "month expenses"
+    private const val EXPENSE_ONBOARDING = "show onBoarding in expenses"
+    private const val SCHEDULE_ONBOARDING = "show onBoarding in schedule"
+    private const val NOTE_ONBOARDING = "show onBoarding in note"
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_NAME, MODE)
@@ -48,5 +52,29 @@ object SharedPreferences {
         get() = preferences.getBoolean(SWITCH_STUDY_MODE, false)
         set(value) = preferences.edit {
             putBoolean(SWITCH_STUDY_MODE, value)
+        }
+
+    var saveExpenseMonth: String?
+        get() = preferences.getString(SAVED_MONTH_EXPENSE, "")
+        set(value) = preferences.edit {
+            putString(SAVED_MONTH_EXPENSE, value)
+        }
+
+    var expenseOnBoarding: Boolean
+        get() = preferences.getBoolean(EXPENSE_ONBOARDING, false)
+        set(value) = preferences.edit {
+            putBoolean(EXPENSE_ONBOARDING, value)
+        }
+
+    var scheduleOnBoarding: Boolean
+        get() = preferences.getBoolean(SCHEDULE_ONBOARDING, false)
+        set(value) = preferences.edit {
+            putBoolean(SCHEDULE_ONBOARDING, value)
+        }
+
+    var noteOnBoarding: Boolean
+        get() = preferences.getBoolean(NOTE_ONBOARDING, false)
+        set(value) = preferences.edit {
+            putBoolean(NOTE_ONBOARDING, value)
         }
 }

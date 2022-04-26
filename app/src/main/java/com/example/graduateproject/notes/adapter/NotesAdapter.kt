@@ -24,7 +24,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.DataViewHolder>() {
         fun bind(note: Note?) {
             with(binding) {
                 tittle.text = note?.title
-                subtittle.text = note?.subTitle
+                subtitle.text = note?.subTitle
                 date.text = note?.dateTime
                 noteItem.setOnClickListener {
                     listener?.onNoteClick(note)

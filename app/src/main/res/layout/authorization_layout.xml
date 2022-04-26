@@ -19,6 +19,7 @@
             android:id="@+id/textFieldEmail"
             style="@style/material_text_field"
             android:hint="@string/email_hint"
+            android:layout_marginHorizontal="@dimen/small_margin"
             app:helperTextTextColor="@color/error_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guidelineTop"
@@ -37,6 +38,7 @@
             style="@style/material_text_field"
             android:layout_marginTop="80dp"
             android:hint="@string/password_hint"
+            android:layout_marginHorizontal="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldEmail"
             app:startIconDrawable="@drawable/ic_password">
@@ -55,11 +57,10 @@
             app:layout_constraintGuide_percent="0.7"
             app:layout_constraintTop_toBottomOf="@id/textFieldPassword" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#404040"
             style="@style/Widget.MaterialComponents.Button"
             android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/login_text"
@@ -103,7 +104,7 @@
             style="@style/guide_line_horizontal_style"
             app:layout_constraintGuide_percent="0.99" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textViewRestorePassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

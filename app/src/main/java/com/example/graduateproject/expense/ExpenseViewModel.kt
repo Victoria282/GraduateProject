@@ -2,7 +2,7 @@ package com.example.graduateproject.expense
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.graduateproject.expense.model.Expense
 import com.example.graduateproject.expense.repository.ExpenseRepository
@@ -15,22 +15,31 @@ class ExpenseViewModel @Inject constructor(
     private val expenseRepository: ExpenseRepository
 ) : AndroidViewModel(application) {
 
+    private val _monthlyExpenses = MutableLiveData<List<Expense>>()
+    val monthlyExpenses: MutableLiveData<List<Expense>>
+        get() = _monthlyExpenses
+
     fun addTransaction(transaction: Expense) {
         viewModelScope.launch(Dispatchers.IO) {
             expenseRepository.insertExpense(transaction)
         }
     }
 
-    fun getTransaction(): LiveData<List<Expense>> = expenseRepository.getAllExpenses()
+    fun getTransaction(): List<Expense> = expenseRepository.getAllExpenses()
 
-    fun getMonthlyTransaction(month: Int, Year: Int): LiveData<List<Expense>> =
-        expenseRepository.getMonthlyExpenses(month, Year)
+    fun getMonthlyTransaction(month: Int, Year: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _monthlyExpenses.postValue(expenseRepository.getMonthlyExpenses(month, Year))
+        }
+    }
 
-    fun getYearlyTransaction(year: Int): LiveData<List<Expense>> =
+    fun getYearlyTransaction(year: Int): List<Expense> =
         expenseRepository.getYearlyExpenses(year)
 
-    fun deleteTransaction(id: Int) {
-        expenseRepository.deleteExpense(id)
+    fun deleteTransaction(expense: Expense) {
+        viewModelScope.launch(Dispatchers.IO) {
+            expenseRepository.deleteExpense(expense)
+        }
     }
 
     fun updateTransaction(transaction: Expense) {
