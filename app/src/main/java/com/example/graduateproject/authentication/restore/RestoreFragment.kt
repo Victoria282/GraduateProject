@@ -16,6 +16,7 @@ import com.example.graduateproject.utils.Utils.hideKeyboard
 import com.example.graduateproject.utils.Utils.showMessage
 import com.example.graduateproject.utils.Utils.showMessageWithPositiveButton
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import javax.inject.Inject
 
 class RestoreFragment @Inject constructor() :
@@ -42,7 +43,10 @@ class RestoreFragment @Inject constructor() :
                     val direction = RestoreFragmentDirections.toAuthorization()
                     findNavController().navigate(direction)
                 }
-            } else {
+            } else if(task.exception is FirebaseAuthInvalidUserException){
+                showMessage(R.string.message_invalid_user, requireContext())
+            }
+            else {
                 showMessage(R.string.message_something_went_wrong, requireContext())
             }
         }
@@ -62,17 +66,14 @@ class RestoreFragment @Inject constructor() :
         setTittle()
         initListeners()
         initObservers()
-        emailFocusListener()
     }
 
     private fun setTittle() {
         activity?.title = "Восстановление пароля"
     }
 
-    private fun emailFocusListener() = with(binding) {
-        email.setOnFocusChangeListener { _, focused ->
-            if (!focused) textFieldEmail.helperText = emailValidate()
-        }
+    private fun initObservers() {
+        viewModel.statusRestorePassword.observe(viewLifecycleOwner, statusRestorePasswordObservers)
     }
 
     private fun emailValidate(): String? = with(binding) {
@@ -81,31 +82,26 @@ class RestoreFragment @Inject constructor() :
         return null
     }
 
-    private fun initObservers() {
-        viewModel.statusRestorePassword.observe(viewLifecycleOwner, statusRestorePasswordObservers)
-    }
-
     private fun initListeners() = with(binding) {
         buttonRestorePassword.setOnClickListener {
-
             val email = email.text?.trim().toString()
             val messageEmptyFields = getString(R.string.not_empty_fields)
 
             when {
-                email.isEmpty() -> {
-                    textFieldEmail.helperText = messageEmptyFields
-                }
-                emailValidate() != null -> {
-                    textFieldEmail.helperText = emailValidate()
-                }
+                email.isEmpty() -> textFieldEmail.helperText = messageEmptyFields
+                emailValidate() != null -> textFieldEmail.helperText = emailValidate()
                 else -> {
                     showProgressBar()
-                    textFieldEmail.helperText = ""
-                    view?.let { activity?.hideKeyboard(it) }
+                    clearScreen()
                     viewModel.restoreUserPassword(email)
                 }
             }
         }
+    }
+
+    private fun clearScreen() = with(binding) {
+        textFieldEmail.helperText = ""
+        view?.let { activity?.hideKeyboard(it) }
     }
 
     private fun hideProgressBar() = with(binding) {

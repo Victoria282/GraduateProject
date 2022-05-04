@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Помощник студента</string>
-    <string name="app_developer">Виктория</string>
+    <string name="year_develop">2022</string>
     <string name="email_hint">Почта</string>
     <string name="password_hint">Пароль</string>
     <string name="password_hint_confirm">Подтверждение пароля*</string>
@@ -21,7 +21,8 @@
     <string name="message_ok">ок</string>
     <string name="message_back_to_main_page">Вернуться на главную</string>
     <string name="message_something_went_wrong">Что-то пошло не так.. Проверьте интернет-соединение</string>
-    <string name="message_weak_password"> Пароль должен содержать не меньше 8 символов</string>
+    <string name="message_invalid_user">Пользователь с данным email не найден</string>
+    <string name="message_weak_password"> Пароль должен содержать не меньше 6 символов</string>
     <string name="message_invalid_auth_data"> Неверный email или пароль</string>
     <string name="message_user_with_such_email_exists"> Пользователь с данным email уже существует</string>
     <string name="forgot_password"> Забыли пароль? </string>
@@ -69,6 +70,7 @@
     <string name="test_email"> user@mail.ru </string>
     <string name="first_week"> 1 неделя </string>
     <string name="second_week"> 2 неделя </string>
+    <string name="password_is_changed_success"> Пароль изменён </string>
 
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>

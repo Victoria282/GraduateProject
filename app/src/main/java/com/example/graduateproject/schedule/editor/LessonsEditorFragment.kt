@@ -26,7 +26,7 @@ class LessonsEditorFragment @Inject constructor(
 ) : Fragment(R.layout.fragment_lessons_editor) {
 
     private lateinit var binding: FragmentLessonsEditorBinding
-    private val viewModel: ScheduleViewModel by viewModels { viewModelFactory }
+    private val viewModel: LessonsEditorViewModel by viewModels { viewModelFactory }
     private val args by navArgs<LessonsEditorFragmentArgs>()
 
     override fun onCreateView(

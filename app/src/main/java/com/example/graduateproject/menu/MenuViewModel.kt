@@ -9,11 +9,7 @@ class MenuViewModel @Inject constructor(
     private val firebase: Firebase
 ) : ViewModel() {
 
-    fun getUserInfo(): FirebaseUser? {
-        return firebase.getCurrentUser()
-    }
+    fun getUserInfo(): FirebaseUser? = firebase.getCurrentUser()
 
-    fun logOut() {
-        firebase.logoutUser()
-    }
+    fun logOut() = firebase.logoutUser()
 }

@@ -32,7 +32,7 @@
                 android:backgroundTint="#EEEEEE"
                 android:checkable="true"
                 android:drawableLeft="@drawable/ic_corpus"
-                android:fontFamily="@font/roboto_condensed_bold"
+                android:fontFamily="@font/roboto_condensed_light"
                 android:text="@string/map_corpus"
                 android:textColor="@color/main_color_icon"
                 android:textSize="@dimen/little_text_size" />
@@ -44,7 +44,7 @@
                 android:layout_marginStart="@dimen/small_margin"
                 android:backgroundTint="#EEEEEE"
                 android:drawableLeft="@drawable/ic_library"
-                android:fontFamily="@font/roboto_condensed_bold"
+                android:fontFamily="@font/roboto_condensed_light"
                 android:text="@string/map_library"
                 android:textColor="@color/main_color_icon"
                 android:textSize="@dimen/little_text_size" />
@@ -56,7 +56,7 @@
                 android:layout_marginStart="@dimen/small_margin"
                 android:backgroundTint="#EEEEEE"
                 android:drawableLeft="@drawable/ic_dormitory"
-                android:fontFamily="@font/roboto_condensed_bold"
+                android:fontFamily="@font/roboto_condensed_light"
                 android:text="@string/map_dormitory"
                 android:textColor="@color/main_color_icon"
                 android:textSize="@dimen/little_text_size" />

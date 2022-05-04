@@ -105,7 +105,7 @@ object Utils {
     fun showOnBoarding(
         activity: Activity,
         view: View,
-        secondaryMessage: Int,
+        message: Int,
         context: Context,
         action: () -> Unit
     ) {
@@ -113,13 +113,12 @@ object Utils {
             .setTarget(view)
             .setPrimaryText(R.string.welcome_message_expenses)
             .setFocalRadius(80.0f)
-            .setSecondaryText(secondaryMessage)
+            .setSecondaryText(message)
             .setBackButtonDismissEnabled(true)
             .setBackgroundColour(ContextCompat.getColor(context, R.color.main_color_icon))
             .setPromptStateChangeListener { _, state ->
-                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED) {
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED)
                     action()
-                }
             }
             .show()
     }

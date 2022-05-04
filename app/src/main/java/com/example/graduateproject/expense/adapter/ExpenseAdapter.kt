@@ -40,9 +40,11 @@ class ExpenseAdapter(val context: Context) :
                 money.text = expense.amount.toString()
                 date.text = expense.date
                 category.text = expense.category
+
                 expenseItem.setOnClickListener {
                     listener?.onExpenseClick(expense)
                 }
+
                 categoryIcon.setImageResource(expense.getIcon())
                 categoryIcon.setColorFilter(
                     ContextCompat.getColor(

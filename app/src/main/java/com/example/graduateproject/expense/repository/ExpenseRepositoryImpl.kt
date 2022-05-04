@@ -7,10 +7,6 @@ import javax.inject.Inject
 class ExpenseRepositoryImpl @Inject constructor(
     private val expenseDao: ExpenseDao
 ) : ExpenseRepository {
-    override fun getAllExpenses(): List<Expense> {
-        return expenseDao.getTransaction()
-    }
-
     override fun getMonthlyExpenses(month: Int, Year: Int): List<Expense> {
         return expenseDao.getMonthlyTransaction(month, Year)
     }

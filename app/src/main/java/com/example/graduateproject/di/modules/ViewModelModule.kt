@@ -6,9 +6,10 @@ import com.example.graduateproject.authentication.registration.RegistrationViewM
 import com.example.graduateproject.authentication.restore.RestoreViewModel
 import com.example.graduateproject.di.utils.ViewModelKey
 import com.example.graduateproject.expense.ExpenseViewModel
-import com.example.graduateproject.expense.add.AddExpenseViewModel
+import com.example.graduateproject.expense.adding.AddingExpenseViewModel
 import com.example.graduateproject.main.MainViewModel
 import com.example.graduateproject.menu.MenuViewModel
+import com.example.graduateproject.notes.NotesViewModel
 import com.example.graduateproject.notes.create.NoteCreateViewModel
 import com.example.graduateproject.schedule.editor.LessonsEditorViewModel
 import com.example.graduateproject.schedule.main.ScheduleViewModel
@@ -61,6 +62,11 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(NotesViewModel::class)
+    fun bindNotesViewModel(viewModel: NotesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
 
@@ -71,6 +77,6 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddExpenseViewModel::class)
-    fun bindAddExpenseViewModel(viewModel: AddExpenseViewModel): ViewModel
+    @ViewModelKey(AddingExpenseViewModel::class)
+    fun bindAddExpenseViewModel(viewModel: AddingExpenseViewModel): ViewModel
 }

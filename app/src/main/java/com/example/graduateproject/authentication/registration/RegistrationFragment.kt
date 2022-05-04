@@ -1,5 +1,6 @@
 package com.example.graduateproject.authentication.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.graduateproject.R
 import com.example.graduateproject.authentication.DaggerBaseFragment
 import com.example.graduateproject.databinding.RegistrationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
+import com.example.graduateproject.menu.MenuActivity
 import com.example.graduateproject.shared_preferences.SharedPreferences
 import com.example.graduateproject.utils.Utils
 import com.example.graduateproject.utils.Utils.showMessage
@@ -35,7 +37,8 @@ class RegistrationFragment @Inject constructor() :
 
             hideProgressBar()
 
-            when (authResult.exception) {
+            if (it.isSuccessful) enterApp()
+            else when (authResult.exception) {
                 is FirebaseAuthWeakPasswordException -> showMessage(
                     R.string.message_weak_password,
                     requireContext()
@@ -70,6 +73,12 @@ class RegistrationFragment @Inject constructor() :
         passwordFocusListener()
     }
 
+    private fun enterApp() = Intent(requireContext(), MenuActivity::class.java).also {
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(it)
+    }
+
     private fun emailFocusListener() = with(binding) {
         email.setOnFocusChangeListener { _, focused ->
             if (!focused) textFieldEmail.helperText = emailValidate()
@@ -89,7 +98,7 @@ class RegistrationFragment @Inject constructor() :
     }
 
     private fun passwordValidate(): String? = with(binding) {
-        if (password.text.toString().length < 8)
+        if (password.text.toString().length < 6)
             return getString(R.string.message_weak_password)
         return null
     }
@@ -113,22 +122,22 @@ class RegistrationFragment @Inject constructor() :
 
     private fun getInputData() = with(binding) {
         val email = email.text?.trim().toString()
-        val password = password.text?.trim().toString()
-        val confirmPassword = confirmPassword.text?.trim().toString()
+        val inputPassword = password.text?.trim().toString()
+        val inputConfirmPassword = confirmPassword.text?.trim().toString()
 
         val messageEmptyFields = getString(R.string.not_empty_fields)
-        val messageDifferencePasswords = getString(R.string.message_password_is_difficult)
+        val messageDifferentPasswords = getString(R.string.message_password_is_difficult)
 
         when {
             email.isEmpty() -> textFieldEmail.helperText = messageEmptyFields
-            password.isEmpty() -> textFieldPassword.helperText = messageEmptyFields
-            confirmPassword.isEmpty() -> textFieldPasswordConfirm.helperText = messageEmptyFields
-            binding.password.text.toString() != binding.confirmPassword.text.toString() ->
-                textFieldPasswordConfirm.helperText = messageDifferencePasswords
+            inputPassword.isEmpty() -> textFieldPassword.helperText = messageEmptyFields
+            inputConfirmPassword.isEmpty() -> textFieldPasswordConfirm.helperText = messageEmptyFields
+            password.text.toString() != confirmPassword.text.toString() ->
+                textFieldPasswordConfirm.helperText = messageDifferentPasswords
             else -> {
+                viewModel.registerUser(email, inputPassword)
+                SharedPreferences.savedPassword = inputPassword
                 clearHelperText()
-                viewModel.registerUser(email, password)
-                SharedPreferences.savedPassword = password
                 showProgressBar()
             }
         }

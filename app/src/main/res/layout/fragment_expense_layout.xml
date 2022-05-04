@@ -25,6 +25,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <TextView
                     android:id="@+id/tittleMonthMoney"
                     style="@style/pieChartCardStyle"
@@ -43,8 +44,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/little_padding"
+                    android:text="0 ₽"
                     android:textStyle="bold"
-                    android:text="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tittleMonthMoney" />
 
@@ -65,8 +66,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/little_margin"
-                    android:text="0 ₽"
                     android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="0 ₽"
                     android:textSize="@dimen/large_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/moreInfoTittle" />
@@ -89,12 +90,12 @@
                     android:layout_marginStart="@dimen/small_margin"
                     android:layout_marginTop="@dimen/little_margin"
                     android:layout_marginBottom="12dp"
-                    android:padding="@dimen/little_padding"
                     android:background="@drawable/round"
-                    tools:text="25 апреля 2022"
-                    app:layout_constraintTop_toBottomOf="@+id/expense"
+                    android:padding="@dimen/little_padding"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@+id/expense"
+                    tools:text="25 апреля 2022" />
 
                 <org.eazegraph.lib.charts.PieChart
                     android:id="@+id/expenseAnalytics"
@@ -110,16 +111,16 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/recentlyExpenses"
-            android:visibility="gone"
-            tools:visibility="visible"
             style="@style/tittleStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="22dp"
             android:text="@string/expense_recent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_card" />
+            app:layout_constraintTop_toBottomOf="@+id/main_card"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expensesRecyclerView"
@@ -135,12 +136,12 @@
             android:id="@+id/add_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foregroundGravity="center"
             android:layout_margin="@dimen/large_margin"
-            app:srcCompat="@drawable/ic_add"
-            app:tint="@android:color/white"
             android:focusable="true"
+            android:foregroundGravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@android:color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -2,17 +2,17 @@ package com.example.graduateproject.notes.create
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.NoteCreateFragmentBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
@@ -82,8 +81,10 @@ class NoteCreateFragment @Inject constructor(
                     noteText = noteText,
                     imgPath = imgPath
                 )
-                if (id == 0) viewModel.insertNote(note)
-                else viewModel.updateNote(note)
+                if (id == 0)
+                    viewModel.insertNote(note)
+                else
+                    viewModel.updateNote(note)
                 backToNotesFragment()
             }
         }
@@ -95,15 +96,15 @@ class NoteCreateFragment @Inject constructor(
 
     private fun setDialog() = with(binding) {
         val dialog = BottomSheetDialog(requireContext())
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_sheet_layout)
 
         val deleteNoteButton = dialog.delete_account
-        val uploadImage = dialog.change_img
+        val uploadImage = dialog.upload_img
 
         deleteNoteButton.setOnClickListener {
-            val note = args.notesVal
-            note?.let { viewModel.deleteNote(it) }
+            args.notesVal?.let { viewModel.deleteNote(it) }
             dialog.dismiss()
             backToNotesFragment()
         }
@@ -112,7 +113,6 @@ class NoteCreateFragment @Inject constructor(
             takePhotoFromGallery()
             dialog.dismiss()
         }
-
         dialog.show()
     }
 
@@ -125,7 +125,7 @@ class NoteCreateFragment @Inject constructor(
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 selectedImageUrl = result.data?.data?.toFilePath(requireContext())
-                Glide.with(requireContext()).load(selectedImageUrl).into(binding.imgNote)
+                binding.imgNote.setImageBitmap(BitmapFactory.decodeFile(selectedImageUrl))
                 binding.imgNote.visibility = View.VISIBLE
             }
         }
@@ -193,14 +193,13 @@ class NoteCreateFragment @Inject constructor(
                     }
                     output.flush()
                 }
-            } catch (e: FileNotFoundException) {
-            }
+            } catch (e: FileNotFoundException) { }
         }
         return outputFile.absolutePath
     }
 
     companion object {
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
         private const val BUFFER_SIZE = 1024 * 1024
     }
 }

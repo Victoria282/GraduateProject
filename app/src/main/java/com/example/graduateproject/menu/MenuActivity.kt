@@ -45,11 +45,11 @@ class MenuActivity : DaggerAppCompatActivity() {
         initNavigationViewHeader()
     }
 
-    private fun initNavigationView() {
-        setSupportActionBar(binding.appBarMenu.toolbar)
+    private fun initNavigationView() = with(binding){
+        setSupportActionBar(appBarMenu.toolbar)
 
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
+        val drawerLayout: DrawerLayout = drawerLayout
+        val navView: NavigationView = navView
         val navController = findNavController(R.id.nav_host_fragment_content_menu)
 
         navView.menu.findItem(R.id.log_out).setOnMenuItemClickListener {

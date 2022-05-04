@@ -37,7 +37,5 @@ class Firebase @Inject constructor() {
         )
     }
 
-    fun changePassword(password: String) {
-        getCurrentUser()?.updatePassword(password)
-    }
+    fun changePassword(password: String) = getCurrentUser()?.updatePassword(password)
 }
