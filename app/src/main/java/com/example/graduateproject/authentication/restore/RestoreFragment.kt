@@ -47,7 +47,7 @@ class RestoreFragment @Inject constructor() :
                 showMessage(R.string.message_invalid_user, requireContext())
             }
             else {
-                showMessage(R.string.message_something_went_wrong, requireContext())
+                showMessage(R.string.something_went_wrong, requireContext())
             }
         }
     }

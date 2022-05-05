@@ -104,7 +104,10 @@
             android:id="@+id/addLesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_margin="@dimen/large_margin"
+            android:backgroundTint="@color/main_color_icon"
+            android:elevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add"
@@ -121,19 +124,19 @@
             android:textStyle="italic"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconWeekend"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/pillow"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weekend"
-            android:id="@+id/iconWeekend"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weekend" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/main_color_icon" />
+
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="-50dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/round_back" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:adjustViewBounds="true"
+                    android:padding="30dp"
+                    android:src="@drawable/smile" />
+            </RelativeLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:padding="@dimen/little_padding"
+                android:text="@string/rate_us"
+                android:textSize="@dimen/normal_text_size"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/large_margin"
+                android:rating="3" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textReview"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/little_margin"
+                android:layout_marginBottom="@dimen/large_margin"
+                android:background="@android:color/transparent"
+                android:hint="@string/rate_us_note"
+                android:inputType="text"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:startIconDrawable="@drawable/ic_edit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/review"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:inputType="textMultiLine"
+                    android:textSize="@dimen/little_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rateNowButton"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/rate_us_now"
+            android:textSize="@dimen/little_text_size"
+            android:layout_marginEnd="@dimen/little_margin"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rateLaterButton"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/little_margin"
+            android:backgroundTint="@color/button_clicked"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/rate_us_later"
+            android:textSize="@dimen/little_text_size" />
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

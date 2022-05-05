@@ -28,5 +28,5 @@ data class Lesson(
     @ColumnInfo(name = "startTime")
     val startTime: String,
     @ColumnInfo(name = "endTime")
-    val endTime: String,
+    val endTime: String
 ) : Parcelable

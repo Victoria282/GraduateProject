@@ -1,6 +1,7 @@
 package com.example.graduateproject.menu
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.example.graduateproject.databinding.ActivityMenuBinding
 import com.example.graduateproject.di.utils.FragmentFactory
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
@@ -45,7 +47,7 @@ class MenuActivity : DaggerAppCompatActivity() {
         initNavigationViewHeader()
     }
 
-    private fun initNavigationView() = with(binding){
+    private fun initNavigationView() = with(binding) {
         setSupportActionBar(appBarMenu.toolbar)
 
         val drawerLayout: DrawerLayout = drawerLayout
@@ -54,6 +56,11 @@ class MenuActivity : DaggerAppCompatActivity() {
 
         navView.menu.findItem(R.id.log_out).setOnMenuItemClickListener {
             logOut()
+            true
+        }
+
+        navView.menu.findItem(R.id.nav_about_developer).setOnMenuItemClickListener {
+            writeEmailMessage()
             true
         }
 
@@ -103,5 +110,11 @@ class MenuActivity : DaggerAppCompatActivity() {
             startActivity(it)
         }
         finish()
+    }
+
+    private fun writeEmailMessage() {
+        val emailIntent =
+            Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", Constants.DEVELOPER_EMAIL, null))
+        startActivity(Intent.createChooser(emailIntent, getString((R.string.email_sending))))
     }
 }

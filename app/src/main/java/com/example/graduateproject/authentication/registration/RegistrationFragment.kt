@@ -48,7 +48,7 @@ class RegistrationFragment @Inject constructor() :
                     requireContext()
                 )
                 else -> showMessage(
-                    R.string.message_something_went_wrong,
+                    R.string.something_went_wrong,
                     requireContext()
                 )
             }

@@ -20,7 +20,7 @@
     <string name="alert_dialog_message">Сообщение</string>
     <string name="message_ok">ок</string>
     <string name="message_back_to_main_page">Вернуться на главную</string>
-    <string name="message_something_went_wrong">Что-то пошло не так.. Проверьте интернет-соединение</string>
+    <string name="something_went_wrong">Что-то пошло не так.. </string>
     <string name="message_invalid_user">Пользователь с данным email не найден</string>
     <string name="message_weak_password"> Пароль должен содержать не меньше 6 символов</string>
     <string name="message_invalid_auth_data"> Неверный email или пароль</string>
@@ -120,4 +120,10 @@
     <string name="welcome_subtitle_message_schedule">Добавьте первую пару нажав на кнопку</string>
     <string name="welcome_subtitle_message_expenses">Добавьте первую покупку нажав на кнопку</string>
     <string name="welcome_subtitle_message_expenses_add_budget">Прежде чем добавить покупку, введите Ваш бюджет на месяц..</string>
+    <string name="email_sending">Отправка письма..</string>
+    <string name="rate_us">Оцените наше приложение</string>
+    <string name="rate_us_now">Оценить</string>
+    <string name="rate_us_later">Позже</string>
+    <string name="rate_us_note">Напишите отзыв</string>
+    <string name="sending_success">Отзыв отправлен!</string>
 </resources>

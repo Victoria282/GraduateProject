@@ -18,6 +18,7 @@
     <dimen name="little_margin">8dp</dimen>
     <dimen name="small_margin">16dp</dimen>
     <dimen name="large_margin">32dp</dimen>
+    <dimen name="huge_margin">48dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

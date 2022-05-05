@@ -35,7 +35,7 @@ class SettingsFragment @Inject constructor(
                 try {
                     viewModel.changePassword(SharedPreferences.savedPassword!!)
                 } catch (e: FirebaseAuthRecentLoginRequiredException) {
-                    Utils.showMessage(R.string.message_something_went_wrong, requireContext())
+                    Utils.showMessage(R.string.something_went_wrong, requireContext())
                 }
             }
         }
@@ -52,7 +52,7 @@ class SettingsFragment @Inject constructor(
                     viewModel.deleteAccount()
                     toAuthenticationScreen()
                 } catch (e: FirebaseAuthRecentLoginRequiredException) {
-                    Utils.showMessage(R.string.message_something_went_wrong, requireContext())
+                    Utils.showMessage(R.string.something_went_wrong, requireContext())
                 }
             }
         }

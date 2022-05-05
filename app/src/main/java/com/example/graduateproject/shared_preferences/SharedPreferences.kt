@@ -18,6 +18,8 @@ object SharedPreferences {
     private const val EXPENSE_ON_BOARDING = "expenses on boarding"
     private const val SCHEDULE_ON_BOARDING = "schedule on boarding"
     private const val NOTE_ON_BOARDING = "note on boarding"
+    private const val RATE_US = "rate app"
+    private const val VISITING_APP = "count of visit app"
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_NAME, MODE)
@@ -69,5 +71,17 @@ object SharedPreferences {
         get() = preferences.getBoolean(NOTE_ON_BOARDING, false)
         set(value) = preferences.edit {
             putBoolean(NOTE_ON_BOARDING, value)
+        }
+
+    var rateUs: Boolean
+        get() = preferences.getBoolean(RATE_US, false)
+        set(value) = preferences.edit {
+            putBoolean(RATE_US, value)
+        }
+
+    var visitingApp: Int
+        get() = preferences.getInt(VISITING_APP, 1)
+        set(value) = preferences.edit {
+            putInt(VISITING_APP, value)
         }
 }

@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/large_margin"
             android:fontFamily="@font/roboto_condensed_light"
-            android:textColor="@color/green_color"
+            android:textColor="#07EA00"
             android:textSize="@dimen/middle_text_size"
             app:layout_constraintBottom_toTopOf="@+id/date"
             app:layout_constraintEnd_toEndOf="parent"
