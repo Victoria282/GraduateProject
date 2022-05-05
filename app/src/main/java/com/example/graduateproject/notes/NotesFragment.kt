@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,7 +14,6 @@ import com.example.graduateproject.R
 import com.example.graduateproject.databinding.NotesFragmentBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.notes.adapter.NotesAdapter
-import com.example.graduateproject.notes.create.NoteCreateViewModel
 import com.example.graduateproject.notes.model.Note
 import com.example.graduateproject.shared_preferences.SharedPreferences
 import com.example.graduateproject.utils.Utils
@@ -26,7 +26,7 @@ class NotesFragment @Inject constructor(
 ) : Fragment(R.layout.notes_fragment),
     NotesAdapter.NoteClickListener {
 
-    private val viewModel: NoteCreateViewModel by viewModels { viewModelFactory }
+    private val viewModel: NotesViewModel by viewModels { viewModelFactory }
     private lateinit var binding: NotesFragmentBinding
 
     lateinit var notesAdapter: NotesAdapter
@@ -47,9 +47,7 @@ class NotesFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!SharedPreferences.noteOnBoarding) {
-            showOnBoarding()
-        }
+        if (!SharedPreferences.noteOnBoarding) showOnBoarding()
         initObservers()
         initListeners()
         initUI()
@@ -60,20 +58,19 @@ class NotesFragment @Inject constructor(
             onNoteClick(null)
         }
 
-        searchView.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                val tempArr = ArrayList<Note>()
+                val array = ArrayList<Note>()
 
                 for (arr in arrayNotes)
                     if (arr.title!!.lowercase(Locale.getDefault()).contains(p0.toString()))
-                        tempArr.add(arr)
+                        array.add(arr)
 
-                notesAdapter.updateNotes(tempArr)
+                notesAdapter.updateNotes(array)
                 notesAdapter.notifyDataSetChanged()
                 return true
             }
@@ -89,8 +86,8 @@ class NotesFragment @Inject constructor(
         notesAdapter.clickListener = this@NotesFragment
     }
 
-    private fun initObservers() {
-        viewModel.notes.observe(viewLifecycleOwner, notesObserver)
+    private fun initObservers() = with(viewModel){
+        notes.observe(viewLifecycleOwner, notesObserver)
     }
 
     override fun onNoteClick(note: Note?) {

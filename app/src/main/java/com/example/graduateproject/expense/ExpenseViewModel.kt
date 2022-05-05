@@ -19,32 +19,11 @@ class ExpenseViewModel @Inject constructor(
     val monthlyExpenses: MutableLiveData<List<Expense>>
         get() = _monthlyExpenses
 
-    fun addTransaction(transaction: Expense) {
-        viewModelScope.launch(Dispatchers.IO) {
-            expenseRepository.insertExpense(transaction)
-        }
-    }
-
-    fun getTransaction(): List<Expense> = expenseRepository.getAllExpenses()
-
     fun getMonthlyTransaction(month: Int, Year: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _monthlyExpenses.postValue(expenseRepository.getMonthlyExpenses(month, Year))
         }
     }
 
-    fun getYearlyTransaction(year: Int): List<Expense> =
-        expenseRepository.getYearlyExpenses(year)
-
-    fun deleteTransaction(expense: Expense) {
-        viewModelScope.launch(Dispatchers.IO) {
-            expenseRepository.deleteExpense(expense)
-        }
-    }
-
-    fun updateTransaction(transaction: Expense) {
-        viewModelScope.launch(Dispatchers.IO) {
-            expenseRepository.updateExpense(transaction)
-        }
-    }
+    fun getYearlyTransaction(year: Int): List<Expense> = expenseRepository.getYearlyExpenses(year)
 }

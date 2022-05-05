@@ -14,23 +14,16 @@ class NoteCreateViewModel @Inject constructor(
     application: Application,
     private val noteRepository: NoteRepository
 ) : AndroidViewModel(application) {
-    val notes: LiveData<List<Note>> = noteRepository.notes
 
-    fun insertNote(note: Note) {
-        viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.insertNote(note)
-        }
+    fun insertNote(note: Note) = viewModelScope.launch(Dispatchers.IO) {
+        noteRepository.insertNote(note)
     }
 
-    fun updateNote(note: Note) {
-        viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.updateNote(note)
-        }
+    fun updateNote(note: Note) = viewModelScope.launch(Dispatchers.IO) {
+        noteRepository.updateNote(note)
     }
 
-    fun deleteNote(note: Note) {
-        viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.deleteNote(note)
-        }
+    fun deleteNote(note: Note) = viewModelScope.launch(Dispatchers.IO) {
+        noteRepository.deleteNote(note)
     }
 }

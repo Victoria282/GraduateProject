@@ -13,11 +13,18 @@ class SettingsViewModel @Inject constructor(
     val statusDeleteAccount: MutableLiveData<Task<Void>>
         get() = _statusDeleteAccount
 
+    private val _changePassword = MutableLiveData<Task<Void>>()
+    val changePassword: MutableLiveData<Task<Void>>
+        get() = _changePassword
+
     fun deleteAccount() = firebase.deleteAccount()?.addOnCompleteListener {
         _statusDeleteAccount.postValue(it)
     }
 
-    fun reAuth() = firebase.reAuthenticate()
+    fun changePassword(password: String) =
+        firebase.changePassword(password)?.addOnCompleteListener {
+            _changePassword.postValue(it)
+        }
 
-    fun changePassword(password: String) = firebase.changePassword(password)
+    fun reAuth() = firebase.reAuthenticate()
 }

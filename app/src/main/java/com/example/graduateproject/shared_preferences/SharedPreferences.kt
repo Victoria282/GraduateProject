@@ -10,15 +10,16 @@ object SharedPreferences {
 
     private const val PREF_NAME = "saved data user"
 
-    private const val STUDY_WEEK_DAY = "day of week"
-    private const val SWITCH_WEEK = "switch week"
-    private const val SWITCH_PERMISSION_NOTIFICATION = "switch permission notification"
-    private const val SWITCH_STUDY_MODE = "switch study mode"
-    private const val SAVED_PASSWORD = "user password"
-    private const val SAVED_MONTH_EXPENSE = "month expenses"
-    private const val EXPENSE_ONBOARDING = "show onBoarding in expenses"
-    private const val SCHEDULE_ONBOARDING = "show onBoarding in schedule"
-    private const val NOTE_ONBOARDING = "show onBoarding in note"
+    private const val STUDY_WEEK_DAY = "week's day"
+    private const val SWITCH_WEEK = "study week"
+    private const val SWITCH_PERMISSION_NOTIFICATION = "study notification"
+    private const val SAVED_PASSWORD = "password"
+    private const val SAVED_MONTH_EXPENSE = "month budget"
+    private const val EXPENSE_ON_BOARDING = "expenses on boarding"
+    private const val SCHEDULE_ON_BOARDING = "schedule on boarding"
+    private const val NOTE_ON_BOARDING = "note on boarding"
+    private const val RATE_US = "rate app"
+    private const val VISITING_APP = "count of visit app"
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_NAME, MODE)
@@ -48,33 +49,39 @@ object SharedPreferences {
             putBoolean(SWITCH_PERMISSION_NOTIFICATION, value)
         }
 
-    var saveStudyMode: Boolean
-        get() = preferences.getBoolean(SWITCH_STUDY_MODE, false)
-        set(value) = preferences.edit {
-            putBoolean(SWITCH_STUDY_MODE, value)
-        }
-
-    var saveExpenseMonth: String?
+    var saveMonthBudget: String?
         get() = preferences.getString(SAVED_MONTH_EXPENSE, "")
         set(value) = preferences.edit {
             putString(SAVED_MONTH_EXPENSE, value)
         }
 
     var expenseOnBoarding: Boolean
-        get() = preferences.getBoolean(EXPENSE_ONBOARDING, false)
+        get() = preferences.getBoolean(EXPENSE_ON_BOARDING, false)
         set(value) = preferences.edit {
-            putBoolean(EXPENSE_ONBOARDING, value)
+            putBoolean(EXPENSE_ON_BOARDING, value)
         }
 
     var scheduleOnBoarding: Boolean
-        get() = preferences.getBoolean(SCHEDULE_ONBOARDING, false)
+        get() = preferences.getBoolean(SCHEDULE_ON_BOARDING, false)
         set(value) = preferences.edit {
-            putBoolean(SCHEDULE_ONBOARDING, value)
+            putBoolean(SCHEDULE_ON_BOARDING, value)
         }
 
     var noteOnBoarding: Boolean
-        get() = preferences.getBoolean(NOTE_ONBOARDING, false)
+        get() = preferences.getBoolean(NOTE_ON_BOARDING, false)
         set(value) = preferences.edit {
-            putBoolean(NOTE_ONBOARDING, value)
+            putBoolean(NOTE_ON_BOARDING, value)
+        }
+
+    var rateUs: Boolean
+        get() = preferences.getBoolean(RATE_US, false)
+        set(value) = preferences.edit {
+            putBoolean(RATE_US, value)
+        }
+
+    var visitingApp: Int
+        get() = preferences.getInt(VISITING_APP, 1)
+        set(value) = preferences.edit {
+            putInt(VISITING_APP, value)
         }
 }

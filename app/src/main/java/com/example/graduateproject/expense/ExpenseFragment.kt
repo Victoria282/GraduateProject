@@ -43,18 +43,11 @@ class ExpenseFragment @Inject constructor(
     private var totalAcademics = 0.0f
 
     private var monthlyExpensesObserver = Observer<List<Expense>> { listExpenses ->
-        totalExpense = 0.0
-        totalFood = 0.0f
-        totalShopping = 0.0f
-        totalTransport = 0.0f
-        totalHealth = 0.0f
-        totalOthers = 0.0f
-        totalAcademics = 0.0f
+        resetResult()
 
-        if (listExpenses.isEmpty()) {
-            showPiChart()
-        } else {
+        if (listExpenses.isNotEmpty()) {
             binding.recentlyExpenses.visibility = View.VISIBLE
+
             listExpenses.forEach { expense ->
                 if (!expenseAdapter.expensesList.contains(expense))
                     expenseAdapter.updateExpenses(expense)
@@ -74,6 +67,19 @@ class ExpenseFragment @Inject constructor(
             checkMonthBudget()
             showPiChart()
         }
+    }
+
+    private fun resetResult() {
+        binding.expenseAnalytics.clearChart()
+
+        totalExpense = 0.0
+
+        totalFood = 0.0f
+        totalShopping = 0.0f
+        totalTransport = 0.0f
+        totalHealth = 0.0f
+        totalOthers = 0.0f
+        totalAcademics = 0.0f
     }
 
     private fun showCurrentExpenses() = with(binding) {
@@ -107,9 +113,7 @@ class ExpenseFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!SharedPreferences.expenseOnBoarding) {
-            showOnBoarding()
-        }
+        if (!SharedPreferences.expenseOnBoarding) showOnBoarding()
         initUi()
         initAdapter()
         initListeners()
@@ -119,7 +123,7 @@ class ExpenseFragment @Inject constructor(
 
     private fun initUi() = with(binding) {
         budget.text =
-            if (SharedPreferences.saveExpenseMonth == "") "0" else SharedPreferences.saveExpenseMonth
+            if (SharedPreferences.saveMonthBudget == "") "0 ₽" else SharedPreferences.saveMonthBudget
     }
 
     private fun initDate() {
@@ -138,13 +142,14 @@ class ExpenseFragment @Inject constructor(
 
     private fun showBottomNavigation() {
         val dialog = BottomSheetDialog(requireContext())
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.bottom_sheet_expense)
 
         val update = dialog.findViewById<Button>(R.id.update)
         val moneyEditor = dialog.findViewById<TextInputEditText>(R.id.edit_money)
 
-        moneyEditor?.setText(SharedPreferences.saveExpenseMonth)
+        moneyEditor?.setText(SharedPreferences.saveMonthBudget)
 
         update?.setOnClickListener {
             val monthBudget = moneyEditor?.text.toString()
@@ -153,7 +158,8 @@ class ExpenseFragment @Inject constructor(
                 requireContext()
             )
             else {
-                SharedPreferences.saveExpenseMonth = monthBudget
+                SharedPreferences.saveMonthBudget = monthBudget
+                binding.expenseAnalytics.clearChart()
                 changeMonthBudgetTittle(monthBudget.toFloat())
                 checkMonthBudget()
                 showPiChart()
@@ -177,12 +183,12 @@ class ExpenseFragment @Inject constructor(
         monthlyExpenses.observe(viewLifecycleOwner, monthlyExpensesObserver)
     }
 
-    private fun changeMonthBudgetTittle(monthBudget: Float) {
-        binding.budget.text = getString(R.string.expense_month_budget, monthBudget.toString())
+    private fun changeMonthBudgetTittle(monthBudget: Float) = with(binding) {
+        budget.text = getString(R.string.expense_month_budget, monthBudget.toString())
     }
 
     private fun checkMonthBudget() = with(binding) {
-        if (totalExpense > SharedPreferences.saveExpenseMonth!!.toFloat()) {
+        if (totalExpense > SharedPreferences.saveMonthBudget!!.toFloat()) {
             indicator.setImageResource(R.drawable.ic_negative_balance)
             expense.setTextColor(
                 ContextCompat.getColor(
@@ -246,22 +252,22 @@ class ExpenseFragment @Inject constructor(
         )
 
         val monthExpense =
-            if (SharedPreferences.saveExpenseMonth == "") 0f else SharedPreferences.saveExpenseMonth!!.toFloat()
+            if (SharedPreferences.saveMonthBudget == "") 0f else SharedPreferences.saveMonthBudget!!.toFloat()
+
         if (monthExpense >= totalExpense)
             addPieSlice(
                 PieModel(
-                    "Left",
+                    "Старт",
                     monthExpense - (totalExpense.toFloat()),
                     ContextCompat.getColor(requireContext(), R.color.gray_light)
                 )
             )
-
         this.startAnimation()
     }
 
     private fun initListeners() = with(binding) {
         addNew.setOnClickListener {
-            if (budget.text.toString() == "0")
+            if (budget.text.toString() == "0 ₽")
                 Utils.showMessage(
                     R.string.welcome_subtitle_message_expenses_add_budget,
                     requireContext()
@@ -276,15 +282,13 @@ class ExpenseFragment @Inject constructor(
         findNavController().navigate(direction)
     }
 
-    private fun showOnBoarding() {
-        Utils.showOnBoarding(
-            requireActivity(),
-            binding.addNew,
-            R.string.welcome_subtitle_message_expenses,
-            requireContext()
-        ) {
-            SharedPreferences.expenseOnBoarding = true
-        }
+    private fun showOnBoarding() = Utils.showOnBoarding(
+        requireActivity(),
+        binding.addNew,
+        R.string.welcome_subtitle_message_expenses,
+        requireContext()
+    ) {
+        SharedPreferences.expenseOnBoarding = true
     }
 
     companion object {

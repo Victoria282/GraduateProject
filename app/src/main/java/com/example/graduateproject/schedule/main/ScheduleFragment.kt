@@ -26,7 +26,7 @@ class ScheduleFragment @Inject constructor(
     private val viewModel: ScheduleViewModel by viewModels { viewModelFactory }
     private lateinit var binding: ScheduleFragmentBinding
     private lateinit var adapter: LessonsAdapter
-
+    private var counter: Int = 0
     private var lessonsList: ArrayList<Lesson> = ArrayList()
 
     private val lessonsObserver = Observer<List<Lesson>> { list ->
@@ -39,14 +39,15 @@ class ScheduleFragment @Inject constructor(
     private val weekDayObserver = Observer<String> {
         initLessonsAdapter()
         lessonsList.forEach {
-            if (checkWeekPositionDay(it)) {
-                adapter.updateLessons(it)
-            }
+            if (checkWeekPositionDay(it)) adapter.updateLessons(it)
         }
+        if(lessonsList.isNotEmpty()) checkLessonsExists()
     }
 
     private fun checkWeekPositionDay(lesson: Lesson): Boolean {
-        return lesson.positionOfWeekDay == SharedPreferences.savedWeekDay && lesson.week == SharedPreferences.saveSwitchWeek
+        val flag = lesson.positionOfWeekDay == SharedPreferences.savedWeekDay && lesson.week == SharedPreferences.saveSwitchWeek
+        if(flag) counter++
+        return flag
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,11 +67,17 @@ class ScheduleFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!SharedPreferences.scheduleOnBoarding) {
-            showOnBoarding()
-        }
+        if (!SharedPreferences.scheduleOnBoarding) showOnBoarding()
         initObservers()
         initUi()
+    }
+    
+    private fun checkLessonsExists() {
+        val visibilityFlag = if(counter == 0) View.VISIBLE else View.GONE
+
+        binding.weekend.visibility = visibilityFlag
+        binding.iconWeekend.visibility = visibilityFlag
+        counter = 0
     }
 
     private fun initUi() = with(binding) {
@@ -103,13 +110,13 @@ class ScheduleFragment @Inject constructor(
         findNavController().navigate(direction)
     }
 
-    private fun initListeners() = with(binding) {
-        btn1.setOnClickListener(this@ScheduleFragment)
-        btn2.setOnClickListener(this@ScheduleFragment)
-        btn3.setOnClickListener(this@ScheduleFragment)
-        btn4.setOnClickListener(this@ScheduleFragment)
-        btn5.setOnClickListener(this@ScheduleFragment)
-        btn6.setOnClickListener(this@ScheduleFragment)
+    private fun initListeners()  {
+        binding.btn1.setOnClickListener(this)
+        binding.btn2.setOnClickListener(this)
+        binding.btn3.setOnClickListener(this)
+        binding.btn4.setOnClickListener(this)
+        binding.btn5.setOnClickListener(this)
+        binding.btn6.setOnClickListener(this)
     }
 
     override fun onResume() {

@@ -43,7 +43,7 @@ class AuthorizationFragment @Inject constructor() :
                         requireContext()
                     )
                 else -> showMessage(
-                    R.string.message_something_went_wrong,
+                    R.string.something_went_wrong,
                     requireContext()
                 )
             }
@@ -124,12 +124,16 @@ class AuthorizationFragment @Inject constructor() :
             email.isEmpty() -> textFieldEmail.helperText = message
             password.isEmpty() -> textFieldPassword.helperText = message
             else -> {
-                textFieldEmail.helperText = ""
-                textFieldPassword.helperText = ""
                 viewModel.loginUser(email, password)
+                clearHelperText()
                 showProgressBar()
             }
         }
+    }
+
+    private fun clearHelperText() = with(binding) {
+        textFieldEmail.helperText = ""
+        textFieldPassword.helperText = ""
     }
 
     private fun hideProgressBar() = with(binding) {

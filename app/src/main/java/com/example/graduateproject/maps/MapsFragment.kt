@@ -14,7 +14,8 @@ import com.example.graduateproject.R
 import com.example.graduateproject.databinding.FragmentMapsBinding
 import com.example.graduateproject.maps.model.Place
 import com.example.graduateproject.utils.Utils
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -23,8 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
 
-class MapsFragment @Inject constructor() : Fragment(R.layout.fragment_maps) {
+class MapsFragment @Inject constructor(
 
+) : Fragment(R.layout.fragment_maps) {
     @Inject
     lateinit var placesReader: PlacesReader
 
@@ -53,7 +55,6 @@ class MapsFragment @Inject constructor() : Fragment(R.layout.fragment_maps) {
                 .title(getString(R.string.tittle_map_my_location))
             googleMap.addMarker(makerOptions)
         }
-        googleMap.mapType
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chelyabinsk, 10f))
     }
 
@@ -69,7 +70,6 @@ class MapsFragment @Inject constructor() : Fragment(R.layout.fragment_maps) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadMap()
-        initListeners()
     }
 
     private fun loadMap() {
@@ -81,8 +81,7 @@ class MapsFragment @Inject constructor() : Fragment(R.layout.fragment_maps) {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            val task = fusedLocationProvider.lastLocation
-            task.addOnSuccessListener { location ->
+            fusedLocationProvider.lastLocation.addOnSuccessListener { location ->
                 currentLocation = location
                 val mapFragment =
                     childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -105,26 +104,6 @@ class MapsFragment @Inject constructor() : Fragment(R.layout.fragment_maps) {
             permission["android.permission.ACCESS_COARSE_LOCATION"] == true
         )
             loadMap()
-    }
-
-    private fun initListeners() = with(binding) {
-        corpusFilter.setOnClickListener {
-            changeStateButton(it)
-        }
-
-        libraryFilter.setOnClickListener {
-            changeStateButton(it)
-        }
-
-        dormitoryFilter.setOnClickListener {
-            changeStateButton(it)
-        }
-    }
-
-    private fun changeStateButton(view: View) {
-        val color = if(view.isSelected) R.color.button_clicked else R.color.light_gray
-        view.setBackgroundColor(resources.getColor(color))
-        view.isSelected = !view.isSelected
     }
 
     companion object {

@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
-        android:name="com.example.graduateproject.expense.add.AddExpenseFragment"
+        android:name="com.example.graduateproject.expense.adding.AddingExpenseFragment"
         android:label="@string/nav_add_expense"
         tools:layout="@layout/add_expense_layout">
         <argument

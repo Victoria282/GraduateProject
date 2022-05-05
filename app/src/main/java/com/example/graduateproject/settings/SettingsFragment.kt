@@ -1,8 +1,6 @@
 package com.example.graduateproject.settings
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -18,6 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import kotlinx.android.synthetic.main.bottom_sheet_settings.*
+import kotlinx.android.synthetic.main.dialog_change_password.view.*
 import javax.inject.Inject
 
 class SettingsFragment @Inject constructor(
@@ -26,23 +25,42 @@ class SettingsFragment @Inject constructor(
     private lateinit var binding: SettingsFragmentLayoutBinding
     private val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
+    private val changePasswordObserver = Observer<Task<Void>> { task ->
+        task.addOnCompleteListener {
+            hideProgressBar()
+            if (it.isSuccessful) {
+                Utils.showMessage(R.string.password_is_changed_success, requireContext())
+            } else if (it.exception is FirebaseAuthRecentLoginRequiredException) {
+                viewModel.reAuth()
+                try {
+                    viewModel.changePassword(SharedPreferences.savedPassword!!)
+                } catch (e: FirebaseAuthRecentLoginRequiredException) {
+                    Utils.showMessage(R.string.something_went_wrong, requireContext())
+                }
+            }
+        }
+    }
+
     private val statusDeleteAccountObserver = Observer<Task<Void>> { task ->
         task.addOnCompleteListener {
             hideProgressBar()
             if (it.isSuccessful) {
-                val direction = SettingsFragmentDirections.toAuthenticationGraph()
-                findNavController().navigate(direction)
+                toAuthenticationScreen()
             } else if (it.exception is FirebaseAuthRecentLoginRequiredException) {
                 viewModel.reAuth()
                 try {
                     viewModel.deleteAccount()
-                    val direction = SettingsFragmentDirections.toAuthenticationGraph()
-                    findNavController().navigate(direction)
+                    toAuthenticationScreen()
                 } catch (e: FirebaseAuthRecentLoginRequiredException) {
-                    Utils.showMessage(R.string.message_something_went_wrong, requireContext())
+                    Utils.showMessage(R.string.something_went_wrong, requireContext())
                 }
             }
         }
+    }
+
+    private fun toAuthenticationScreen() {
+        val direction = SettingsFragmentDirections.toAuthenticationGraph()
+        findNavController().navigate(direction)
     }
 
     override fun onCreateView(
@@ -74,9 +92,6 @@ class SettingsFragment @Inject constructor(
         switchWeek.setOnCheckedChangeListener { _, isChecked ->
             SharedPreferences.saveSwitchWeek = isChecked
         }
-        switchExams.setOnCheckedChangeListener { _, isChecked ->
-            SharedPreferences.saveStudyMode = isChecked
-        }
         switchNotification.setOnCheckedChangeListener { _, isChecked ->
             SharedPreferences.savePermissionNotification = isChecked
         }
@@ -84,12 +99,12 @@ class SettingsFragment @Inject constructor(
 
     private fun initObservers() {
         viewModel.statusDeleteAccount.observe(viewLifecycleOwner, statusDeleteAccountObserver)
+        viewModel.changePassword.observe(viewLifecycleOwner, changePasswordObserver)
     }
 
     private fun loadSettings() {
         with(binding) {
             switchWeek.isChecked = SharedPreferences.saveSwitchWeek
-            switchExams.isChecked = SharedPreferences.saveStudyMode
             switchNotification.isChecked = SharedPreferences.savePermissionNotification
         }
     }
@@ -108,9 +123,43 @@ class SettingsFragment @Inject constructor(
             viewModel.deleteAccount()
         }
         changePassword.setOnClickListener {
+            val dialogView = LayoutInflater
+                .from(requireContext())
+                .inflate(R.layout.dialog_change_password, null)
+
+            val mBuilder = AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setTitle(R.string.change_password_button)
+                .show()
+
+            val messageEmptyFields = getString(R.string.not_empty_fields)
+            val messageDifferencePasswords = getString(R.string.message_password_is_difficult)
+
+            dialogView.changeButton.setOnClickListener {
+                val password = dialogView.password.text?.trim().toString()
+                val confirmPassword = dialogView.confirmPassword.text?.trim().toString()
+
+                when {
+                    password.isEmpty() -> dialogView.textFieldPassword.helperText =
+                        messageEmptyFields
+                    confirmPassword.isEmpty() -> dialogView.textFieldPasswordConfirm.helperText =
+                        messageEmptyFields
+                    dialogView.password.text.toString() != dialogView.confirmPassword.text.toString() ->
+                        dialogView.textFieldPasswordConfirm.helperText = messageDifferencePasswords
+
+                    else -> {
+                        dialogView.textFieldPassword.helperText = ""
+                        dialogView.textFieldPasswordConfirm.helperText = ""
+
+                        mBuilder.dismiss()
+                        SharedPreferences.savedPassword = password
+                        showProgressBar()
+                        viewModel.changePassword(password)
+                    }
+                }
+            }
             dialog.dismiss()
         }
-
         dialog.show()
     }
 

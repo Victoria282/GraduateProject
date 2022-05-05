@@ -1,4 +1,4 @@
-package com.example.graduateproject.expense.add
+package com.example.graduateproject.expense.adding
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -14,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.AddExpenseLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.expense.ExpenseViewModel
 import com.example.graduateproject.expense.model.Expense
 import com.example.graduateproject.utils.Utils
 import com.google.android.material.button.MaterialButton
@@ -22,12 +21,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class AddExpenseFragment @Inject constructor(
+class AddingExpenseFragment @Inject constructor(
     viewModelFactory: ViewModelFactory
 ) : Fragment(R.layout.add_expense_layout), View.OnClickListener {
     private lateinit var binding: AddExpenseLayoutBinding
-    private val viewModel: ExpenseViewModel by viewModels { viewModelFactory }
-    private val args by navArgs<AddExpenseFragmentArgs>()
+    private val viewModel: AddingExpenseViewModel by viewModels { viewModelFactory }
+    private val args by navArgs<AddingExpenseFragmentArgs>()
 
     private var day = 0
     private var month = 0
@@ -45,16 +44,9 @@ class AddExpenseFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Locale.setDefault(APP_LOCALE_RU)
-        args.expenseItem?.let {
-            setExpenseInfo()
-        }
+        args.expenseItem?.let { setExpenseInfo() }
         datePicker()
         initListeners()
-        binding.delete.setOnClickListener {
-            val expense = args.expenseItem
-            expense?.let { viewModel.deleteTransaction(expense) }
-            backToExpenseFragment()
-        }
     }
 
     private fun datePicker() = with(binding) {
@@ -89,26 +81,34 @@ class AddExpenseFragment @Inject constructor(
         }
     }
 
-    private fun initListeners() {
+    private fun initListeners() = with(binding) {
+        addExpense.setOnClickListener { addExpense() }
+        delete.setOnClickListener {
+            val expense = args.expenseItem
+            expense?.let { viewModel.deleteExpense(expense) }
+            backToExpenseFragment()
+        }
+        initCategoryButtons()
+    }
+
+    private fun initCategoryButtons() {
         binding.food.setOnClickListener(this)
         binding.shopping.setOnClickListener(this)
         binding.transport.setOnClickListener(this)
         binding.health.setOnClickListener(this)
         binding.others.setOnClickListener(this)
         binding.academics.setOnClickListener(this)
-
-        binding.addExpense.setOnClickListener { addExpense() }
     }
 
-    private fun addExpense() {
-        val title = binding.editTitle.text.toString()
-        val amount = binding.editMoney.text.toString()
-        val note = binding.editNote.text.toString()
-        val date = binding.editDate.text.toString()
+    private fun addExpense() = with(binding) {
+        val title = editTitle.text.toString()
+        val amount = editMoney.text.toString()
+        val note = editNote.text.toString()
+        val date = editDate.text.toString()
 
-        if (title == "" || amount == "" || date == "" || categoryExpense == "") {
+        if (title == "" || amount == "" || date == "" || categoryExpense == "")
             Utils.showMessage(R.string.message_input_empty_fields, requireContext())
-        } else {
+        else {
             val id = if (args.expenseItem == null) null else args.expenseItem!!.id
 
             val expense = Expense(
@@ -123,16 +123,16 @@ class AddExpenseFragment @Inject constructor(
                 category = categoryExpense
             )
             if (id == null)
-                viewModel.addTransaction(expense)
+                viewModel.addExpense(expense)
             else
-                viewModel.updateTransaction(expense)
+                viewModel.updateExpense(expense)
 
             backToExpenseFragment()
         }
     }
 
     private fun backToExpenseFragment() {
-        val direction = AddExpenseFragmentDirections.toExpenseFragment()
+        val direction = AddingExpenseFragmentDirections.toExpenseFragment()
         findNavController().navigate(direction)
     }
 
@@ -151,22 +151,21 @@ class AddExpenseFragment @Inject constructor(
         setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color_icon))
     }
 
-    private fun setExpenseInfo() {
-        with(binding) {
-            editTitle.setText(args.expenseItem?.title)
-            editDate.setText((args.expenseItem?.date))
-            editMoney.setText((args.expenseItem?.amount.toString()))
-            editNote.setText((args.expenseItem?.note))
-        }
+    private fun setExpenseInfo() = with(binding) {
+        editTitle.setText(args.expenseItem?.title)
+        editDate.setText((args.expenseItem?.date))
+        editMoney.setText((args.expenseItem?.amount.toString()))
+        editNote.setText((args.expenseItem?.note))
+
         categoryExpense = (args.expenseItem!!.category)
 
         when (categoryExpense) {
-            "Еда" -> setCategory(binding.food)
-            "Покупки" -> setCategory(binding.shopping)
-            "Транспорт" -> setCategory(binding.transport)
-            "Здоровье" -> setCategory(binding.health)
-            "Другое" -> setCategory(binding.others)
-            "Учёба" -> setCategory(binding.academics)
+            "Еда" -> setCategory(food)
+            "Покупки" -> setCategory(shopping)
+            "Транспорт" -> setCategory(transport)
+            "Здоровье" -> setCategory(health)
+            "Другое" -> setCategory(others)
+            "Учёба" -> setCategory(academics)
         }
     }
 
@@ -176,53 +175,53 @@ class AddExpenseFragment @Inject constructor(
         setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
     }
 
-    private fun setCategory(v: View?) {
-        categoryExpense = (v as Button).text.toString()
+    private fun setCategory(view: View?) = with(binding) {
+        categoryExpense = (view as Button).text.toString()
 
-        makeSelectedButton(v)
+        makeSelectedButton(view)
 
-        when (v) {
-            binding.food -> {
-                removeBackground(binding.shopping)
-                removeBackground(binding.transport)
-                removeBackground(binding.health)
-                removeBackground(binding.others)
-                removeBackground(binding.academics)
+        when (view) {
+            food -> {
+                removeBackground(shopping)
+                removeBackground(transport)
+                removeBackground(health)
+                removeBackground(others)
+                removeBackground(academics)
             }
-            binding.shopping -> {
-                removeBackground(binding.food)
-                removeBackground(binding.transport)
-                removeBackground(binding.health)
-                removeBackground(binding.others)
-                removeBackground(binding.academics)
+            shopping -> {
+                removeBackground(food)
+                removeBackground(transport)
+                removeBackground(health)
+                removeBackground(others)
+                removeBackground(academics)
             }
-            binding.transport -> {
-                removeBackground(binding.shopping)
-                removeBackground(binding.food)
-                removeBackground(binding.health)
-                removeBackground(binding.others)
-                removeBackground(binding.academics)
+            transport -> {
+                removeBackground(shopping)
+                removeBackground(food)
+                removeBackground(health)
+                removeBackground(others)
+                removeBackground(academics)
             }
-            binding.health -> {
-                removeBackground(binding.shopping)
-                removeBackground(binding.transport)
-                removeBackground(binding.food)
-                removeBackground(binding.others)
-                removeBackground(binding.academics)
+            health -> {
+                removeBackground(shopping)
+                removeBackground(transport)
+                removeBackground(food)
+                removeBackground(others)
+                removeBackground(academics)
             }
-            binding.others -> {
-                removeBackground(binding.shopping)
-                removeBackground(binding.transport)
-                removeBackground(binding.health)
-                removeBackground(binding.food)
-                removeBackground(binding.academics)
+            others -> {
+                removeBackground(shopping)
+                removeBackground(transport)
+                removeBackground(health)
+                removeBackground(food)
+                removeBackground(academics)
             }
-            binding.academics -> {
-                removeBackground(binding.shopping)
-                removeBackground(binding.transport)
-                removeBackground(binding.health)
-                removeBackground(binding.others)
-                removeBackground(binding.food)
+            academics -> {
+                removeBackground(shopping)
+                removeBackground(transport)
+                removeBackground(health)
+                removeBackground(others)
+                removeBackground(food)
             }
         }
     }

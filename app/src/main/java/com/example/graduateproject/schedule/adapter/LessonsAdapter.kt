@@ -57,9 +57,7 @@ class LessonsAdapter(private val lessons: ArrayList<Lesson>) :
     }
 
     fun updateLessons(lessons: Lesson) {
-        this.lessons.apply {
-            add(lessons)
-        }
+        this.lessons.add(lessons)
         notifyDataSetChanged()
     }
 }
