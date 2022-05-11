@@ -15,7 +15,7 @@ import com.example.graduateproject.databinding.NotesFragmentBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.notes.adapter.NotesAdapter
 import com.example.graduateproject.notes.model.Note
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Utils
 import java.util.*
 import javax.inject.Inject
@@ -47,7 +47,7 @@ class NotesFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!SharedPreferences.noteOnBoarding) showOnBoarding()
+        if (!Storage.noteOnBoarding) showOnBoarding()
         initObservers()
         initListeners()
         initUI()
@@ -102,7 +102,7 @@ class NotesFragment @Inject constructor(
             R.string.welcome_subtitle_message_note,
             requireContext()
         ) {
-            SharedPreferences.noteOnBoarding = true
+            Storage.noteOnBoarding = true
         }
     }
 }

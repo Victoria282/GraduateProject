@@ -3,6 +3,7 @@ package com.example.graduateproject.settings
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.graduateproject.authentication.firebase.Firebase
+import com.example.graduateproject.shared_preferences.Storage
 import com.google.android.gms.tasks.Task
 import javax.inject.Inject
 
@@ -17,13 +18,17 @@ class SettingsViewModel @Inject constructor(
     val changePassword: MutableLiveData<Task<Void>>
         get() = _changePassword
 
-    fun deleteAccount() = firebase.deleteAccount()?.addOnCompleteListener {
-        _statusDeleteAccount.postValue(it)
-    }
+    fun deleteAccount() = firebase.deleteAccount()
+        ?.addOnCompleteListener {
+            _statusDeleteAccount.postValue(it)
+        }
 
-    fun changePassword(password: String) =
-        firebase.changePassword(password)?.addOnCompleteListener {
+    fun changePassword(password: String) = firebase.changePassword(password)
+        ?.addOnCompleteListener {
             _changePassword.postValue(it)
+        }
+        ?.addOnSuccessListener {
+            Storage.password = Storage.updatedPassword
         }
 
     fun reAuth() = firebase.reAuthenticate()

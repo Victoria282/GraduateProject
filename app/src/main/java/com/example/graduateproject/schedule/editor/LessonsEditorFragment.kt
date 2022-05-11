@@ -12,9 +12,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.FragmentLessonsEditorBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.schedule.main.ScheduleViewModel
 import com.example.graduateproject.schedule.model.Lesson
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Utils
 import com.google.android.material.textview.MaterialTextView
 import java.text.SimpleDateFormat
@@ -44,7 +43,7 @@ class LessonsEditorFragment @Inject constructor(
     }
 
     private fun setLessonInfo(lesson: Lesson) {
-        val typeOfLesson = lesson.typeOfLesson
+        val typeOfLesson = lesson.lessonType
 
         with(binding) {
             lessonName.setText(lesson.subject)
@@ -52,7 +51,8 @@ class LessonsEditorFragment @Inject constructor(
             cabinet.setText(lesson.cabinet)
             startTime.text = lesson.startTime
             endTime.text = lesson.endTime
-            lessonNumber.setText(lesson.numberOfLesson.toString())
+            lessonNumber.setText(lesson.lesson.toString())
+
             if (typeOfLesson == 0) lecture.isChecked =
                 true else practice.isChecked = true
         }
@@ -74,53 +74,53 @@ class LessonsEditorFragment @Inject constructor(
     }
 
     private fun getInputLesson() = with(binding) {
-        val lessonName = lessonName.text?.trim()
-        val teacherName = teacherName.text?.trim()
-        val cabinet = cabinet.text?.trim()
+        val lesson = lessonName.text?.trim().toString()
+        val teacher = teacherName.text?.trim().toString()
+        val cabinet = cabinet.text?.trim().toString()
 
-        val radioButton: View = typeOfLesson.findViewById(typeOfLesson.checkedRadioButtonId)
-        val typeOfLesson: Int = typeOfLesson.indexOfChild(radioButton)
-        val numOfLesson: Int = if (lessonNumber.text?.trim().toString().isEmpty()) 0
+        val buttonId: View = typeOfLesson.findViewById(typeOfLesson.checkedRadioButtonId)
+        val lessonType = typeOfLesson.indexOfChild(buttonId)
+        val lessonPosition = if (lessonNumber.text?.trim().toString().isEmpty()) 0
         else lessonNumber.text?.trim().toString().toInt()
 
-        val startTime = startTime.text?.trim()
-        val endTime = endTime.text?.trim()
+        val startTime = startTime.text?.trim().toString()
+        val endTime = endTime.text?.trim().toString()
 
         validateInputFields(
-            lessonName,
-            teacherName,
+            lesson,
+            teacher,
             cabinet,
-            typeOfLesson,
-            numOfLesson,
+            lessonType,
+            lessonPosition,
             startTime,
             endTime
         )
     }
 
     private fun validateInputFields(
-        lessonName: CharSequence?,
-        teacherName: CharSequence?,
-        cabinet: CharSequence?,
+        lessonName: String?,
+        teacherName: String?,
+        cabinet: String?,
         typeOfLesson: Int,
         numOfLesson: Int,
-        startTime: CharSequence?,
-        endTime: CharSequence?
+        startTime: String?,
+        endTime: String?
     ) {
-        if (lessonName == "" || teacherName == "" || cabinet == "" || startTime == "" || endTime == "") {
+        if (lessonName.isNullOrEmpty() || teacherName.isNullOrEmpty() || cabinet.isNullOrEmpty() || startTime.isNullOrEmpty() || endTime.isNullOrEmpty()) {
             Utils.showMessage(R.string.message_input_empty_fields, requireContext())
         } else {
-            val id = if (args.lesson?.id != null) args.lesson?.id else 0
+            val id = if (args.lesson?.id != null) args.lesson!!.id else 0
             val formedLesson = Lesson(
-                id = id!!,
-                positionOfWeekDay = SharedPreferences.savedWeekDay!!,
-                numberOfLesson = numOfLesson,
-                subject = lessonName.toString(),
-                teacher = teacherName.toString(),
-                typeOfLesson = typeOfLesson,
-                cabinet = cabinet.toString(),
-                week = SharedPreferences.saveSwitchWeek,
-                startTime = startTime.toString(),
-                endTime = endTime.toString()
+                id = id,
+                weekDay = Storage.weekDay!!,
+                lesson = numOfLesson,
+                subject = lessonName,
+                teacher = teacherName,
+                lessonType = typeOfLesson,
+                cabinet = cabinet,
+                week = Storage.studyWeek,
+                startTime = startTime,
+                endTime = endTime
             )
             if (args.lesson == null)
                 viewModel.insertLesson(formedLesson)
@@ -135,12 +135,13 @@ class LessonsEditorFragment @Inject constructor(
         findNavController().navigate(directions)
     }
 
-    private fun createTimePicker(textView: MaterialTextView) {
+    private fun createTimePicker(timeTextView: MaterialTextView) {
         val cal = Calendar.getInstance()
+
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            textView.text = sdf.format(cal.time)
+            timeTextView.text = sdf.format(cal.time)
         }
         TimePickerDialog(
             requireContext(),

@@ -1,6 +1,9 @@
 package com.example.graduateproject.menu
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -14,15 +17,19 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.graduateproject.R
 import com.example.graduateproject.authentication.MainActivity
+import com.example.graduateproject.authentication.firebase.Firebase
 import com.example.graduateproject.databinding.ActivityMenuBinding
 import com.example.graduateproject.di.utils.FragmentFactory
 import com.example.graduateproject.di.utils.ViewModelFactory
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.rate.RateDialog
+import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Constants
+import com.example.graduateproject.widget.ScheduleWidget
 import com.google.android.material.navigation.NavigationView
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
+
 
 class MenuActivity : DaggerAppCompatActivity() {
 
@@ -32,9 +39,16 @@ class MenuActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    @Inject
+    lateinit var scheduleWidget: ScheduleWidget
+
+    @Inject
+    lateinit var firebase: Firebase
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMenuBinding
     private val viewModel: MenuViewModel by viewModels { viewModelFactory }
+    private lateinit var rateDialog: RateDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +59,19 @@ class MenuActivity : DaggerAppCompatActivity() {
 
         initNavigationView()
         initNavigationViewHeader()
+        registerReceiver()
+        rateDialog = RateDialog(this, firebase)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        checkReviewAppExisting()
+    }
+
+    private fun registerReceiver() {
+        val filter = IntentFilter()
+        filter.addAction("android.appwidget.action.APPWIDGET_UPDATE")
+        registerReceiver(scheduleWidget, filter)
     }
 
     private fun initNavigationView() = with(binding) {
@@ -96,13 +123,13 @@ class MenuActivity : DaggerAppCompatActivity() {
     }
 
     private fun checkStudyWeek(menu: Menu) {
-        if (!SharedPreferences.saveSwitchWeek)
+        if (!Storage.studyWeek)
             menu.findItem(R.id.switchWeek).title = resources.getString(R.string.first_week)
         else
             menu.findItem(R.id.switchWeek).title = resources.getString(R.string.second_week)
     }
 
-    private fun logOut() {
+    fun logOut() {
         viewModel.logOut()
         Intent(this, MainActivity::class.java).also {
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -112,9 +139,37 @@ class MenuActivity : DaggerAppCompatActivity() {
         finish()
     }
 
+    fun updateReceiver() {
+        val intent = Intent(this, ScheduleWidget::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
+        val ids = appWidgetManager.getAppWidgetIds(
+            ComponentName(
+                applicationContext,
+                ScheduleWidget::class.java
+            )
+        )
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.lessons_list)
+
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        sendBroadcast(intent)
+    }
+
+    private fun checkReviewAppExisting() {
+        if (Storage.visitingApp == 3 && !Storage.rateUs) {
+            rateDialog.setCancelable(true)
+            rateDialog.show()
+        } else if (Storage.visitingApp < 3) {
+            Storage.visitingApp++
+        }
+    }
+
     private fun writeEmailMessage() {
-        val emailIntent =
-            Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", Constants.DEVELOPER_EMAIL, null))
-        startActivity(Intent.createChooser(emailIntent, getString((R.string.email_sending))))
+        val action = Intent.ACTION_SENDTO
+        val uri = Uri.fromParts("mailto", Constants.DEVELOPER_EMAIL, null)
+        val emailIntent = Intent(action, uri)
+        val tittle = getString((R.string.email_sending))
+        startActivity(Intent.createChooser(emailIntent, tittle))
     }
 }

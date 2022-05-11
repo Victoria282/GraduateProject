@@ -1,6 +1,6 @@
 package com.example.graduateproject.authentication.firebase
 
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.EmailAuthProvider
@@ -26,20 +26,13 @@ class Firebase @Inject constructor() {
 
     fun logoutUser(): Unit = FirebaseAuth.getInstance().signOut()
 
-    fun deleteAccount(): Task<Void>? = FirebaseAuth.getInstance().currentUser?.delete()
+    fun deleteAccount(): Task<Void>? = getCurrentUser()?.delete()
 
-    fun reAuthenticate() {
-        var email = ""
-        var password = ""
-        getCurrentUser()?.email?.let { email = it }
-        SharedPreferences.savedPassword?.let { password = it }
-
-        FirebaseAuth.getInstance().currentUser?.reauthenticate(
-            EmailAuthProvider.getCredential(
-                email, password
-            )
+    fun reAuthenticate() = getCurrentUser()?.reauthenticate(
+        EmailAuthProvider.getCredential(
+            Storage.email!!, Storage.password!!
         )
-    }
+    )
 
     fun changePassword(password: String) = getCurrentUser()?.updatePassword(password)
 

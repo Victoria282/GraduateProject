@@ -120,10 +120,17 @@
     <string name="welcome_subtitle_message_schedule">Добавьте первую пару нажав на кнопку</string>
     <string name="welcome_subtitle_message_expenses">Добавьте первую покупку нажав на кнопку</string>
     <string name="welcome_subtitle_message_expenses_add_budget">Прежде чем добавить покупку, введите Ваш бюджет на месяц..</string>
-    <string name="email_sending">Отправка письма..</string>
+    <string name="email_sending">Написать письмо..</string>
     <string name="rate_us">Оцените наше приложение</string>
     <string name="rate_us_now">Оценить</string>
     <string name="rate_us_later">Позже</string>
     <string name="rate_us_note">Напишите отзыв</string>
     <string name="sending_success">Отзыв отправлен!</string>
+    <string name="message_delete_schedule">Удалить расписание</string>
+    <string name="confirm_action">Подтвердить</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Расписание</string>
+    <string name="configure">Configure</string>
+    <string name="divider">-</string>
+    <string name="widget_header_icon">widget_header_icon</string>
 </resources>

@@ -14,8 +14,10 @@ import com.example.graduateproject.databinding.ScheduleFragmentBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.schedule.adapter.LessonsAdapter
 import com.example.graduateproject.schedule.model.Lesson
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
+import com.example.graduateproject.utils.Constants.MONDAY
 import com.example.graduateproject.utils.Utils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import javax.inject.Inject
 
 class ScheduleFragment @Inject constructor(
@@ -25,29 +27,60 @@ class ScheduleFragment @Inject constructor(
     View.OnClickListener {
     private val viewModel: ScheduleViewModel by viewModels { viewModelFactory }
     private lateinit var binding: ScheduleFragmentBinding
-    private lateinit var adapter: LessonsAdapter
+    private lateinit var lessonsAdapter: LessonsAdapter
     private var counter: Int = 0
     private var lessonsList: ArrayList<Lesson> = ArrayList()
 
-    private val lessonsObserver = Observer<List<Lesson>> { list ->
+    private val lessonsObserver = Observer<List<Lesson>?> { list ->
         list.forEach {
-            if (!lessonsList.contains(it)) lessonsList.add(it)
-            if (checkWeekPositionDay(it)) adapter.updateLessons(it)
+            if (!lessonsList.contains(it)) {
+                lessonsList.add(it)
+                if (accordanceLesson(it))
+                    lessonsAdapter.updateLessons(it)
+            }
         }
     }
 
     private val weekDayObserver = Observer<String> {
         initLessonsAdapter()
         lessonsList.forEach {
-            if (checkWeekPositionDay(it)) adapter.updateLessons(it)
+            if (accordanceLesson(it))
+                lessonsAdapter.updateLessons(it)
         }
-        if(lessonsList.isNotEmpty()) checkLessonsExists()
+        if (lessonsList.isNotEmpty()) checkLessonsExists()
     }
 
-    private fun checkWeekPositionDay(lesson: Lesson): Boolean {
-        val flag = lesson.positionOfWeekDay == SharedPreferences.savedWeekDay && lesson.week == SharedPreferences.saveSwitchWeek
-        if(flag) counter++
+    private fun accordanceLesson(lesson: Lesson): Boolean {
+        val flag = lesson.weekDay == Storage.weekDay && lesson.week == Storage.studyWeek
+        if (flag) counter++
         return flag
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        if (item.itemId == R.id.deleteSchedule) showBottomNavigation()
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showBottomNavigation() {
+        val dialog = BottomSheetDialog(requireContext())
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.bottom_sheet_delete_schedule)
+
+        val delete = dialog.findViewById<Button>(R.id.delete)
+        delete?.setOnClickListener {
+            viewModel.deleteSchedule()
+            lessonsAdapter.clearLessons()
+            lessonsList.clear()
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,30 +94,31 @@ class ScheduleFragment @Inject constructor(
         savedInstanceState: Bundle?
     ): View {
         binding = ScheduleFragmentBinding.inflate(inflater, container, false)
-        initDefaultDay()
+        checkWeekDay(savedInstanceState)
         return binding.root
+    }
+
+    private fun checkWeekDay(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null)
+            setWeekDay(MONDAY)
+        else
+            setWeekDay(Storage.weekDay!!)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!SharedPreferences.scheduleOnBoarding) showOnBoarding()
+        viewModel.getLessons()
+        if (!Storage.scheduleOnBoarding) showOnBoarding()
         initObservers()
-        initUi()
-    }
-    
-    private fun checkLessonsExists() {
-        val visibilityFlag = if(counter == 0) View.VISIBLE else View.GONE
-
-        binding.weekend.visibility = visibilityFlag
-        binding.iconWeekend.visibility = visibilityFlag
-        counter = 0
-    }
-
-    private fun initUi() = with(binding) {
         initListeners()
-        addLesson.setOnClickListener {
-            onLessonClick(null)
-        }
+    }
+
+    private fun checkLessonsExists() = with(binding) {
+        val visibilityFlag = if (counter == 0) View.VISIBLE else View.GONE
+
+        weekend.visibility = visibilityFlag
+        iconWeekend.visibility = visibilityFlag
+        counter = 0
     }
 
     private fun initObservers() = with(viewModel) {
@@ -92,17 +126,17 @@ class ScheduleFragment @Inject constructor(
         lessons.observe(viewLifecycleOwner, lessonsObserver)
     }
 
-    private fun initLessonsAdapter() = with(binding) {
-        listOfLessons.layoutManager = LinearLayoutManager(context)
-        adapter = LessonsAdapter(arrayListOf())
-        listOfLessons.addItemDecoration(
+    private fun initLessonsAdapter() = with(binding.listOfLessons) {
+        layoutManager = LinearLayoutManager(context)
+        lessonsAdapter = LessonsAdapter(arrayListOf())
+        addItemDecoration(
             DividerItemDecoration(
-                listOfLessons.context,
-                (listOfLessons.layoutManager as LinearLayoutManager).orientation
+                context,
+                (layoutManager as LinearLayoutManager).orientation
             )
         )
-        listOfLessons.adapter = adapter
-        adapter.clickListener = this@ScheduleFragment
+        adapter = lessonsAdapter
+        lessonsAdapter.clickListener = this@ScheduleFragment
     }
 
     override fun onLessonClick(lesson: Lesson?) {
@@ -110,34 +144,34 @@ class ScheduleFragment @Inject constructor(
         findNavController().navigate(direction)
     }
 
-    private fun initListeners()  {
+    private fun initListeners() {
         binding.btn1.setOnClickListener(this)
         binding.btn2.setOnClickListener(this)
         binding.btn3.setOnClickListener(this)
         binding.btn4.setOnClickListener(this)
         binding.btn5.setOnClickListener(this)
         binding.btn6.setOnClickListener(this)
+
+        binding.addLesson.setOnClickListener {
+            onLessonClick(null)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        initDefaultDay()
+        setWeekDay(Storage.weekDay!!)
     }
 
-    private fun initDefaultDay() = viewModel.setWeekDay("Понедельник")
+    override fun onClick(button: View?) = setWeekDay((button as Button).text.toString())
 
-    override fun onClick(button: View?) {
-        viewModel.setWeekDay((button as Button).text.toString())
-    }
+    private fun setWeekDay(weekday: String) = viewModel.setWeekDay(weekday)
 
-    private fun showOnBoarding() {
-        Utils.showOnBoarding(
-            requireActivity(),
-            binding.addLesson,
-            R.string.welcome_subtitle_message_schedule,
-            requireContext()
-        ) {
-            SharedPreferences.scheduleOnBoarding = true
-        }
+    private fun showOnBoarding() = Utils.showOnBoarding(
+        requireActivity(),
+        binding.addLesson,
+        R.string.welcome_subtitle_message_schedule,
+        requireContext()
+    ) {
+        Storage.scheduleOnBoarding = true
     }
 }

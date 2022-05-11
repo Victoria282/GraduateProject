@@ -14,12 +14,11 @@ import com.example.graduateproject.databinding.FragmentExpenseLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.expense.adapter.ExpenseAdapter
 import com.example.graduateproject.expense.model.Expense
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Utils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
-import kotlinx.android.synthetic.main.fragment_expense_layout.*
 import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -113,7 +112,7 @@ class ExpenseFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!SharedPreferences.expenseOnBoarding) showOnBoarding()
+        if (!Storage.expenseOnBoarding) showOnBoarding()
         initUi()
         initAdapter()
         initListeners()
@@ -123,7 +122,7 @@ class ExpenseFragment @Inject constructor(
 
     private fun initUi() = with(binding) {
         budget.text =
-            if (SharedPreferences.saveMonthBudget == "") "0 ₽" else SharedPreferences.saveMonthBudget
+            if (Storage.monthBudget == "") "0 ₽" else Storage.monthBudget
     }
 
     private fun initDate() {
@@ -149,7 +148,7 @@ class ExpenseFragment @Inject constructor(
         val update = dialog.findViewById<Button>(R.id.update)
         val moneyEditor = dialog.findViewById<TextInputEditText>(R.id.edit_money)
 
-        moneyEditor?.setText(SharedPreferences.saveMonthBudget)
+        moneyEditor?.setText(Storage.monthBudget)
 
         update?.setOnClickListener {
             val monthBudget = moneyEditor?.text.toString()
@@ -158,7 +157,7 @@ class ExpenseFragment @Inject constructor(
                 requireContext()
             )
             else {
-                SharedPreferences.saveMonthBudget = monthBudget
+                Storage.monthBudget = monthBudget
                 binding.expenseAnalytics.clearChart()
                 changeMonthBudgetTittle(monthBudget.toFloat())
                 checkMonthBudget()
@@ -169,7 +168,7 @@ class ExpenseFragment @Inject constructor(
         dialog.show()
     }
 
-    private fun initAdapter() {
+    private fun initAdapter() = with(binding) {
         expenseAdapter = ExpenseAdapter(requireContext())
         expensesRecyclerView.apply {
             setHasFixedSize(true)
@@ -188,7 +187,7 @@ class ExpenseFragment @Inject constructor(
     }
 
     private fun checkMonthBudget() = with(binding) {
-        if (totalExpense > SharedPreferences.saveMonthBudget!!.toFloat()) {
+        if (totalExpense > Storage.monthBudget!!.toFloat()) {
             indicator.setImageResource(R.drawable.ic_negative_balance)
             expense.setTextColor(
                 ContextCompat.getColor(
@@ -252,7 +251,7 @@ class ExpenseFragment @Inject constructor(
         )
 
         val monthExpense =
-            if (SharedPreferences.saveMonthBudget == "") 0f else SharedPreferences.saveMonthBudget!!.toFloat()
+            if (Storage.monthBudget == "") 0f else Storage.monthBudget!!.toFloat()
 
         if (monthExpense >= totalExpense)
             addPieSlice(
@@ -288,7 +287,7 @@ class ExpenseFragment @Inject constructor(
         R.string.welcome_subtitle_message_expenses,
         requireContext()
     ) {
-        SharedPreferences.expenseOnBoarding = true
+        Storage.expenseOnBoarding = true
     }
 
     companion object {

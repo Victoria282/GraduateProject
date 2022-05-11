@@ -11,16 +11,16 @@ import kotlinx.android.parcel.Parcelize
 data class Lesson(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    @ColumnInfo(name = "weekDap")
-    val positionOfWeekDay: String,
+    @ColumnInfo(name = "weekDay")
+    val weekDay: String,
     @ColumnInfo(name = "lessonPosition")
-    val numberOfLesson: Int,
+    val lesson: Int,
     @ColumnInfo(name = "subject")
     val subject: String,
     @ColumnInfo(name = "teacher")
     val teacher: String,
     @ColumnInfo(name = "lessonType")
-    val typeOfLesson: Int,
+    val lessonType: Int,
     @ColumnInfo(name = "cabinet")
     val cabinet: String,
     @ColumnInfo(name = "studyWeek")

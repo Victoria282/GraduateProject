@@ -13,7 +13,7 @@ import com.example.graduateproject.authentication.DaggerBaseFragment
 import com.example.graduateproject.databinding.RegistrationLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.menu.MenuActivity
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Utils
 import com.example.graduateproject.utils.Utils.showMessage
 import com.google.android.gms.tasks.Task
@@ -131,12 +131,14 @@ class RegistrationFragment @Inject constructor() :
         when {
             email.isEmpty() -> textFieldEmail.helperText = messageEmptyFields
             inputPassword.isEmpty() -> textFieldPassword.helperText = messageEmptyFields
-            inputConfirmPassword.isEmpty() -> textFieldPasswordConfirm.helperText = messageEmptyFields
+            inputConfirmPassword.isEmpty() -> textFieldPasswordConfirm.helperText =
+                messageEmptyFields
             password.text.toString() != confirmPassword.text.toString() ->
                 textFieldPasswordConfirm.helperText = messageDifferentPasswords
             else -> {
                 viewModel.registerUser(email, inputPassword)
-                SharedPreferences.savedPassword = inputPassword
+                Storage.password = inputPassword
+                Storage.email = email
                 clearHelperText()
                 showProgressBar()
             }

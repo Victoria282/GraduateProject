@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.graduateproject.schedule.model.Lesson
 import com.example.graduateproject.schedule.repository.ScheduleRepository
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,14 +19,26 @@ class ScheduleViewModel @Inject constructor(
     private val scheduleRepository: ScheduleRepository
 ) : AndroidViewModel(application) {
 
-    val lessons: LiveData<List<Lesson>> = scheduleRepository.lessons
+    private val _lessons = MutableLiveData<List<Lesson>?>()
+    val lessons: MutableLiveData<List<Lesson>?>
+        get() = _lessons
 
     private val _weekDay = MutableLiveData<String>()
     val weekDay: MutableLiveData<String>
         get() = _weekDay
 
     fun setWeekDay(dayOfWeek: String) {
-        SharedPreferences.savedWeekDay = dayOfWeek
+        Storage.weekDay = dayOfWeek
         _weekDay.postValue(dayOfWeek)
+    }
+
+    fun getLessons() = viewModelScope.launch(Dispatchers.IO) {
+        val result = scheduleRepository.getLessons()
+        _lessons.postValue(result)
+    }
+
+    fun deleteSchedule() = viewModelScope.launch(Dispatchers.IO) {
+        scheduleRepository.deleteSchedule()
+        _lessons.postValue(emptyList())
     }
 }
