@@ -3,53 +3,66 @@ package com.example.graduateproject.shared_preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.example.graduateproject.utils.Constants.EXPENSE_ON_BOARDING
+import com.example.graduateproject.utils.Constants.NOTE_ON_BOARDING
+import com.example.graduateproject.utils.Constants.RATE_US
+import com.example.graduateproject.utils.Constants.SAVED_EMAIL
+import com.example.graduateproject.utils.Constants.SAVED_MONTH_EXPENSE
+import com.example.graduateproject.utils.Constants.SAVED_PASSWORD
+import com.example.graduateproject.utils.Constants.SCHEDULE_ON_BOARDING
+import com.example.graduateproject.utils.Constants.STUDY_WEEK
+import com.example.graduateproject.utils.Constants.STUDY_WEEK_DAY
+import com.example.graduateproject.utils.Constants.SWITCH_PERMISSION_NOTIFICATION
+import com.example.graduateproject.utils.Constants.UPDATED_SAVED_PASSWORD
+import com.example.graduateproject.utils.Constants.VISITING_APP
 
-object SharedPreferences {
+object Storage {
     private lateinit var preferences: SharedPreferences
     private const val MODE = Context.MODE_PRIVATE
 
-    private const val PREF_NAME = "saved data user"
-
-    private const val STUDY_WEEK_DAY = "week's day"
-    private const val SWITCH_WEEK = "study week"
-    private const val SWITCH_PERMISSION_NOTIFICATION = "study notification"
-    private const val SAVED_PASSWORD = "password"
-    private const val SAVED_MONTH_EXPENSE = "month budget"
-    private const val EXPENSE_ON_BOARDING = "expenses on boarding"
-    private const val SCHEDULE_ON_BOARDING = "schedule on boarding"
-    private const val NOTE_ON_BOARDING = "note on boarding"
-    private const val RATE_US = "rate app"
-    private const val VISITING_APP = "count of visit app"
+    private const val PREF_NAME = "saved data"
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREF_NAME, MODE)
     }
 
-    var savedPassword: String?
+    var password: String?
         get() = preferences.getString(SAVED_PASSWORD, "")
         set(value) = preferences.edit {
             putString(SAVED_PASSWORD, value)
         }
 
-    var savedWeekDay: String?
+    var updatedPassword: String?
+        get() = preferences.getString(UPDATED_SAVED_PASSWORD, "")
+        set(value) = preferences.edit {
+            putString(UPDATED_SAVED_PASSWORD, value)
+        }
+
+    var email: String?
+        get() = preferences.getString(SAVED_EMAIL, "")
+        set(value) = preferences.edit {
+            putString(SAVED_EMAIL, value)
+        }
+
+    var weekDay: String?
         get() = preferences.getString(STUDY_WEEK_DAY, "")
         set(value) = preferences.edit {
             putString(STUDY_WEEK_DAY, value)
         }
 
-    var saveSwitchWeek: Boolean
-        get() = preferences.getBoolean(SWITCH_WEEK, false)
+    var studyWeek: Boolean
+        get() = preferences.getBoolean(STUDY_WEEK, false)
         set(value) = preferences.edit {
-            putBoolean(SWITCH_WEEK, value)
+            putBoolean(STUDY_WEEK, value)
         }
 
-    var savePermissionNotification: Boolean
+    var notificationSettings: Boolean
         get() = preferences.getBoolean(SWITCH_PERMISSION_NOTIFICATION, false)
         set(value) = preferences.edit {
             putBoolean(SWITCH_PERMISSION_NOTIFICATION, value)
         }
 
-    var saveMonthBudget: String?
+    var monthBudget: String?
         get() = preferences.getString(SAVED_MONTH_EXPENSE, "")
         set(value) = preferences.edit {
             putString(SAVED_MONTH_EXPENSE, value)

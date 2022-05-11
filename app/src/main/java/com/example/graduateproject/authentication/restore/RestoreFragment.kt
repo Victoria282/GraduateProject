@@ -34,22 +34,22 @@ class RestoreFragment @Inject constructor() :
             hideProgressBar()
             clearInputFields()
 
-            if (task.isSuccessful) {
-                showMessageWithPositiveButton(
-                    R.string.password_is_reset,
-                    requireContext(),
-                    R.string.message_back_to_main_page
-                ) { _, _ ->
-                    val direction = RestoreFragmentDirections.toAuthorization()
-                    findNavController().navigate(direction)
-                }
-            } else if(task.exception is FirebaseAuthInvalidUserException){
-                showMessage(R.string.message_invalid_user, requireContext())
-            }
-            else {
-                showMessage(R.string.something_went_wrong, requireContext())
+            when {
+                task.isSuccessful -> showMessage()
+                task.exception is FirebaseAuthInvalidUserException ->
+                    showMessage(R.string.message_invalid_user, requireContext())
+                else -> showMessage(R.string.something_went_wrong, requireContext())
             }
         }
+    }
+
+    private fun showMessage() = showMessageWithPositiveButton(
+        R.string.password_is_reset,
+        requireContext(),
+        R.string.message_back_to_main_page
+    ) { _, _ ->
+        val direction = RestoreFragmentDirections.toAuthorization()
+        findNavController().navigate(direction)
     }
 
     override fun onCreateView(
@@ -72,8 +72,8 @@ class RestoreFragment @Inject constructor() :
         activity?.title = "Восстановление пароля"
     }
 
-    private fun initObservers() {
-        viewModel.statusRestorePassword.observe(viewLifecycleOwner, statusRestorePasswordObservers)
+    private fun initObservers() = with(viewModel) {
+        statusRestorePassword.observe(viewLifecycleOwner, statusRestorePasswordObservers)
     }
 
     private fun emailValidate(): String? = with(binding) {

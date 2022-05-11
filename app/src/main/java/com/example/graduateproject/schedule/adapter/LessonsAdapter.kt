@@ -24,18 +24,19 @@ class LessonsAdapter(private val lessons: ArrayList<Lesson>) :
 
         fun bind(lesson: Lesson) {
             val typeOfLesson =
-                if (lesson.typeOfLesson == 0) R.string.lesson_type_lecture else R.string.lesson_type_practice
+                if (lesson.lessonType == 0) R.string.lesson_type_lecture else R.string.lesson_type_practice
 
             with(binding) {
                 lessonTittle.text = lesson.subject
                 lessonType.setText(typeOfLesson)
                 lessonTeacher.text = lesson.teacher
                 lessonCabinet.text = lesson.cabinet
+                startTime.text = lesson.startTime
+                endTime.text = lesson.endTime
+
                 itemLesson.setOnClickListener {
                     listener?.onLessonClick(lesson)
                 }
-                startTime.text = lesson.startTime
-                endTime.text = lesson.endTime
             }
         }
     }
@@ -56,8 +57,13 @@ class LessonsAdapter(private val lessons: ArrayList<Lesson>) :
         holder.bind(lessons[position])
     }
 
-    fun updateLessons(lessons: Lesson) {
-        this.lessons.add(lessons)
+    fun updateLessons(lesson: Lesson) {
+        this.lessons.add(lesson)
+        notifyDataSetChanged()
+    }
+
+    fun clearLessons() {
+        lessons.clear()
         notifyDataSetChanged()
     }
 }

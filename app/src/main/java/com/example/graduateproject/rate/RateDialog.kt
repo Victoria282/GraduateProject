@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.example.graduateproject.R
 import com.example.graduateproject.authentication.firebase.Firebase
 import com.example.graduateproject.databinding.RateUsDialogBinding
-import com.example.graduateproject.shared_preferences.SharedPreferences
+import com.example.graduateproject.shared_preferences.Storage
 import javax.inject.Inject
 
 class RateDialog @Inject constructor(
@@ -44,14 +44,14 @@ class RateDialog @Inject constructor(
         }
 
         rateLaterButton.setOnClickListener {
-            SharedPreferences.visitingApp = 1
+            Storage.visitingApp = 1
             dismiss()
         }
     }
 
     private fun sendFeedback(review: String) = firebase.saveFeedback(appRating, review)
         .addOnSuccessListener {
-            SharedPreferences.rateUs = true
+            Storage.rateUs = true
             Toast.makeText(context, R.string.sending_success, Toast.LENGTH_SHORT).show()
         }
         .addOnFailureListener {

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/widgetLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/header"
+    android:gravity="start|center_vertical"
+    android:orientation="horizontal"
+    tools:background="@color/main_color_icon">
+
+    <TextView
+        android:id="@+id/lesson_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/little_margin"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/little_text_size"
+        tools:text="8:00" />
+
+    <TextView
+        android:id="@+id/lesson_time_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/extra_little_padding"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/little_text_size"
+        tools:text="@string/divider" />
+
+    <TextView
+        android:id="@+id/lesson_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/extra_little_padding"
+        android:layout_marginEnd="@dimen/little_margin"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/little_text_size"
+        tools:text="9:30" />
+
+    <TextView
+        android:id="@+id/lesson_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/little_margin"
+        android:fontFamily="@font/roboto_condensed_light"
+        android:textColor="@color/white"
+        android:textSize="@dimen/little_text_size"
+        tools:text="Математический анализ" />
+
+    <TextView
+        android:id="@+id/lesson_cabinet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/little_margin"
+        android:fontFamily="@font/roboto_condensed_light"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="@dimen/little_text_size"
+        tools:text="A15" />
+</LinearLayout>

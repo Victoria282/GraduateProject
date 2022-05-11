@@ -49,4 +49,13 @@
         <item name="android:textSize">12sp</item>
         <item name="fontFamily">@font/roboto_condensed_light</item>
     </style>
+
+    <style name="Widget.GraduateProject.AppWidget.Container" parent="android:Widget">
+        <item name="android:background">#80706F6F</item>
+    </style>
+
+    <style name="Widget.GraduateProject.AppWidget.InnerView" parent="android:Widget">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>
