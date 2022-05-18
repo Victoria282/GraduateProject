@@ -11,10 +11,6 @@ class ExpenseRepositoryImpl @Inject constructor(
         return expenseDao.getMonthlyTransaction(month, Year)
     }
 
-    override fun getYearlyExpenses(year: Int): List<Expense> {
-        return expenseDao.getYearlyTransaction(year)
-    }
-
     override suspend fun insertExpense(expense: Expense) {
         expenseDao.insertTransaction(expense)
     }

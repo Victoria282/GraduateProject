@@ -28,8 +28,14 @@ class ScheduleFragment @Inject constructor(
     private val viewModel: ScheduleViewModel by viewModels { viewModelFactory }
     private lateinit var binding: ScheduleFragmentBinding
     private lateinit var lessonsAdapter: LessonsAdapter
-    private var counter: Int = 0
     private var lessonsList: ArrayList<Lesson> = ArrayList()
+
+    private val weekDayObserver = Observer<String> {
+        initLessonsAdapter()
+        lessonsList.forEach {
+            if (accordanceLesson(it)) lessonsAdapter.updateLessons(it)
+        }
+    }
 
     private val lessonsObserver = Observer<List<Lesson>?> { list ->
         list.forEach {
@@ -41,19 +47,31 @@ class ScheduleFragment @Inject constructor(
         }
     }
 
-    private val weekDayObserver = Observer<String> {
-        initLessonsAdapter()
-        lessonsList.forEach {
-            if (accordanceLesson(it))
-                lessonsAdapter.updateLessons(it)
-        }
-        if (lessonsList.isNotEmpty()) checkLessonsExists()
+    private fun accordanceLesson(lesson: Lesson): Boolean {
+        return lesson.weekDay == Storage.weekDay && lesson.week == Storage.studyWeek
     }
 
-    private fun accordanceLesson(lesson: Lesson): Boolean {
-        val flag = lesson.weekDay == Storage.weekDay && lesson.week == Storage.studyWeek
-        if (flag) counter++
-        return flag
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = ScheduleFragmentBinding.inflate(inflater, container, false)
+        checkWeekDay(Storage.weekDay)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getLessons()
+        if (!Storage.scheduleOnBoarding) showOnBoarding()
+        initObservers()
+        initListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -74,6 +92,7 @@ class ScheduleFragment @Inject constructor(
         dialog.setContentView(R.layout.bottom_sheet_delete_schedule)
 
         val delete = dialog.findViewById<Button>(R.id.delete)
+
         delete?.setOnClickListener {
             viewModel.deleteSchedule()
             lessonsAdapter.clearLessons()
@@ -83,42 +102,11 @@ class ScheduleFragment @Inject constructor(
         dialog.show()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = ScheduleFragmentBinding.inflate(inflater, container, false)
-        checkWeekDay(savedInstanceState)
-        return binding.root
-    }
-
-    private fun checkWeekDay(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null)
+    private fun checkWeekDay(weekday: String?) {
+        if (weekday.isNullOrEmpty())
             setWeekDay(MONDAY)
         else
             setWeekDay(Storage.weekDay!!)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getLessons()
-        if (!Storage.scheduleOnBoarding) showOnBoarding()
-        initObservers()
-        initListeners()
-    }
-
-    private fun checkLessonsExists() = with(binding) {
-        val visibilityFlag = if (counter == 0) View.VISIBLE else View.GONE
-
-        weekend.visibility = visibilityFlag
-        iconWeekend.visibility = visibilityFlag
-        counter = 0
     }
 
     private fun initObservers() = with(viewModel) {
@@ -157,14 +145,13 @@ class ScheduleFragment @Inject constructor(
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        setWeekDay(Storage.weekDay!!)
+    override fun onClick(button: View?) {
+        setWeekDay((button as Button).text.toString())
     }
 
-    override fun onClick(button: View?) = setWeekDay((button as Button).text.toString())
-
-    private fun setWeekDay(weekday: String) = viewModel.setWeekDay(weekday)
+    private fun setWeekDay(weekday: String) = with(viewModel) {
+        setWeekDay(weekday)
+    }
 
     private fun showOnBoarding() = Utils.showOnBoarding(
         requireActivity(),

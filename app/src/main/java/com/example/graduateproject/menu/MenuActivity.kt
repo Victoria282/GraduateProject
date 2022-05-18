@@ -24,6 +24,9 @@ import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.rate.RateDialog
 import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Constants
+import com.example.graduateproject.utils.Constants.FIRST_WEEK
+import com.example.graduateproject.utils.Constants.SECOND_WEEK
+import com.example.graduateproject.utils.Constants.WIDGET_ACTION
 import com.example.graduateproject.widget.ScheduleWidget
 import com.google.android.material.navigation.NavigationView
 import dagger.android.AndroidInjection
@@ -70,7 +73,7 @@ class MenuActivity : DaggerAppCompatActivity() {
 
     private fun registerReceiver() {
         val filter = IntentFilter()
-        filter.addAction("android.appwidget.action.APPWIDGET_UPDATE")
+        filter.addAction(WIDGET_ACTION)
         registerReceiver(scheduleWidget, filter)
     }
 
@@ -124,9 +127,9 @@ class MenuActivity : DaggerAppCompatActivity() {
 
     private fun checkStudyWeek(menu: Menu) {
         if (!Storage.studyWeek)
-            menu.findItem(R.id.switchWeek).title = resources.getString(R.string.first_week)
+            menu.findItem(R.id.switchWeek).title = FIRST_WEEK
         else
-            menu.findItem(R.id.switchWeek).title = resources.getString(R.string.second_week)
+            menu.findItem(R.id.switchWeek).title = SECOND_WEEK
     }
 
     fun logOut() {
@@ -140,20 +143,10 @@ class MenuActivity : DaggerAppCompatActivity() {
     }
 
     fun updateReceiver() {
-        val intent = Intent(this, ScheduleWidget::class.java)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
-        val ids = appWidgetManager.getAppWidgetIds(
-            ComponentName(
-                applicationContext,
-                ScheduleWidget::class.java
-            )
-        )
-
-        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.lessons_list)
-
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-        sendBroadcast(intent)
+        val appWidgetManager = AppWidgetManager.getInstance(this)
+        val ids = appWidgetManager.getAppWidgetIds(ComponentName(this, ScheduleWidget::class.java))
+        for (id in ids)
+            ScheduleWidget.updateAppWidget(this, appWidgetManager, id)
     }
 
     private fun checkReviewAppExisting() {

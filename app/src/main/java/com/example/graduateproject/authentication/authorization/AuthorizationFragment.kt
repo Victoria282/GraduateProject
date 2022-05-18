@@ -20,8 +20,9 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import javax.inject.Inject
 
-class AuthorizationFragment @Inject constructor() :
-    DaggerBaseFragment(R.layout.authorization_layout) {
+class AuthorizationFragment @Inject constructor(
+
+) : DaggerBaseFragment(R.layout.authorization_layout) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

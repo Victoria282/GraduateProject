@@ -12,7 +12,12 @@ import com.example.graduateproject.schedule.dao.LessonDao
 import com.example.graduateproject.schedule.model.Lesson
 
 @Database(
-    entities = [Lesson::class, Note::class, Expense::class],
+    entities =
+    [
+        Lesson::class,
+        Note::class,
+        Expense::class
+    ],
     version = 1,
     exportSchema = false
 )
@@ -28,9 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun invoke(context: Context): AppDatabase {
             val temp = INSTANCE
-            if (temp != null) {
-                return temp
-            }
+            if (temp != null) return temp
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

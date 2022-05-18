@@ -19,13 +19,15 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import javax.inject.Inject
 
-class RestoreFragment @Inject constructor() :
-    DaggerBaseFragment(R.layout.restore_layout) {
+class RestoreFragment @Inject constructor(
+
+) : DaggerBaseFragment(R.layout.restore_layout) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: RestoreLayoutBinding
+
     private val viewModel: RestoreViewModel by viewModels { viewModelFactory }
 
     private val statusRestorePasswordObservers = Observer<Task<Void>> { task ->

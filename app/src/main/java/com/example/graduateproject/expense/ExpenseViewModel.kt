@@ -24,6 +24,4 @@ class ExpenseViewModel @Inject constructor(
             _monthlyExpenses.postValue(expenseRepository.getMonthlyExpenses(month, Year))
         }
     }
-
-    fun getYearlyTransaction(year: Int): List<Expense> = expenseRepository.getYearlyExpenses(year)
 }

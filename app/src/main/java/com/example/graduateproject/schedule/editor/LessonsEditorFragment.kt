@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.graduateproject.R
 import com.example.graduateproject.databinding.FragmentLessonsEditorBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
+import com.example.graduateproject.menu.MenuActivity
 import com.example.graduateproject.schedule.model.Lesson
 import com.example.graduateproject.shared_preferences.Storage
 import com.example.graduateproject.utils.Utils
@@ -60,11 +61,8 @@ class LessonsEditorFragment @Inject constructor(
 
     private fun initListeners() = with(binding) {
         btnSave.setOnClickListener { getInputLesson() }
-
         btnDelete.setOnClickListener { deleteLesson() }
-
         startTime.setOnClickListener { createTimePicker(startTime) }
-
         endTime.setOnClickListener { createTimePicker(endTime) }
     }
 
@@ -133,6 +131,7 @@ class LessonsEditorFragment @Inject constructor(
     private fun backToLessons() {
         val directions = LessonsEditorFragmentDirections.toSchedule()
         findNavController().navigate(directions)
+        (activity as MenuActivity).updateReceiver()
     }
 
     private fun createTimePicker(timeTextView: MaterialTextView) {
