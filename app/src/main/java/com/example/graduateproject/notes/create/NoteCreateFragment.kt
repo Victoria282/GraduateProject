@@ -67,7 +67,7 @@ class NoteCreateFragment @Inject constructor(
             val date = date.text?.trim().toString()
             val noteText = noteText.text?.trim().toString()
 
-            if (noteTittle == "" || noteSubTittle == "" || noteText == "")
+            if (noteTittle.isEmpty() || noteSubTittle.isEmpty() || noteText.isEmpty())
                 Utils.showMessage(R.string.message_input_empty_fields, requireContext())
             else {
                 val id = if (args.notesVal == null) 0 else args.notesVal!!.id
@@ -193,7 +193,8 @@ class NoteCreateFragment @Inject constructor(
                     }
                     output.flush()
                 }
-            } catch (e: FileNotFoundException) { }
+            } catch (e: FileNotFoundException) {
+            }
         }
         return outputFile.absolutePath
     }

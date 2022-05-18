@@ -15,6 +15,12 @@ import com.example.graduateproject.R
 import com.example.graduateproject.databinding.AddExpenseLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.expense.model.Expense
+import com.example.graduateproject.utils.Constants.FOOD
+import com.example.graduateproject.utils.Constants.HEALTH
+import com.example.graduateproject.utils.Constants.OTHER
+import com.example.graduateproject.utils.Constants.SHOPPING
+import com.example.graduateproject.utils.Constants.STUDY
+import com.example.graduateproject.utils.Constants.TRANSPORT
 import com.example.graduateproject.utils.Utils
 import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
@@ -106,7 +112,7 @@ class AddingExpenseFragment @Inject constructor(
         val note = editNote.text.toString()
         val date = editDate.text.toString()
 
-        if (title == "" || amount == "" || date == "" || categoryExpense == "")
+        if (title.isEmpty() || amount.isEmpty() || date.isEmpty() || categoryExpense.isEmpty())
             Utils.showMessage(R.string.message_input_empty_fields, requireContext())
         else {
             val id = if (args.expenseItem == null) null else args.expenseItem!!.id
@@ -160,19 +166,28 @@ class AddingExpenseFragment @Inject constructor(
         categoryExpense = (args.expenseItem!!.category)
 
         when (categoryExpense) {
-            "Еда" -> setCategory(food)
-            "Покупки" -> setCategory(shopping)
-            "Транспорт" -> setCategory(transport)
-            "Здоровье" -> setCategory(health)
-            "Другое" -> setCategory(others)
-            "Учёба" -> setCategory(academics)
+            FOOD -> setCategory(food)
+            SHOPPING -> setCategory(shopping)
+            TRANSPORT -> setCategory(transport)
+            HEALTH -> setCategory(health)
+            OTHER -> setCategory(others)
+            STUDY -> setCategory(academics)
         }
     }
 
-    private fun removeBackground(button: MaterialButton) = with(button) {
-        setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.main_color_icon))
-        setIconTintResource(R.color.white)
-        setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+    private fun removeBackground(view: Button, button: List<MaterialButton>) {
+        button.forEach {
+            if (it != view) {
+                it.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.main_color_icon
+                    )
+                )
+                it.setIconTintResource(R.color.white)
+                it.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            }
+        }
     }
 
     private fun setCategory(view: View?) = with(binding) {
@@ -180,50 +195,11 @@ class AddingExpenseFragment @Inject constructor(
 
         makeSelectedButton(view)
 
-        when (view) {
-            food -> {
-                removeBackground(shopping)
-                removeBackground(transport)
-                removeBackground(health)
-                removeBackground(others)
-                removeBackground(academics)
-            }
-            shopping -> {
-                removeBackground(food)
-                removeBackground(transport)
-                removeBackground(health)
-                removeBackground(others)
-                removeBackground(academics)
-            }
-            transport -> {
-                removeBackground(shopping)
-                removeBackground(food)
-                removeBackground(health)
-                removeBackground(others)
-                removeBackground(academics)
-            }
-            health -> {
-                removeBackground(shopping)
-                removeBackground(transport)
-                removeBackground(food)
-                removeBackground(others)
-                removeBackground(academics)
-            }
-            others -> {
-                removeBackground(shopping)
-                removeBackground(transport)
-                removeBackground(health)
-                removeBackground(food)
-                removeBackground(academics)
-            }
-            academics -> {
-                removeBackground(shopping)
-                removeBackground(transport)
-                removeBackground(health)
-                removeBackground(others)
-                removeBackground(food)
-            }
-        }
+        val buttons: ArrayList<MaterialButton> = arrayListOf(
+            shopping, transport, health, others, academics, food
+        )
+
+        removeBackground(view, buttons)
     }
 
     companion object {

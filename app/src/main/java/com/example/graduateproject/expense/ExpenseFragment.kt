@@ -14,12 +14,18 @@ import com.example.graduateproject.databinding.FragmentExpenseLayoutBinding
 import com.example.graduateproject.di.utils.ViewModelFactory
 import com.example.graduateproject.expense.adapter.ExpenseAdapter
 import com.example.graduateproject.expense.model.Expense
+import com.example.graduateproject.expense.pichartBuilder.PiChartBuilder
 import com.example.graduateproject.shared_preferences.Storage
+import com.example.graduateproject.utils.Constants.FOOD
+import com.example.graduateproject.utils.Constants.HEALTH
+import com.example.graduateproject.utils.Constants.OTHER
+import com.example.graduateproject.utils.Constants.SHOPPING
+import com.example.graduateproject.utils.Constants.STUDY
+import com.example.graduateproject.utils.Constants.TRANSPORT
 import com.example.graduateproject.utils.Utils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.bottom_sheet_layout.*
-import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -27,10 +33,11 @@ import javax.inject.Inject
 class ExpenseFragment @Inject constructor(
     viewModelFactory: ViewModelFactory
 ) : Fragment(R.layout.fragment_expense_layout), ExpenseAdapter.ExpenseClickListener {
-
     private val viewModel: ExpenseViewModel by viewModels { viewModelFactory }
     private lateinit var binding: FragmentExpenseLayoutBinding
     private lateinit var expenseAdapter: ExpenseAdapter
+
+    lateinit var pieChartBuilder: PiChartBuilder
 
     private var totalExpense = 0.0
 
@@ -54,12 +61,12 @@ class ExpenseFragment @Inject constructor(
                 totalExpense += expense.amount
 
                 when (expense.category) {
-                    "Еда" -> totalFood += expense.amount.toFloat()
-                    "Покупки" -> totalShopping += expense.amount.toFloat()
-                    "Транспорт" -> totalTransport += expense.amount.toFloat()
-                    "Здоровье" -> totalHealth += expense.amount.toFloat()
-                    "Другое" -> totalOthers += expense.amount.toFloat()
-                    "Учёба" -> totalAcademics += expense.amount.toFloat()
+                    FOOD -> totalFood += expense.amount.toFloat()
+                    SHOPPING -> totalShopping += expense.amount.toFloat()
+                    TRANSPORT -> totalTransport += expense.amount.toFloat()
+                    HEALTH -> totalHealth += expense.amount.toFloat()
+                    OTHER -> totalOthers += expense.amount.toFloat()
+                    STUDY -> totalAcademics += expense.amount.toFloat()
                 }
             }
             showCurrentExpenses()
@@ -207,61 +214,24 @@ class ExpenseFragment @Inject constructor(
     }
 
     private fun showPiChart() = with(binding.expenseAnalytics) {
-        addPieSlice(
-            PieModel(
-                "Еда",
-                totalFood,
-                ContextCompat.getColor(requireContext(), R.color.green_color)
-            )
-        )
-        addPieSlice(
-            PieModel(
-                "Покупки",
-                totalShopping,
-                ContextCompat.getColor(requireContext(), R.color.blue_color)
-            )
-        )
-        addPieSlice(
-            PieModel(
-                "Здоровье",
-                totalHealth,
-                ContextCompat.getColor(requireContext(), R.color.red_color)
-            )
-        )
-        addPieSlice(
-            PieModel(
-                "Другое",
-                totalOthers,
-                ContextCompat.getColor(requireContext(), R.color.violet_color)
-            )
-        )
-        addPieSlice(
-            PieModel(
-                "Транспорт",
-                totalTransport,
-                ContextCompat.getColor(requireContext(), R.color.yellow_color)
-            )
-        )
-        addPieSlice(
-            PieModel(
-                "Учёба",
-                totalAcademics,
-                ContextCompat.getColor(requireContext(), R.color.orange_color)
-            )
-        )
+        pieChartBuilder = PiChartBuilder(requireContext(), this)
+
+        pieChartBuilder.createFood(totalFood)
+            .crateShopping(totalShopping)
+            .createHealth(totalHealth)
+            .createOther(totalOthers)
+            .createTransport(totalTransport)
+            .createStudy(totalAcademics)
 
         val monthExpense =
             if (Storage.monthBudget == "") 0f else Storage.monthBudget!!.toFloat()
 
         if (monthExpense >= totalExpense)
-            addPieSlice(
-                PieModel(
-                    "Старт",
-                    monthExpense - (totalExpense.toFloat()),
-                    ContextCompat.getColor(requireContext(), R.color.gray_light)
-                )
+            pieChartBuilder.createRemains(
+                monthExpense, totalExpense.toFloat()
             )
-        this.startAnimation()
+
+        pieChartBuilder.build().startAnimation()
     }
 
     private fun initListeners() = with(binding) {

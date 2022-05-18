@@ -19,8 +19,8 @@ class SplashScreen : DaggerAppCompatActivity() {
         setSplashScreen()
     }
 
-    private fun setSplashScreen() =
-        binding.motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
+    private fun setSplashScreen() = binding.motionLayout.addTransitionListener(
+        object : MotionLayout.TransitionListener {
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
 
             override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}

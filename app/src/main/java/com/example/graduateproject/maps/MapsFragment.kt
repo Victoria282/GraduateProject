@@ -50,9 +50,11 @@ class MapsFragment @Inject constructor(
         }
         currentLocation?.let {
             val currentLocation = LatLng(it.latitude, it.longitude)
-            val makerOptions = MarkerOptions().position(currentLocation)
-                .icon(Utils.vectorToBitmap(requireContext(), R.drawable.map_marker_red))
+            val makerOptions = MarkerOptions()
                 .title(getString(R.string.tittle_map_my_location))
+                .position(currentLocation)
+                .icon(Utils.vectorToBitmap(requireContext(), R.drawable.map_marker_red))
+
             googleMap.addMarker(makerOptions)
         }
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chelyabinsk, 10f))

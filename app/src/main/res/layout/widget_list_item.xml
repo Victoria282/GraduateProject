@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/header"
-    android:gravity="start|center_vertical"
+    android:gravity="center_horizontal|center_vertical"
     android:orientation="horizontal"
-    tools:background="@color/main_color_icon">
+    tools:background="@color/drawable_icon_light">
 
     <TextView
         android:id="@+id/lesson_start_time"

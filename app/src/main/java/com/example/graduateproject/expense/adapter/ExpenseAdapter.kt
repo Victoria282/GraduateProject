@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.graduateproject.databinding.ExpenseItemLayoutBinding
 import com.example.graduateproject.expense.model.Expense
 
-class ExpenseAdapter(val context: Context) :
-    RecyclerView.Adapter<ExpenseAdapter.DataViewHolder>() {
+class ExpenseAdapter(
+    val context: Context
+) : RecyclerView.Adapter<ExpenseAdapter.DataViewHolder>() {
     var expensesList: ArrayList<Expense> = ArrayList()
     var clickListener: ExpenseClickListener? = null
 
@@ -46,6 +47,7 @@ class ExpenseAdapter(val context: Context) :
                 }
 
                 categoryIcon.setImageResource(expense.getIcon())
+
                 categoryIcon.setColorFilter(
                     ContextCompat.getColor(
                         categoryIcon.context,

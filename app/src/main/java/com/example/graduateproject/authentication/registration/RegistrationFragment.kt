@@ -22,8 +22,9 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import javax.inject.Inject
 
-class RegistrationFragment @Inject constructor() :
-    DaggerBaseFragment(R.layout.registration_layout) {
+class RegistrationFragment @Inject constructor(
+
+) : DaggerBaseFragment(R.layout.registration_layout) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

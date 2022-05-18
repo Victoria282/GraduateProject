@@ -11,9 +11,6 @@ interface ExpenseDao {
     @Query("SELECT * FROM `Expense` WHERE month=:month AND year=:year")
     fun getMonthlyTransaction(month: Int, year: Int): List<Expense>
 
-    @Query("SELECT * FROM `Expense` WHERE year=:year")
-    fun getYearlyTransaction(year: Int): List<Expense>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: Expense)
 

@@ -30,6 +30,14 @@
             android:textColor="@color/white"
             android:textSize="@dimen/normal_text_size"
             tools:text="Понедельник" />
+
+        <ImageView
+            android:id="@+id/updateWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/little_padding"
+            android:contentDescription="@string/widget_header_icon"
+            android:src="@drawable/update" />
     </LinearLayout>
 
     <ListView
@@ -38,5 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
         android:divider="@null"
+        tools:listitem="@layout/widget_list_item"
         android:dividerHeight="0dp" />
 </RelativeLayout>

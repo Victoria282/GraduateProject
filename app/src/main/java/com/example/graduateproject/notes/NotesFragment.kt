@@ -42,6 +42,7 @@ class NotesFragment @Inject constructor(
         savedInstanceState: Bundle?
     ): View {
         binding = NotesFragmentBinding.inflate(inflater, container, false)
+        viewModel.getNotes()
         return binding.root
     }
 
@@ -86,7 +87,7 @@ class NotesFragment @Inject constructor(
         notesAdapter.clickListener = this@NotesFragment
     }
 
-    private fun initObservers() = with(viewModel){
+    private fun initObservers() = with(viewModel) {
         notes.observe(viewLifecycleOwner, notesObserver)
     }
 
